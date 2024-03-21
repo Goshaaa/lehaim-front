@@ -1,0 +1,24 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-title {
+    font-size: calc(72px + 2vmin);
+}
+
+.home-description {
+    font-size: calc(24px + 2vmin);
+}
+
+.home-header {
+    margin: 20px 30px;
+}
+
+.home-header-about {
+    float: right
+}
