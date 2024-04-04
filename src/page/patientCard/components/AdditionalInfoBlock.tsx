@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
-import { ApiHost } from "../../../config";
 import { Patient } from "../../../types/CommonTypes";
+import * as patientService from '../../../services/PatientService';
 
 interface Props {
     patient: Patient;
@@ -31,25 +31,14 @@ function AdditionaInfolBlock({ patient }: Props) {
         setError("");
 
         try {
-            const response = await fetch(ApiHost + "/patients/" + patient.id, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(changePatient)
-            })
-            setLoading(false);
-            if (response.ok) {
-                const data = await response.json();
-                setSourcePatient(data);
-                setChangePatient(data);
-                setEditMode(false);
-            } else {
-                setError("Ошибка сохранения");
-            }
+            const data = await patientService.updatePatient(changePatient);
+            setSourcePatient(data);
+            setChangePatient(data);
+            setEditMode(false);
         } catch (err) {
             setError("Ошибка сохранения: " + err);
         }
+        setLoading(false);
     }
 
     return (

@@ -21,6 +21,19 @@ export function getEmptyPatient(): Patient {
     }
 }
 
+interface PatientSearchParam {
+    firstName?: string | undefined,
+    lastName?: string | undefined,
+    patronymic?: string | undefined,
+    birthDate?: string | undefined,
+}
+
+interface AnalyzesData {
+    id?: number,
+    testDate?: string,
+    paramMap: Map<string, number>;
+}
+
 interface AnalyzeBriefInfo {
     id?: string,
     testDate?: string
@@ -58,6 +71,8 @@ interface CatalogData {
     Hematological: CatalogItem[]
 }
 
+export class NotFoundError extends Error {}
+
 export enum ChartType {
     B_Type,
     T_Type,
@@ -66,4 +81,4 @@ export enum ChartType {
 
 interface SelectAnalyzeCallback { (analyzeId: string): void }
 
-export type { Patient, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter, CatalogData, CatalogItem };
+export type { Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter, CatalogData, CatalogItem, AnalyzesData };

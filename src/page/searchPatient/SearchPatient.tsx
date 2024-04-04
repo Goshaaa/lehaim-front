@@ -1,7 +1,8 @@
 import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../header/Header";
-import { ApiHost } from "../../config";
+import * as patientService from '../../services/PatientService';
+import { PatientSearchParam, NotFoundError } from "../../types/CommonTypes";
 
 
 function SearchPatient() {
@@ -9,12 +10,7 @@ function SearchPatient() {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [searchData, setSearchData] = useState({
-        firstName: null,
-        lastName: null,
-        patronymic: null,
-        birthDate: null,
-    });
+    const [searchData, setSearchData] = useState<PatientSearchParam>({});
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -26,30 +22,17 @@ function SearchPatient() {
         setLoading(true);
         setError("");
 
-        const url = new URL(ApiHost + "/patients/fullName?");
-        url.searchParams.set('firstname', searchData.firstName ?? "");
-        url.searchParams.set('lastname', searchData.lastName ?? "");
-        url.searchParams.set('middlename', searchData.patronymic ?? "");
-        url.searchParams.set('birthdate', searchData.birthDate ?? "");
-
         try {
-            const response = await fetch(url,
-                {
-                    method: "GET",
-                    headers: { "Content-Type": "application/json" }
-                }
-            );
-            setLoading(false);
-            if (response.ok) {
-                const data = await response.json();
-                navigate("/patientCard/" + data.id)
-            } else {
-                setError("Пациент не найден");
-            }
+            const data = await patientService.searchPatient(searchData);
+            navigate("/patientCard/" + data.id);
         } catch (err) {
-            setLoading(false);
-            setError("Ошибка загрузки: " + err);
+            if (err instanceof NotFoundError) {
+                setError(err.message);
+            } else {
+                setError("Ошибка загрузки: " + err);
+            }
         }
+        setLoading(false);
     }
 
     return (

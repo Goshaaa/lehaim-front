@@ -5,37 +5,35 @@ import PatientInfo from "./components/PatientInfo";
 import AdditionaInfolBlock from './components/AdditionalInfoBlock';
 import AnalyzesBlock from "./components/AnalyzesBlock";
 import GraphBlock from "./components/GraphBlock";
-import { ApiHost } from '../../config';
 import { Patient, SelectAnalyzeCallback } from '../../types/CommonTypes';
+import * as patientService from '../../services/PatientService';
 
 function PatientCard() {
     const [patient, setPatient] = useState<Patient | null>(null);
     const [selectedAnalyzeId, setSelectedAnalyzeId] = useState("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-
     const { patientId } = useParams();
 
-    const loadPatientData = async () => {
+    const loadPatient = async () => {
         setError("");
         setLoading(true);
+
         if (patientId) {
             try {
-                const response = await fetch(ApiHost + '/patients/' + patientId, { method: "GET" });
-                setLoading(false);
-                if (response.ok) {
-                    const data = await response.json();
-                    setPatient(data);
-                } else {
-                    setError("Не удалось загрузить сведения о пациенте");
-                }
+                const data = await patientService.getPatientById(Number(patientId));
+                setPatient(data);
             } catch (err) {
-                setLoading(false);
                 setError("Ошибка загрузки: " + err);
             }
+            setLoading(false);
+            
         }
     }
-    useEffect(() => { loadPatientData() }, [patientId]);
+
+    useEffect(() => {
+        loadPatient() 
+    }, [patientId]);
 
 
     const selectAnalyzeCallback: SelectAnalyzeCallback = (selectedAnalyzeId: string) => {

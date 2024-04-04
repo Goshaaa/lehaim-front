@@ -4,7 +4,7 @@ import AboutPage from './page/about/About';
 import SearchPatient from './page/searchPatient/SearchPatient';
 import AddPatient from './page/addPatient/AddPatient';
 import PatientCard from "./page/patientCard/PatientCard";
-import AddAnalyzes from "./page/addAnalyzes/AddAnalyzes";
+import AddAnalyzes from "./page/analyzes/AddAnalyzes";
 
 
 function App() {

@@ -1,11 +1,14 @@
 import { CatalogItem } from "../../types/CommonTypes";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
+import { ChangeEventHandler } from "react";
 
 interface Props {
     param: CatalogItem;
+    onChange?: ChangeEventHandler | undefined;
 }
-function CatalogParamItem({ param }: Props) {
+function CatalogParamItem({ param, onChange }: Props) {
+
     return (
         <div className="col-sm-12 col-md-6 col-lg-4 p-1 text-secondary">
             <div className="d-flex justify-content-start col-sm-10 col-md-8">
@@ -21,7 +24,11 @@ function CatalogParamItem({ param }: Props) {
                         title={param.additionalName} />
                 </div>
             </div>
-            <input className="col-12 col-md-8 mb-2" type='text'></input>
+            <input
+                name={param.id.toString()}
+                onChange={onChange}
+                className="col-12 col-md-8 mb-2"
+                type='number' />
         </div>
     );
 }

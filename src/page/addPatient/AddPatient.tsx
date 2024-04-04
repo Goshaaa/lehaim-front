@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../header/Header";
 import { Patient, getEmptyPatient } from "../../types/CommonTypes";
-import { ApiHost } from "../../config";
+import * as patientService from '../../services/PatientService';
 
 function AddPatient() {
     const navigate = useNavigate();
@@ -16,23 +16,12 @@ function AddPatient() {
         setError("")
 
         try {
-            const response = await fetch(ApiHost + "/patients/",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(patient)
-                }
-            )
-            setLoading(false);
-            if (response.ok) {
-                const data = await response.json();
-                navigate("/patientCard/" + data.id)
-            } else {
-                setError("Ошибка сохранения");
-            }
+            const data = await patientService.saveNewPatient(patient);
+            navigate("/patientCard/" + data.id);
         } catch (err) {
             setError("Ошибка сохранения: " + err);
         }
+        setLoading(false);
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
