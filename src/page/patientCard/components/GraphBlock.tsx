@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ApiHost } from '../../../config';
+import * as oncoTestService from '../../../services/OncoTestSerive';
 import { AnalyzeDetailedInfo, ChartType } from '../../../types/CommonTypes';
 import RadarChat from '../../chart/RadarChart';
 
@@ -10,21 +10,24 @@ interface Props {
 
 function GraphBlock({ selectedAnayzeId }: Props) {
     const [analyzeResult, setAnalyzeResult] = useState<AnalyzeDetailedInfo[]>([]);
-    // const [error, setError] = useState(null);
+    const [error, setError] = useState("");
+
+    const loadAllOncoTestParams = async () => {
+        setError("");
+        if (selectedAnayzeId) {
+            try {
+                const data = await oncoTestService.getAllOncoTestParams(Number(selectedAnayzeId));
+                setAnalyzeResult(data);
+            } catch (err) {
+                setError("Ошибка загрузки: " + err);
+            }
+        } else {
+            setAnalyzeResult([]);
+        }
+    }
 
     useEffect(() => {
-        if (selectedAnayzeId) {
-            fetch(ApiHost + '/results/' + selectedAnayzeId + "/all", {
-                method: "GET"
-            })
-                .then(resp => resp.json())
-                .then(data => {
-                    setAnalyzeResult(data);
-                },
-                    (error) => {
-                        // setError(error.message);
-                    })
-        }
+        loadAllOncoTestParams();
     }, [selectedAnayzeId])
 
     return (

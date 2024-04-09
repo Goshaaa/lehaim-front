@@ -38,9 +38,11 @@ function About() {
                                             aria-labelledby="headingOncology">
                                             <div className="accordion-body">
                                                 <ul>
-                                                    <li>Целесообразность применения для наблюдения за пациентами с раком легкого C50, C64, C43, Саркома Капоша, C18-20</li>
-                                                    <li>Докумменатция иммунокопрометации пациента</li>
-                                                    <li>Фиксация глубины и вида нарушения для реабилитации</li>
+                                                    <li>Выявляет и подтверждает иммунокомпрометацию пациента</li>
+                                                    <li>Фиксирует глубину и вид нарушения для иммунореабилитации</li>
+                                                    <li>Оценивает вид регенерации у пациента</li>
+                                                    <li>Формирует визуальный образ иммунологических нарушений пациента</li>
+                                                    <li>Предназначен для пациентов с ЗНО: С34, С50, С64, С43, С18-19, С20-21, С61 и С49 (саркома Капоши) до и в ходе терапии</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -62,9 +64,9 @@ function About() {
                                             aria-labelledby="headingHematology">
                                             <div className="accordion-body">
                                                 <ul>
-                                                    <li>Оценка степени регенерации пациента</li>
-                                                    <li>Прогноз осложнений для пересадки переферических стволовых клеток</li>
-                                                    <li>Мониторинг</li>
+                                                    <li>Подтверждает приживаемость трастплантата ПГСК</li>
+                                                    <li>Оценивает сохранность и/или вид иммуноповреждения после лечения</li>
+                                                    <li>Помогает определить векторность иммунологической коррекции</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -86,7 +88,32 @@ function About() {
                                             aria-labelledby="headingSurgery">
                                             <div className="accordion-body">
                                                 <ul>
-                                                    <li>Документирует риски послеоперационных осложнений (особенно после химио и лучевого компонента) </li>
+                                                    <li>Документирует прогноз и риск осложнений после первичного химио/лучевого лечения пациента</li>
+                                                    <li>Оценивает риск неблагоприятного исхода хирургического лечения</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="accordion-item">
+                                        <h2 className="accordion-header" id="headingTherapy">
+                                            <button className="accordion-button collapsed"
+                                                type="button"
+                                                data-bs-toggle="collapse"
+                                                data-bs-target="#collapseTherapy"
+                                                aria-expanded="false"
+                                                aria-controls="collapseTherapy">
+                                                Терапия
+                                            </button>
+                                        </h2>
+                                        <div id="collapseTherapy"
+                                            className="accordion-collapse collapse"
+                                            aria-labelledby="headingTherapy">
+                                            <div className="accordion-body">
+                                                <ul>
+                                                    <li>Помогает определить патологический элемент системной воспалительной реакции</li>
+                                                    <li>Проводит расчет параметров иммунограммы.(Расшифровка)</li>
+                                                    <li>Оценивает динамику изменений иммунитета в сезонах весна/осень</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -119,7 +146,6 @@ function About() {
                 </div>
             </div>
         </>
-
     )
 }
 

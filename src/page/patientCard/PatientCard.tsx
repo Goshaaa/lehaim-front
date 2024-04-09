@@ -10,7 +10,7 @@ import * as patientService from '../../services/PatientService';
 
 function PatientCard() {
     const [patient, setPatient] = useState<Patient | null>(null);
-    const [selectedAnalyzeId, setSelectedAnalyzeId] = useState("");
+    const [selectedAnalyzeId, setSelectedAnalyzeId] = useState<string|undefined>("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const { patientId } = useParams();
@@ -36,7 +36,7 @@ function PatientCard() {
     }, [patientId]);
 
 
-    const selectAnalyzeCallback: SelectAnalyzeCallback = (selectedAnalyzeId: string) => {
+    const selectAnalyzeCallback: SelectAnalyzeCallback = (selectedAnalyzeId?: string) => {
         setSelectedAnalyzeId(selectedAnalyzeId);
     }
 

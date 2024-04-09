@@ -31,7 +31,7 @@ interface PatientSearchParam {
 interface AnalyzesData {
     id?: number,
     testDate?: string,
-    paramMap: Map<string, number>;
+    results: Map<number, number>;
 }
 
 interface AnalyzeBriefInfo {
@@ -79,6 +79,7 @@ export enum ChartType {
     Cytokine_Type
 }
 
-interface SelectAnalyzeCallback { (analyzeId: string): void }
+interface SelectAnalyzeCallback { (analyzeId?: string | undefined): void }
 
-export type { Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter, CatalogData, CatalogItem, AnalyzesData };
+export type { Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter, CatalogData, 
+    CatalogItem, AnalyzesData };

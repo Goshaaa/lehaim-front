@@ -1,4 +1,4 @@
-import { Patient, PatientSearchParam, NotFoundError } from "../types/CommonTypes";
+import { Patient, PatientSearchParam, NotFoundError, AnalyzeBriefInfo, AnalyzesData } from "../types/CommonTypes";
 import { ApiHost } from "../config";
 
 export async function getPatientById(patientId: number): Promise<Patient> {
@@ -60,5 +60,70 @@ export async function searchPatient(searchParam: PatientSearchParam): Promise<Pa
         throw new NotFoundError("Пациент не найден");
     } else {
         throw new Error("Ошибка загрузки");
+    }
+}
+
+export async function listAllPatientOncoTests(patientId: number): Promise<AnalyzeBriefInfo[]> {
+    const response = await fetch(ApiHost + '/patients/' + patientId + "/test/all",
+        {
+            method: "GET"
+        }
+    );
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw Error("[" + response.status + "] Ошибка загрузики сведений об обследованиях пациента");
+    }
+}
+
+export async function addNewPatientOncoTest(patientId: number, oncoTestData: AnalyzesData) {
+    const payload = {
+        testDate: oncoTestData.testDate,
+        results: Array.from(oncoTestData.results)
+            .map(entry => {
+                return {
+                    "catalogId": entry[0],
+                    "value": entry[1]
+                }
+            })
+    }
+
+    const response = await fetch(ApiHost + "/patients/" + patientId + "/test/",
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        }
+    );
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw Error("[" + response.status + "] Ошибка сохранения сведений об обследовании");
+    }
+}
+
+export async function updatePatientOncoTest(patientId: number, oncoTestData: AnalyzesData) {
+    const payload = {
+        testDate: oncoTestData.testDate,
+        results: Array.from(oncoTestData.results)
+            .map(entry => {
+                return {
+                    "catalogId": entry[0],
+                    "value": entry[1]
+                }
+            })
+    }
+
+    const response = await fetch(ApiHost + "/patients/" + patientId + "/test/",
+        {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+        }
+    );
+    if (response.ok) {
+        return response.json();
+    } else {
+        throw Error("[" + response.status + "] Ошибка сохранения сведений об обследовании");
     }
 }

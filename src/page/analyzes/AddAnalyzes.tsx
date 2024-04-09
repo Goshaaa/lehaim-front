@@ -1,18 +1,24 @@
 import { useState, useEffect, FormEvent } from 'react';
 import Header from "../header/Header";
 import CatalogParamItem from './CatalogParamItem';
+import { useParams, useNavigate } from "react-router-dom";
 import { CatalogData, AnalyzesData } from '../../types/CommonTypes';
-import * as analyzesService from './AnalyzesService';
+import * as oncoTestService from '../../services/OncoTestSerive';
+import * as patientService from '../../services/PatientService';
 import { ChangeEvent } from 'react';
 
+
+
 function AddAnalyzes() {
+    const navigate = useNavigate();
     const [analyzesData, setAnalyzesData] = useState<AnalyzesData>({
         testDate: undefined,
-        paramMap: new Map()
+        results: new Map()
     })
     const [catalogData, setCatalogData] = useState<CatalogData | null>(null)
     const [isCatalogLoaded, setCatalogLoaded] = useState(false)
     const [loading, setLoading] = useState(false);
+    const { patientId } = useParams();
 
     useEffect(() => {
         requestCatalog();
@@ -20,7 +26,7 @@ function AddAnalyzes() {
 
     const requestCatalog = async () => {
         try {
-            const data = await analyzesService.loadAnalyzeCatalog();
+            const data = await oncoTestService.loadOncoTestCatalog();
             setCatalogLoaded(true);
             setCatalogData(data);
         } catch (err) {
@@ -36,14 +42,19 @@ function AddAnalyzes() {
 
     const handleParamChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        analyzesData.paramMap.set(name, Number(value));
-        console.log("analyzesData.paramMap " + JSON.stringify(Object.fromEntries(analyzesData.paramMap)));
+        analyzesData.results.set(Number(name), Number(value));
+        // console.log("analyzesData.paramMap " + JSON.stringify(Object.fromEntries(analyzesData.results)));
         setAnalyzesData(analyzesData);
     }
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
-        console.log("handle Submit for:  " + JSON.stringify(Object.fromEntries(analyzesData.paramMap)));
+        try {
+            await patientService.addNewPatientOncoTest(Number(patientId), analyzesData);
+            navigate("/patientCard/" + patientId);
+        } catch (err) {
+            setLoading(false);
+        }
     }
 
     return (
