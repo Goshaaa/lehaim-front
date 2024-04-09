@@ -20,7 +20,7 @@ function AnalyzesBlock({ selectAnalyzeCallback }: Props) {
                         selectAnalyzeCallback={selectAnalyzeCallback} />
 
                     <div className='mt-3'>
-                        <Link to={"/patient/" + patientId + "/addAnalyzes/"}>
+                        <Link to={"/patient/" + patientId + "/analyzes/"}>
                             <button type="button" className="btn btn-outline-secondary float-end">Добавить</button>
                         </Link>
                     </div>

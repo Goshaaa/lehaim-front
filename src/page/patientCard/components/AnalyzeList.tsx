@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
 import { AnalyzeBriefInfo, SelectAnalyzeCallback } from '../../../types/CommonTypes';
 import * as patientService from '../../../services/PatientService';
 import * as oncoTestService from '../../../services/OncoTestSerive';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
+
 
 interface Props {
     patientId: number,
@@ -16,6 +17,7 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
     const [oncoTests, setOncoTests] = useState<AnalyzeBriefInfo[]>([]);
     const [activeId, setActiveId] = useState<string>("");
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     const loadPatientOncoTests = async () => {
         setError("");
@@ -37,25 +39,28 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
     const handleClick = (id: string) => {
         setActiveId(id);
         selectAnalyzeCallback!!(id);
-        console.log("handleClick");
     }
 
     const handleDelete = async (event: React.MouseEvent, id: string) => {
+        event.preventDefault();
         event.stopPropagation();
         try {
             selectAnalyzeCallback!!();
-            //await oncoTestService.deleteOncoTest(Number(id));
+            await oncoTestService.deleteOncoTest(Number(id));
             const result = oncoTests.filter((item) => {
                 return item.id !== id
             });
             setOncoTests(result);
         } catch (err) {
             console.log(err);
-        }        
+        }
     }
 
     const handleEdit = (event: React.MouseEvent, id: string) => {
         console.log("handleEdit");
+        event.preventDefault();
+        event.stopPropagation();
+        navigate("/patient/" + patientId + "/analyzes/" + id);
     }
 
 
@@ -79,6 +84,7 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                                     icon={faEdit}
                                     role="button"
                                     title="Редактировать" />
+
                                 <FontAwesomeIcon
                                     className="ps-1"
                                     onClick={(event) => handleDelete(event, test.id!!)}

@@ -31,9 +31,7 @@ export async function deleteOncoTest(testId: number) {
             method: "DELETE"
         }
     );
-    if (response.ok) {
-        return response.json();
-    } else {
+    if (!response.ok) {
         throw Error("[" + response.status + "] Ошибка удаления сведений об обследовании");
     }
 }

@@ -28,6 +28,27 @@ interface PatientSearchParam {
     birthDate?: string | undefined,
 }
 
+interface ParameterResultRestDTO {
+    catalogId: number,
+    value?: number
+}
+
+interface OncologicalTestRestDTO {
+    id? : number,
+    testDate?: string,
+    results?: ParameterResultRestDTO[]
+}
+
+interface TestParamType {
+    [key: string]: number | undefined;
+}
+
+interface OncoTestData {
+    id?: number | undefined,
+    testDate?: string | undefined,
+    params: TestParamType
+}
+
 interface AnalyzesData {
     id?: number,
     testDate?: string,
@@ -82,4 +103,4 @@ export enum ChartType {
 interface SelectAnalyzeCallback { (analyzeId?: string | undefined): void }
 
 export type { Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter, CatalogData, 
-    CatalogItem, AnalyzesData };
+    CatalogItem, AnalyzesData, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO };
