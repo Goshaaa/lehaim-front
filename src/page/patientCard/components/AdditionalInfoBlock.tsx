@@ -1,6 +1,8 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import { Patient } from "../../../types/CommonTypes";
 import * as patientService from '../../../services/PatientService';
+import * as diagnosisService from '../../../services/DiagnosisService';
+import { DiagnosisDTO } from "../../../services/DiagnosisService";
 
 interface Props {
     patient: Patient;
@@ -13,6 +15,25 @@ function AdditionaInfolBlock({ patient }: Props) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
+    const [diagnosisCatalog, setDiagnosisCatalog] = useState<DiagnosisDTO[]>([]);
+
+    const loadDiagnosisCatalog = async () => {
+        setError("");
+        setLoading(true);
+        try {
+            const data = await diagnosisService.loadAllDiagnosis();
+            setDiagnosisCatalog(data);
+        } catch (err) {
+            setError("Ошибка загрузки: " + err);
+        }
+        setLoading(false);
+
+    }
+
+    useEffect(() => {
+        loadDiagnosisCatalog()
+    }, [diagnosisCatalog.length > 0]);
+
     const toggleEditMode = () => {
         if (editMode) {
             setChangePatient(sourcePatient);
@@ -20,7 +41,7 @@ function AdditionaInfolBlock({ patient }: Props) {
         setEditMode(!editMode);
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         setChangePatient(prevData => ({ ...prevData, [name]: value }))
     }
@@ -45,31 +66,81 @@ function AdditionaInfolBlock({ patient }: Props) {
         <>
             <div className="border border-secondary rounded-3 text-secondary p-3 clearfix">
                 <form onSubmit={handleSubmit} className="container-fluid">
-                    <div>
+                    <div className="mb-3">
                         <label htmlFor="mainDiagnosisArea"
                             className="fw-bold">Диагноз:</label>
                         <div className="mt-2">
-                            <textarea className="w-100"
+                            <select
                                 id="mainDiagnosisArea"
-                                name="mainDiagnosis"
-                                onChange={handleChange}
                                 disabled={!editMode}
-                                value={changePatient.mainDiagnosis ?? ""} />
+                                name="diagnosisId"
+                                className="w-100"
+                                value={changePatient.diagnosisId}
+                                onChange={handleChange}>
+                                {diagnosisCatalog?.map((diag) =>
+                                    <option value={diag.id}>
+                                        {diag.code + " - " + diag.description}
+                                    </option>
+                                )}
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div className="row mb-2 mt-2">
+                        <div className="col">
+                            <label htmlFor="TArea"
+                                className="fw-bold  me-3">T:</label>
+                            <select
+                                id="TArea"
+                                disabled={!editMode}
+                                name="t"
+                                value={changePatient.t}
+                                onChange={handleChange}>
+                                <option value="0">0</option>
+                                <option value="X">Х</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                            </select>
+                        </div>
+
+                        <div className="col">
+                            <label htmlFor="NArea"
+                                className="fw-bold me-3">N:</label>
+                            <select
+                                id="NArea"
+                                disabled={!editMode}
+                                name="n"
+                                value={changePatient.n}
+                                onChange={handleChange}>
+                                <option value="0">0</option>
+                                <option value="X">Х</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+
+                        <div className="col">
+                            <label htmlFor="MArea"
+                                className="fw-bold  me-3">M:</label>
+                            <select
+                                id="MArea"
+                                disabled={!editMode}
+                                name="m"
+                                value={changePatient.m}
+                                onChange={handleChange}
+                            >
+                                <option value="0">0</option>
+                                <option value="X">Х</option>
+                                <option value="1">1</option>
+                            </select>
                         </div>
                     </div>
 
-                    <div>
-                        <label htmlFor="additionalDiagnosisArea"
-                            className="fw-bold">Дополнительный диагноз:</label>
-                        <div className="mt-2">
-                            <textarea className="w-100"
-                                id="additionalDiagnosisArea"
-                                name="otherDiagnosis"
-                                onChange={handleChange}
-                                disabled={!editMode}
-                                value={changePatient.otherDiagnosis ?? ""} />
-                        </div>
-                    </div>
+
 
                     <div>
                         <label htmlFor="diagnosisArea"

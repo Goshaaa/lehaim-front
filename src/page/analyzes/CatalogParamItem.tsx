@@ -28,6 +28,7 @@ function CatalogParamItem({ param, value, onChange }: Props) {
             <input
                 name={param.id.toString()}
                 onChange={onChange}
+                step="0.01" min="0" max="1000"
                 className="col-12 col-md-8 mb-2"
                 value={value ?? ""}
                 type='number' />

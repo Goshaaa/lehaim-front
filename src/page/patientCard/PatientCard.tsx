@@ -27,7 +27,6 @@ function PatientCard() {
                 setError("Ошибка загрузки: " + err);
             }
             setLoading(false);
-            
         }
     }
 

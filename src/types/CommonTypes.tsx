@@ -4,12 +4,15 @@ interface Patient {
     lastname: string,
     patronymic: string,
     birthdate: string,
+    diagnosisId?: number,
+    info?: string,
     gender?: string,
-    mainDiagnosis?: string,
-    otherDiagnosis?: string,
     diagnosisComments?: string,
     operationComments?: string,
-    chemotherapyComments?: string
+    chemotherapyComments?: string,
+    m?: string,
+    n?: string,
+    t?: string
 }
 
 export function getEmptyPatient(): Patient {
