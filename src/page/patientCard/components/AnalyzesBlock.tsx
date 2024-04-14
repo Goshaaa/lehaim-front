@@ -12,7 +12,7 @@ function AnalyzesBlock({ selectAnalyzeCallback }: Props) {
 
     return (
         <div className="container-lg border border-secondary rounded-3 text-secondary p-3 mb-3 clearfix">
-            <h3 className="text-center mb-3">Список результатов анализов</h3>
+            <h3 className="text-center mb-3">Список обследований</h3>
             {patientId &&
                 <>
                     <AnalyzeList

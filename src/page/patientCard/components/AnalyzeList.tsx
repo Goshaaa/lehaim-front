@@ -75,7 +75,7 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                         onClick={() => handleClick(test.id!!)}>
                         <div className='d-flex justify-content-between'>
                             <div>
-                                Результаты от {test.testDate}
+                                Обследование от {test.testDate}
                             </div>
                             <div>
                                 <FontAwesomeIcon

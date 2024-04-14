@@ -22,6 +22,7 @@ function EditAnalyzes() {
     const [catalogData, setCatalogData] = useState<CatalogData | null>(null);
     const [isDataLoaded, setDataLoaded] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
     const { patientId, testId } = useParams();
 
     useEffect(() => {
@@ -33,28 +34,23 @@ function EditAnalyzes() {
             const data = await oncoTestService.loadOncoTestCatalog();
             setCatalogData(data);
         } catch (err) {
-            setLoading(false);
             setCatalogData(null);
         }
     }
 
     const requestOncoTestData = async () => {
         try {
-            // const data = await oncoTestService.getAllOncoTestParams(Number(testId));
             const data = await patientService.getPatientOncoTest(Number(patientId), Number(testId));
             oncoTestData.id = Number(data.id);
             oncoTestData.testDate = data.testDate;
             data.results?.forEach((result) => {
                 oncoTestData.params[result.catalogId] = result.value;
-                
+
             });
-            // data.forEach((item) => {
-            //     oncoTestData.params[item.id!!] = item.value;
-            // })
-            
+
             setOncoTestData(oncoTestData);
-        } catch(err) {
-            console.error("Unable to load data");
+        } catch (err) {
+            setError("Не удалось загрузить результаты обследования");
         }
 
     }
@@ -83,7 +79,9 @@ function EditAnalyzes() {
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
+        setError("")
         try {
+            setLoading(true);
             if (oncoTestData.id) {
                 await patientService.editPatientOncoTestData(Number(patientId), oncoTestData);
             } else {
@@ -91,8 +89,9 @@ function EditAnalyzes() {
             }
             navigate("/patientCard/" + patientId);
         } catch (err) {
-            setLoading(false);
+            setError("" + err);
         }
+        setLoading(false);
     }
 
     const getPageTitle = () => {
@@ -224,18 +223,29 @@ function EditAnalyzes() {
                             </div>
                         </div>
 
-                        <div className="d-flex justify-content-end">
-                            <div>
-                                <button
-                                    type="submit"
-                                    className="btn btn-outline-success"
-                                    disabled={loading}>
-                                    {loading &&
-                                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                    }
-                                    Сохранить
-                                </button>
+                        {error &&
+                            <div className="alert alert-danger" role="alert">
+                                {error}
                             </div>
+                        }
+
+                        <div className="d-flex justify-content-end">
+                            <button
+                                type="submit"
+                                className="btn btn-outline-success me-3"
+                                disabled={loading}>
+                                {loading &&
+                                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                }
+                                Сохранить
+                            </button>
+                            <button
+                                type="button"
+                                className="btn btn-outline-secondary"
+                                onClick={() => navigate("/patientCard/" + patientId)}
+                                disabled={loading}>
+                                Отмена
+                            </button>
                         </div>
                     </form>
                 </div>

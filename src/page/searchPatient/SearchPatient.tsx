@@ -95,26 +95,22 @@ function SearchPatient() {
                                     </div>
                                 }
 
-                                <div className="d-flex justify-content-between">
-                                    <div>
-                                        <button
-                                            type="button"
-                                            className="btn btn-outline-success"
-                                            onClick={() => {navigate("/addPatient/")}}>
-                                            Добавить пациента
-                                        </button>
-                                    </div>
-                                    <div>
-                                        <button
-                                            type="submit"
-                                            className="btn btn-outline-secondary"
-                                            disabled={loading}>
-                                            {loading &&
-                                                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                            }
-                                            Поиск
-                                        </button>
-                                    </div>
+                                <div className="d-flex justify-content-end">
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-success me-3"
+                                        onClick={() => { navigate("/addPatient/") }}>
+                                        Добавить пациента
+                                    </button>
+                                    <button
+                                        type="submit"
+                                        className="btn btn-outline-secondary"
+                                        disabled={loading}>
+                                        {loading &&
+                                            <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                        }
+                                        Поиск
+                                    </button>
                                 </div>
                             </form>
                         </div>

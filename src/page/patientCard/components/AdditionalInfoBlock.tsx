@@ -74,9 +74,12 @@ function AdditionaInfolBlock({ patient }: Props) {
                                 id="mainDiagnosisArea"
                                 disabled={!editMode}
                                 name="diagnosisId"
-                                className="w-100"
+                                className="container-fluid"
                                 value={changePatient.diagnosisId}
                                 onChange={handleChange}>
+                                {!sourcePatient.diagnosisId &&
+                                    <option>-</option>
+                                }
                                 {diagnosisCatalog?.map((diag) =>
                                     <option value={diag.id}>
                                         {diag.code + " - " + diag.description}
@@ -87,16 +90,17 @@ function AdditionaInfolBlock({ patient }: Props) {
 
                     </div>
 
-                    <div className="row mb-2 mt-2">
-                        <div className="col">
+                    <div className="d-flex justify-content-between">
+                        <div>
                             <label htmlFor="TArea"
-                                className="fw-bold  me-3">T:</label>
+                                className="fw-bold me-3">T:</label>
                             <select
                                 id="TArea"
                                 disabled={!editMode}
                                 name="t"
                                 value={changePatient.t}
                                 onChange={handleChange}>
+                                <option value="">-</option>
                                 <option value="0">0</option>
                                 <option value="X">Х</option>
                                 <option value="1">1</option>
@@ -106,7 +110,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                             </select>
                         </div>
 
-                        <div className="col">
+                        <div>
                             <label htmlFor="NArea"
                                 className="fw-bold me-3">N:</label>
                             <select
@@ -115,6 +119,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                                 name="n"
                                 value={changePatient.n}
                                 onChange={handleChange}>
+                                <option value="">-</option>
                                 <option value="0">0</option>
                                 <option value="X">Х</option>
                                 <option value="1">1</option>
@@ -123,16 +128,17 @@ function AdditionaInfolBlock({ patient }: Props) {
                             </select>
                         </div>
 
-                        <div className="col">
+                        <div>
                             <label htmlFor="MArea"
                                 className="fw-bold  me-3">M:</label>
                             <select
                                 id="MArea"
                                 disabled={!editMode}
                                 name="m"
-                                value={changePatient.m}
+                                value={changePatient.m ?? ""}
                                 onChange={handleChange}
                             >
+                                <option value="">-</option>
                                 <option value="0">0</option>
                                 <option value="X">Х</option>
                                 <option value="1">1</option>

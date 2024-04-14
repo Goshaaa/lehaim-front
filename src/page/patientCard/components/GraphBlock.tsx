@@ -34,7 +34,7 @@ function GraphBlock({ selectedAnayzeId }: Props) {
         <div className="container-lg border border-secondary rounded-3 text-secondary p-3 mb-3 clearfix">
             <h3 className="text-center m-3">Графики</h3>
             {analyzeResult.length === 0
-                ? <h5 className="text-center m-3">Не выбраны результаты анализов, по которым построить графики</h5>
+                ? <h5 className="text-center m-3">Не выбрано обследование, по которому построить графики</h5>
                 : <div>
                     <div className='container'>
                         <RadarChat

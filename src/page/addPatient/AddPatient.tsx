@@ -105,23 +105,28 @@ function AddPatient() {
                                 }
 
                                 <div className="d-flex justify-content-end">
-                                    <div>
-                                        <button
-                                            type="submit"
-                                            className="btn btn-outline-secondary"
-                                            disabled={loading}>
-                                            {loading &&
-                                                <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                                            }
-                                            Сохранить
-                                        </button>
-                                    </div>
+                                    <button
+                                        type="submit"
+                                        className="btn btn-outline-success me-3"
+                                        disabled={loading}>
+                                        {loading &&
+                                            <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                        }
+                                        Сохранить
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="btn btn-outline-secondary"
+                                        onClick={() => navigate("/searhPatient/")}
+                                        disabled={loading}>
+                                        Отмена
+                                    </button>
                                 </div>
                             </form>
                         </div>
                     </div>
-                </div>
-            </div>
+                </div >
+            </div >
         </>
     );
 }
