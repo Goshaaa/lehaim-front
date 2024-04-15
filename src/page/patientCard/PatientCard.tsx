@@ -21,7 +21,7 @@ function PatientCard() {
 
         if (patientId) {
             try {
-                const data = await patientService.getPatientById(Number(patientId));
+                const data = await patientService.getPatientById(patientId);
                 setPatient(data);
             } catch (err) {
                 setError("Ошибка загрузки: " + err);

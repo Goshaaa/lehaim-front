@@ -24,7 +24,7 @@ function SearchPatient() {
 
         try {
             const data = await patientService.searchPatient(searchData);
-            navigate("/patientCard/" + data.id);
+            navigate("/patient/" + data.id);
         } catch (err) {
             if (err instanceof NotFoundError) {
                 setError(err.message);
@@ -33,6 +33,14 @@ function SearchPatient() {
             }
         }
         setLoading(false);
+    }
+
+    const handleClickAddNew = () => {
+        navigate("/addPatient?firstName=" + (searchData.firstName ?? "") +
+         "&lastName=" + (searchData.lastName ?? "") + 
+         "&middleName=" + (searchData.patronymic ?? "") + 
+         "&birthDate=" + (searchData.birthDate ?? "")
+        );
     }
 
     return (
@@ -99,7 +107,7 @@ function SearchPatient() {
                                     <button
                                         type="button"
                                         className="btn btn-outline-success me-3"
-                                        onClick={() => { navigate("/addPatient/") }}>
+                                        onClick={handleClickAddNew}>
                                         Добавить пациента
                                     </button>
                                     <button

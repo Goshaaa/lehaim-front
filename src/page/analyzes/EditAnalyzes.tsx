@@ -8,10 +8,6 @@ import * as patientService from '../../services/PatientService';
 import { ChangeEvent } from 'react';
 
 
-interface ParamType {
-    [key: string]: number;
-}
-
 function EditAnalyzes() {
     const navigate = useNavigate();
 
@@ -40,7 +36,7 @@ function EditAnalyzes() {
 
     const requestOncoTestData = async () => {
         try {
-            const data = await patientService.getPatientOncoTest(Number(patientId), Number(testId));
+            const data = await patientService.getPatientOncoTest(patientId!!, Number(testId));
             oncoTestData.id = Number(data.id);
             oncoTestData.testDate = data.testDate;
             data.results?.forEach((result) => {
@@ -83,11 +79,11 @@ function EditAnalyzes() {
         try {
             setLoading(true);
             if (oncoTestData.id) {
-                await patientService.editPatientOncoTestData(Number(patientId), oncoTestData);
+                await patientService.editPatientOncoTestData(patientId!!, oncoTestData);
             } else {
-                await patientService.addNewPatientOncoTestData(Number(patientId), oncoTestData);
+                await patientService.addNewPatientOncoTestData(patientId!!, oncoTestData);
             }
-            navigate("/patientCard/" + patientId);
+            navigate("/patient/" + patientId);
         } catch (err) {
             setError("" + err);
         }
@@ -242,7 +238,7 @@ function EditAnalyzes() {
                             <button
                                 type="button"
                                 className="btn btn-outline-secondary"
-                                onClick={() => navigate("/patientCard/" + patientId)}
+                                onClick={() => navigate("/patient/" + patientId)}
                                 disabled={loading}>
                                 Отмена
                             </button>

@@ -16,7 +16,7 @@ function AnalyzesBlock({ selectAnalyzeCallback }: Props) {
             {patientId &&
                 <>
                     <AnalyzeList
-                        patientId={Number(patientId)}
+                        patientId={patientId}
                         selectAnalyzeCallback={selectAnalyzeCallback} />
 
                     <div className='mt-3'>

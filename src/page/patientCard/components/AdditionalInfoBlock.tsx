@@ -75,13 +75,13 @@ function AdditionaInfolBlock({ patient }: Props) {
                                 disabled={!editMode}
                                 name="diagnosisId"
                                 className="container-fluid"
-                                value={changePatient.diagnosisId}
+                                value={changePatient.diagnosisId ?? ""}
                                 onChange={handleChange}>
                                 {!sourcePatient.diagnosisId &&
                                     <option>-</option>
                                 }
                                 {diagnosisCatalog?.map((diag) =>
-                                    <option value={diag.id}>
+                                    <option value={diag.id} key={diag.id}>
                                         {diag.code + " - " + diag.description}
                                     </option>
                                 )}
@@ -98,7 +98,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                                 id="TArea"
                                 disabled={!editMode}
                                 name="t"
-                                value={changePatient.t}
+                                value={changePatient.t ?? ""}
                                 onChange={handleChange}>
                                 <option value="">-</option>
                                 <option value="0">0</option>
@@ -117,7 +117,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                                 id="NArea"
                                 disabled={!editMode}
                                 name="n"
-                                value={changePatient.n}
+                                value={changePatient.n ?? ""}
                                 onChange={handleChange}>
                                 <option value="">-</option>
                                 <option value="0">0</option>

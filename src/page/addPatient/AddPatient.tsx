@@ -1,12 +1,20 @@
-import { FormEvent, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { FormEvent, useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Header from "../header/Header";
-import { Patient, getEmptyPatient } from "../../types/CommonTypes";
+import { Patient } from "../../types/CommonTypes";
 import * as patientService from '../../services/PatientService';
 
+
 function AddPatient() {
+    let [searchParams] = useSearchParams();
     const navigate = useNavigate();
-    const [patient, setPatient] = useState<Patient>(getEmptyPatient());
+    const [patient, setPatient] = useState<Patient>({
+        name: searchParams.get('firstName') ?? "",
+        lastname: searchParams.get('lastName') ?? "",
+        patronymic: searchParams.get('middleName') ?? "",
+        birthdate: searchParams.get('birthDate') ?? ""
+    });
+
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
@@ -17,7 +25,7 @@ function AddPatient() {
 
         try {
             const data = await patientService.saveNewPatient(patient);
-            navigate("/patientCard/" + data.id);
+            navigate("/patient/" + data.id);
         } catch (err) {
             setError("Ошибка сохранения: " + err);
         }
@@ -46,6 +54,7 @@ function AddPatient() {
                                         autoComplete="off"
                                         maxLength={40}
                                         name="lastname"
+                                        value={patient.lastname}
                                         onChange={handleChange}
                                         className="form-control" />
                                 </div>
@@ -58,6 +67,7 @@ function AddPatient() {
                                         autoComplete="off"
                                         maxLength={40}
                                         name="name"
+                                        value={patient.name}
                                         onChange={handleChange}
                                         className="form-control" />
                                 </div>
@@ -69,6 +79,7 @@ function AddPatient() {
                                         maxLength={40}
                                         autoComplete="off"
                                         name="patronymic"
+                                        value={patient.patronymic}
                                         onChange={handleChange}
                                         className="form-control" />
                                 </div>
@@ -81,6 +92,7 @@ function AddPatient() {
                                         autoComplete="off"
                                         maxLength={40}
                                         name="birthdate"
+                                        value={patient.birthdate}
                                         onChange={handleChange}
                                         className="form-control" />
                                 </div>
