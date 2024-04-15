@@ -26,6 +26,8 @@ function getOptions(data: AnalyzeDetailedInfo[], chartType: ChartType) {
         return getTOption(filterForTChart(data));
     } else if (ChartType.Cytokine_Type === chartType) {
         return getCytokineOption(filterForCytokineChart(data));
+    } else if (ChartType.Regeneration_Type === chartType) {
+        return getRegenerationOption(filterForRegenerationChart(data));
     }
     return null;
 }
@@ -59,15 +61,28 @@ function getTOption(data: ChartDataParams) {
 
 function getCytokineOption(data: ChartDataParams) {
     let scale = 1.2;
-    let maxValue = Math.max(...data.min, ...data.values, ...data.max)
-    let chartTitle = 'Цитокиновые пары'
+    let maxValue = Math.max(...data.min, ...data.values, ...data.max);
+    let chartTitle = 'Цитокиновые пары';
     let radarIndicator: Indicator[] = [
         { name: 'ФНО', max: maxValue * scale },
         { name: 'Интерферон гамма', max: maxValue * scale },
         { name: 'Интерлейкин 2', max: maxValue * scale },
-    ]
+    ];
 
-    let option = getBaseOption(chartTitle, radarIndicator, data)
+    let option = getBaseOption(chartTitle, radarIndicator, data);
+    return option;
+}
+
+function getRegenerationOption(data: ChartDataParams) {
+    let maxValue = Math.max(...data.min, ...data.values, ...data.max);
+    let chartTitle = 'Расчет вида регенерации';
+    let radarIndicator = [
+        { name: 'NEU/MON', max: maxValue },
+        { name: 'NEU/LYMF', max: maxValue },
+        { name: 'LYMF/MON', max: maxValue },
+    ];
+
+    let option = getBaseOption(chartTitle, radarIndicator, data);
     return option
 }
 
@@ -203,6 +218,25 @@ function filterForCytokineChart(results: AnalyzeDetailedInfo[]): ChartDataParams
     }
 }
 
+function filterForRegenerationChart(results: AnalyzeDetailedInfo[]): ChartDataParams {
+    let NEU = getValueAndParambyAddName(results, "NEU");
+    let MON = getValueAndParambyAddName(results, "MON");
+    let LYMF = getValueAndParambyAddName(results, "LYMF");
+
+
+    let NEUdivMON = divide(NEU, MON);
+    let NEUdivLYMF = divide(NEU, LYMF);
+    let LYMFdivMON = divide(LYMF, MON);
+
+    let mins = [10, 1.67, 6];
+    let max = [180, 1.8, 100];
+    let values = [NEUdivMON.value, NEUdivLYMF.value, LYMFdivMON.value];
+    return {
+        min: mins,
+        max: max,
+        values: values
+    }
+}
 
 function getValueAndParambyAddName(results: AnalyzeDetailedInfo[], param: string): ChartDataParam {
     if (results !== null) {

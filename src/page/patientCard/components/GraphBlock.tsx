@@ -54,6 +54,12 @@ function GraphBlock({ selectedAnayzeId }: Props) {
                             data={analyzeResult}
                         />
                     </div>
+                    <div className='container'>
+                        <RadarChat
+                            chartType={ChartType.Regeneration_Type}
+                            data={analyzeResult}
+                        />
+                    </div>
                 </div>
             }
         </div>

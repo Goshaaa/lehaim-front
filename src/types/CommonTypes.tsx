@@ -100,7 +100,8 @@ export class NotFoundError extends Error {}
 export enum ChartType {
     B_Type,
     T_Type,
-    Cytokine_Type
+    Cytokine_Type,
+    Regeneration_Type
 }
 
 interface SelectAnalyzeCallback { (analyzeId?: string | undefined): void }

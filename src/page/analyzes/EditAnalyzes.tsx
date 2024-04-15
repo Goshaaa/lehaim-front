@@ -41,7 +41,6 @@ function EditAnalyzes() {
             oncoTestData.testDate = data.testDate;
             data.results?.forEach((result) => {
                 oncoTestData.params[result.catalogId] = result.value;
-
             });
 
             setOncoTestData(oncoTestData);
