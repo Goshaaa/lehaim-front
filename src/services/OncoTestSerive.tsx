@@ -1,9 +1,9 @@
 import { AnalyzeDetailedInfo } from "../types/CommonTypes";
 import { ApiHost } from "../config";
-import { CatalogData } from '../types/CommonTypes';
+import { CatalogItem } from '../types/CommonTypes';
 
-export async function loadOncoTestCatalog(): Promise<CatalogData> {
-    const response = await fetch(ApiHost + '/catalog/all/grouped', { method: "GET" });
+export async function loadOncoTestCatalog(): Promise<CatalogItem[]> {
+    const response = await fetch(ApiHost + '/catalog/all', { method: "GET" });
     if (response.ok) {
         return await response.json();
     } else {

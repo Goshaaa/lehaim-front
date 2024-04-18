@@ -1,11 +1,11 @@
-import { useState, useEffect, FormEvent } from 'react';
+import { useState, useEffect, FormEvent, ChangeEvent } from 'react';
+import { useParams, useNavigate } from "react-router-dom";
 import Header from "../header/Header";
 import CatalogParamItem from './CatalogParamItem';
-import { useParams, useNavigate } from "react-router-dom";
-import { CatalogData, TestParamType, OncoTestData } from '../../types/CommonTypes';
+import { CatalogItem, AnalyzeDetailedInfo, OncoTestData, ChartType } from '../../types/CommonTypes';
 import * as oncoTestService from '../../services/OncoTestSerive';
 import * as patientService from '../../services/PatientService';
-import { ChangeEvent } from 'react';
+import RadarChat from '../chart/RadarChart';
 
 
 function EditAnalyzes() {
@@ -15,7 +15,9 @@ function EditAnalyzes() {
         params: {}
     });
 
-    const [catalogData, setCatalogData] = useState<CatalogData | null>(null);
+    const [analyzeResult, setAnalyzeResult] = useState<AnalyzeDetailedInfo[]>([]); //Для построения графика
+
+    const [catalogData, setCatalogData] = useState<CatalogItem[] | null>(null);
     const [isDataLoaded, setDataLoaded] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -34,7 +36,7 @@ function EditAnalyzes() {
         }
     }
 
-    const requestOncoTestData = async () => {
+    const requestPatientOncoTestData = async () => {
         try {
             const data = await patientService.getPatientOncoTest(patientId!!, Number(testId));
             oncoTestData.id = Number(data.id);
@@ -47,20 +49,19 @@ function EditAnalyzes() {
         } catch (err) {
             setError("Не удалось загрузить результаты обследования");
         }
-
+        mapCatalogDataToAnalyzeResult();
     }
 
     const loadAllData = async () => {
         await requestCatalog();
         if (testId) {
-            await requestOncoTestData();
+            await requestPatientOncoTestData();
         }
         setDataLoaded(true);
     }
 
     const handleTestDateChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        console.log("handleTestDateChange " + name + " " + value);
         setOncoTestData(prevData => ({ ...prevData, [name]: value }))
     }
 
@@ -70,6 +71,7 @@ function EditAnalyzes() {
             ...prevData,
             ...{ "params": { ...oncoTestData.params, ...{ [name]: Number(value) } } }
         }));
+        updateAnalyzeResultValues();
     }
 
     const handleSubmit = async (event: FormEvent) => {
@@ -97,6 +99,26 @@ function EditAnalyzes() {
         }
     }
 
+    const mapCatalogDataToAnalyzeResult = () => {
+        const data = new Array<AnalyzeDetailedInfo>;
+        catalogData?.forEach(catalogItem => {
+            data.push({
+                value: oncoTestData.params[catalogItem.id] ?? 0,
+                parameter: catalogItem
+            });
+        })
+        setAnalyzeResult(data);
+    }
+
+    const updateAnalyzeResultValues = () => {
+        console.log("updateAnalyzeResultValues");
+        const data = analyzeResult.map(item => ({ ...item }));
+        data.forEach(result => {
+            result.value = oncoTestData.params[result.parameter!!.id!!] ?? 0;
+        })
+        setAnalyzeResult(data);
+    }
+
     return (
         <>
             <Header title={getPageTitle()}></Header>
@@ -119,6 +141,7 @@ function EditAnalyzes() {
                                 onChange={handleTestDateChange}
                                 className="form-control" />
                         </div>
+
                         <div className='mb-3'>
                             <label htmlFor="testDate" className="form-label fw-bold">Результаты</label>
 
@@ -134,21 +157,35 @@ function EditAnalyzes() {
                                             Результаты гематологического исследования
                                         </button>
                                     </h2>
+
                                     <div id="flush-collapseHematological"
                                         className="accordion-collapse collapse"
                                         aria-labelledby="flush-Hematological"
                                         data-bs-parent="#accordionTestsFlush">
                                         <div className="accordion-body">
                                             <div className='row'>
-                                                {catalogData && catalogData.Hematological
-                                                    .map(param =>
-                                                        <CatalogParamItem
-                                                            key={param.id}
-                                                            onChange={handleParamChange}
-                                                            param={param}
-                                                            value={oncoTestData.params[param.id]}
-                                                        />
-                                                    )}
+                                                <div className="col-sm-12 col-md-6 col-lg-4">
+                                                    {catalogData && catalogData
+                                                        .filter(item => item.researchType === 'Hematological')
+                                                        .map(param =>
+                                                            <CatalogParamItem
+                                                                key={param.id}
+                                                                onChange={handleParamChange}
+                                                                param={param}
+                                                                value={oncoTestData.params[param.id]}
+                                                            />
+                                                        )}
+                                                </div>
+                                                <div className="col-sm-12 col-md-6 col-lg-8">
+                                                    <RadarChat
+                                                        chartType={ChartType.B_Type}
+                                                        data={analyzeResult}
+                                                    />
+                                                    <RadarChat
+                                                        chartType={ChartType.Regeneration_Type}
+                                                        data={analyzeResult}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -171,15 +208,24 @@ function EditAnalyzes() {
                                         data-bs-parent="#accordionTestsFlush">
                                         <div className="accordion-body">
                                             <div className='row'>
-                                                {catalogData && catalogData.Immunological
-                                                    .map(param =>
-                                                        <CatalogParamItem
-                                                            key={param.id}
-                                                            onChange={handleParamChange}
-                                                            param={param}
-                                                            value={oncoTestData.params[param.id]}
-                                                        />
-                                                    )}
+                                                <div className="col-sm-12 col-md-6 col-lg-4">
+                                                    {catalogData && catalogData
+                                                        .filter(item => item.researchType === 'Immunological')
+                                                        .map(param =>
+                                                            <CatalogParamItem
+                                                                key={param.id}
+                                                                onChange={handleParamChange}
+                                                                param={param}
+                                                                value={oncoTestData.params[param.id]}
+                                                            />
+                                                        )}
+                                                </div>
+                                                <div className="col-sm-12  col-md-6 col-lg-8">
+                                                    <RadarChat
+                                                        chartType={ChartType.T_Type}
+                                                        data={analyzeResult}
+                                                    />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -202,15 +248,25 @@ function EditAnalyzes() {
                                         data-bs-parent="#accordionTestsFlush">
                                         <div className="accordion-body">
                                             <div className='row'>
-                                                {catalogData && catalogData.Cytokine
-                                                    .map(param =>
-                                                        <CatalogParamItem
-                                                            key={param.id}
-                                                            onChange={handleParamChange}
-                                                            param={param}
-                                                            value={oncoTestData.params[param.id]}
-                                                        />
-                                                    )}
+                                                <div className="col-sm-12 col-md-6 col-lg-4">
+                                                    {catalogData && catalogData
+                                                        .filter(item => item.researchType === 'Cytokine')
+                                                        .map(param =>
+                                                            <CatalogParamItem
+                                                                key={param.id}
+                                                                onChange={handleParamChange}
+                                                                param={param}
+                                                                value={oncoTestData.params[param.id]}
+                                                            />
+                                                        )}
+                                                </div>
+                                                <div className="col-sm-12  col-md-6 col-lg-8">
+                                                    <RadarChat
+                                                        chartType={ChartType.Cytokine_Type}
+                                                        data={analyzeResult}
+                                                    />
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>

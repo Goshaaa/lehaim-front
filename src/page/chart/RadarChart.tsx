@@ -21,13 +21,17 @@ function RadarChat({ chartType, data }: Props) {
         <>
             {options
                 ?
-                <ReactECharts
-                    option={options}
-                    notMerge={true}
-                    lazyUpdate={true}
-                    theme={"theme_name"}
-                    style={{ height: '800px', width: '100%' }}
-                />
+                <div>
+                    <h4 className='text-center'>{options.title.text}</h4>
+                    <ReactECharts
+                        option={options}
+                        notMerge={true}
+                        lazyUpdate={true}
+                        theme={"theme_name"}
+                        style={{ height: '650px', width: '100%' }}
+                    />
+                </div>
+
                 : null
             }
         </>

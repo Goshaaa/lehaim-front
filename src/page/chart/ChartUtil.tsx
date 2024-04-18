@@ -74,12 +74,15 @@ function getCytokineOption(data: ChartDataParams) {
 }
 
 function getRegenerationOption(data: ChartDataParams) {
-    let maxValue = Math.max(...data.min, ...data.values, ...data.max);
+    let upAxisMaxValue = Math.max(data.min[0], data.values[0], data.max[0]);
+    let rightAxisMaxValue = Math.max(data.min[1], data.values[1], data.max[1]);
+    let leftAxisMaxValue = Math.max(data.min[2], data.values[2], data.max[2]);
+
     let chartTitle = 'Расчет вида регенерации';
-    let radarIndicator = [
-        { name: 'NEU/MON', max: maxValue },
-        { name: 'NEU/LYMF', max: maxValue },
-        { name: 'LYMF/MON', max: maxValue },
+    let radarIndicator: Indicator[] = [
+        { name: 'NEU/MON', max: upAxisMaxValue },
+        { name: 'NEU/LYMF', max: rightAxisMaxValue },
+        { name: 'LYMF/MON', max: leftAxisMaxValue },
     ];
 
     let option = getBaseOption(chartTitle, radarIndicator, data);
@@ -89,7 +92,7 @@ function getRegenerationOption(data: ChartDataParams) {
 function getBaseOption(chartTitle: string, indicator: Indicator[], params: ChartDataParams) {
     return {
         title: {
-            left: 'center',
+            show: false,
             text: chartTitle
         },
         tooltip: {

@@ -11,8 +11,8 @@ interface Props {
 function CatalogParamItem({ param, value, onChange }: Props) {
 
     return (
-        <div className="col-sm-12 col-md-6 col-lg-4 p-1 text-secondary">
-            <div className="d-flex justify-content-start col-sm-10 col-md-8">
+        <div className="p-1 text-secondary">
+            <div className="d-flex justify-content-start col-12">
                 <div className="text-truncate "
                     title={param.name + " " + param.unit}>
                     {param.name}, {param.unit}
@@ -29,7 +29,7 @@ function CatalogParamItem({ param, value, onChange }: Props) {
                 name={param.id.toString()}
                 onChange={onChange}
                 step="0.01" min="0" max="1000"
-                className="col-12 col-md-8 mb-2"
+                className="col-12 mb-2"
                 value={value ?? ""}
                 type='number' />
         </div>

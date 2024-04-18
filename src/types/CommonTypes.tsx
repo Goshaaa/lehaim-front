@@ -89,7 +89,7 @@ interface CatalogItem {
     researchType: string
 }
 
-interface CatalogData {
+interface GroupedCatalogData {
     Cytokine: CatalogItem[],
     Immunological: CatalogItem[],
     Hematological: CatalogItem[]
@@ -106,5 +106,5 @@ export enum ChartType {
 
 interface SelectAnalyzeCallback { (analyzeId?: string | undefined): void }
 
-export type { Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter, CatalogData, 
+export type { Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter,
     CatalogItem, AnalyzesData, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO };

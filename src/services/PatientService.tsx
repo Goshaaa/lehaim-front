@@ -117,7 +117,6 @@ export async function addNewPatientOncoTestData(patientId: string, oncoTestData:
 }
 
 export async function editPatientOncoTestData(patientId: string, oncoTestData: OncoTestData) {
-    console.log("editPatientOncoTestData");
     const payload = {
         testDate: oncoTestData.testDate,
         results: Object.entries(oncoTestData.params)
