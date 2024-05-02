@@ -73,7 +73,7 @@ function AddPatient() {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setPatient(prevData => ({ ...prevData, [name]: value }))
+        setPatient(prevData => ({ ...prevData, [name]: value.trim() }));
     }
 
     return (
