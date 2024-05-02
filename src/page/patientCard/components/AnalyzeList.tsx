@@ -109,13 +109,6 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                                     role="button"
                                     title="Редактировать" />
 
-                                {/* <FontAwesomeIcon
-                                    className="ps-1"
-                                    onClick={(event) => handleDelete(event, test.id!!)}
-                                    icon={faTrash}
-                                    role="button"
-                                    title="Удалить" /> */}
-
                                 <FontAwesomeIcon
                                     className="ps-1"
                                     data-bs-toggle="modal" data-bs-target="#confirmationModal"

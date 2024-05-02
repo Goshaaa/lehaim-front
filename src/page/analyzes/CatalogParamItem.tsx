@@ -1,6 +1,4 @@
 import { CatalogItem } from "../../types/CommonTypes";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 import { ChangeEventHandler } from "react";
 
 interface Props {
@@ -14,16 +12,10 @@ function CatalogParamItem({ param, value, onChange }: Props) {
         <div className="p-1 text-secondary">
             <div className="d-flex justify-content-start col-12">
                 <div className="text-truncate "
-                    title={param.name + " " + param.unit}>
-                    {param.name}, {param.unit}
+                    title={param.name + " " + param.unit + " (" + param.additionalName + ")"}>
+                    {param.name}, {param.unit} ({param.additionalName})
                 </div>
-                <div >
-                    <FontAwesomeIcon
-                        className="ps-1"
-                        icon={faQuestionCircle}
-                        role="button"
-                        title={param.additionalName} />
-                </div>
+                
             </div>
             <input
                 name={param.id.toString()}

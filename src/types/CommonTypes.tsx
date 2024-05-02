@@ -86,7 +86,8 @@ interface CatalogItem {
     unit: string,
     refMin: number,
     refMax: number,
-    researchType: string
+    researchType: string,
+    isActive: boolean
 }
 
 interface GroupedCatalogData {

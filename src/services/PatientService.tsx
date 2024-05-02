@@ -21,7 +21,14 @@ export async function saveNewPatient(patient: Patient): Promise<Patient> {
     if (response.ok) {
         return response.json();
     } else {
-        throw Error("[" + response.status + "] Ошибка сохранения сведений о пациенте");
+        var errorMsg = "[" + response.status + "] Ошибка сохранения сведений о пациенте";
+        try {
+            const errBody = await response.json();
+            errorMsg = errBody['msg'] ?? errorMsg;
+        } catch (err) {
+            console.log("Не удалось распарсить сообщение")
+        }
+        throw Error(errorMsg);
     }
 }
 

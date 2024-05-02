@@ -64,7 +64,7 @@ function About() {
                                             aria-labelledby="headingHematology">
                                             <div className="accordion-body">
                                                 <ul>
-                                                    <li>Подтверждает приживаемость трастплантата ПГСК</li>
+                                                    <li>Подтверждает приживаемость трансплантата ПГСК</li>
                                                     <li>Оценивает сохранность и/или вид иммуноповреждения после лечения</li>
                                                     <li>Помогает определить векторность иммунологической коррекции</li>
                                                 </ul>
@@ -130,7 +130,7 @@ function About() {
                                 data-bs-target="#collapseRights"
                                 aria-expanded="false"
                                 aria-controls="collapseRights">
-                                Авторсике права
+                                Авторские права
                             </button>
                         </h2>
                         <div id="collapseRights"

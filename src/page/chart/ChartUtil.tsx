@@ -64,9 +64,9 @@ function getCytokineOption(data: ChartDataParams) {
     let maxValue = Math.max(...data.min, ...data.values, ...data.max);
     let chartTitle = 'Цитокиновые пары';
     let radarIndicator: Indicator[] = [
-        { name: 'ФНО', max: maxValue * scale },
-        { name: 'Интерферон гамма', max: maxValue * scale },
-        { name: 'Интерлейкин 2', max: maxValue * scale },
+        { name: 'TNFa', max: maxValue * scale },
+        { name: 'IFNy', max: maxValue * scale },
+        { name: 'IL2', max: maxValue * scale },
     ];
 
     let option = getBaseOption(chartTitle, radarIndicator, data);
@@ -103,7 +103,15 @@ function getBaseOption(chartTitle: string, indicator: Indicator[], params: Chart
             data: ['Нижние референтные значения', 'Результат', 'Верхние референтные значения']
         },
         radar: {
-            indicator: indicator
+            indicator: indicator,
+            axisName: {
+                fontWeight: 'bold',
+                color: 'black',
+                width: 20,
+                padding: 2,
+                overflow: 'breakAll',
+                scale: true
+            } 
         },
         series: [
             {
@@ -231,8 +239,8 @@ function filterForRegenerationChart(results: AnalyzeDetailedInfo[]): ChartDataPa
     let NEUdivLYMF = divide(NEU, LYMF);
     let LYMFdivMON = divide(LYMF, MON);
 
-    let mins = [10, 1.67, 6];
-    let max = [180, 1.8, 100];
+    let mins = [6.4, 1.67, 3.4];
+    let max = [12.8, 2.1, 6.1];
     let values = [NEUdivMON.value, NEUdivLYMF.value, LYMFdivMON.value];
     return {
         min: mins,
@@ -270,13 +278,13 @@ function getValueAndParambyId(results: AnalyzeDetailedInfo[], id: number): Chart
 }
 
 function divide(first: ChartDataParam, sec: ChartDataParam): ChartDataParam {
-    let min = sec.min !== 0 ? (first.min / sec.min) : 0;
+    let calcMin = sec.min !== 0 ? (first.min / sec.min) : 0;
     let val = sec.value !== 0 ? (first.value / sec.value) : 0;
-    let max = sec.max !== 0 ? (first.max / sec.max) : 0;
+    let calcMax = sec.max !== 0 ? (first.max / sec.max) : 0;
 
     return {
-        "min": Math.round(min * 100) / 100,
-        "max": Math.round(max * 100) / 100,
+        "min": Math.round(Math.min(calcMin, calcMax) * 100) / 100,
+        "max": Math.round(Math.max(calcMin, calcMax) * 100) / 100,
         "value": Math.round(val * 100) / 100
     }
 }

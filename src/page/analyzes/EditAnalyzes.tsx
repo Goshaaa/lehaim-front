@@ -27,6 +27,10 @@ function EditAnalyzes() {
         loadAllData();
     }, [isDataLoaded]);
 
+    useEffect(() => {
+        updateAnalyzeResultValues();
+    }, [oncoTestData]);
+
     const requestCatalog = async () => {
         try {
             const data = await oncoTestService.loadOncoTestCatalog();
@@ -34,6 +38,7 @@ function EditAnalyzes() {
         } catch (err) {
             setCatalogData(null);
         }
+        mapCatalogDataToAnalyzeResult();
     }
 
     const requestPatientOncoTestData = async () => {
@@ -49,7 +54,6 @@ function EditAnalyzes() {
         } catch (err) {
             setError("Не удалось загрузить результаты обследования");
         }
-        mapCatalogDataToAnalyzeResult();
     }
 
     const loadAllData = async () => {
@@ -71,7 +75,6 @@ function EditAnalyzes() {
             ...prevData,
             ...{ "params": { ...oncoTestData.params, ...{ [name]: Number(value) } } }
         }));
-        updateAnalyzeResultValues();
     }
 
     const handleSubmit = async (event: FormEvent) => {
@@ -111,11 +114,10 @@ function EditAnalyzes() {
     }
 
     const updateAnalyzeResultValues = () => {
-        console.log("updateAnalyzeResultValues");
         const data = analyzeResult.map(item => ({ ...item }));
         data.forEach(result => {
             result.value = oncoTestData.params[result.parameter!!.id!!] ?? 0;
-        })
+        });
         setAnalyzeResult(data);
     }
 
@@ -166,7 +168,7 @@ function EditAnalyzes() {
                                             <div className='row'>
                                                 <div className="col-sm-12 col-md-6 col-lg-4">
                                                     {catalogData && catalogData
-                                                        .filter(item => item.researchType === 'Hematological')
+                                                        .filter(item => item.researchType === 'Hematological' && item.isActive)
                                                         .map(param =>
                                                             <CatalogParamItem
                                                                 key={param.id}
@@ -177,10 +179,7 @@ function EditAnalyzes() {
                                                         )}
                                                 </div>
                                                 <div className="col-sm-12 col-md-6 col-lg-8">
-                                                    <RadarChat
-                                                        chartType={ChartType.B_Type}
-                                                        data={analyzeResult}
-                                                    />
+
                                                     <RadarChat
                                                         chartType={ChartType.Regeneration_Type}
                                                         data={analyzeResult}
@@ -210,7 +209,7 @@ function EditAnalyzes() {
                                             <div className='row'>
                                                 <div className="col-sm-12 col-md-6 col-lg-4">
                                                     {catalogData && catalogData
-                                                        .filter(item => item.researchType === 'Immunological')
+                                                        .filter(item => item.researchType === 'Immunological' && item.isActive)
                                                         .map(param =>
                                                             <CatalogParamItem
                                                                 key={param.id}
@@ -221,6 +220,10 @@ function EditAnalyzes() {
                                                         )}
                                                 </div>
                                                 <div className="col-sm-12  col-md-6 col-lg-8">
+                                                    <RadarChat
+                                                        chartType={ChartType.B_Type}
+                                                        data={analyzeResult}
+                                                    />
                                                     <RadarChat
                                                         chartType={ChartType.T_Type}
                                                         data={analyzeResult}
@@ -250,7 +253,7 @@ function EditAnalyzes() {
                                             <div className='row'>
                                                 <div className="col-sm-12 col-md-6 col-lg-4">
                                                     {catalogData && catalogData
-                                                        .filter(item => item.researchType === 'Cytokine')
+                                                        .filter(item => item.researchType === 'Cytokine' && item.isActive)
                                                         .map(param =>
                                                             <CatalogParamItem
                                                                 key={param.id}

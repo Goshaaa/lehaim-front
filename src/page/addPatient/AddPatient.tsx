@@ -18,16 +18,55 @@ function AddPatient() {
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
 
+
+    const validateBeforeSubmit = (): string | null => {
+        const errMsgs: string[] = [];
+        if (patient.name.trim().length == 0) {
+            errMsgs.push("Не заполнено имя пациента");
+        }
+        if (patient.lastname.trim().length == 0) {
+            errMsgs.push("Не заполнена фамилия пациента");
+        }
+        if (patient.patronymic.trim().length == 0) {
+            errMsgs.push("Не заполнено отчество пациента");
+        }
+        if (!patient.gender || patient.gender === '-') {
+            errMsgs.push("Не указан пол пациента");
+        }
+        
+        if (!patient.birthdate) {
+            errMsgs.push("Не указан дата рождения пациента");
+        } else {
+            const parsedDate = new Date(patient.birthdate);
+            if (parsedDate >= new Date()) {
+                errMsgs.push("Дата рождения не может быть в будущем");
+            } else if (parsedDate < new Date("1900-01-01")) {
+                errMsgs.push("Неверная дата рождения");
+            }
+        }
+        
+        return errMsgs.length > 0 ? "Ошибка заполнения формы: " + errMsgs.join('; ') : null;
+    }
+
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
+        const err = validateBeforeSubmit();
+        if (err) {
+            setError(err);
+            return;
+        }
         setLoading(true);
-        setError("")
+        
 
         try {
             const data = await patientService.saveNewPatient(patient);
             navigate("/patient/" + data.id);
         } catch (err) {
-            setError("Ошибка сохранения: " + err);
+            if (err instanceof Error) {
+                setError("Ошибка сохранения: " + err.message);
+            } else {
+                setError("Ошибка сохранения: " + err);
+            }
         }
         setLoading(false);
     }
@@ -104,8 +143,8 @@ function AddPatient() {
                                         name="gender"
                                         onChange={handleChange}
                                         required
-                                        className="form-select" >
-                                        <option>Выберите пол</option>
+                                        className="form-select">
+                                        <option value="-">Выберите пол</option>
                                         <option value="Male">Мужской</option>
                                         <option value="Female">Женский</option>
                                     </select>
