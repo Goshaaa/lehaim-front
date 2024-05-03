@@ -1,4 +1,5 @@
 import { ApiHost } from "../config";
+import { handleResponse } from "./ResponseHandler"
 
 interface DiagnosisDTO {
     id: number,
@@ -8,11 +9,7 @@ interface DiagnosisDTO {
 
 export async function loadAllDiagnosis(): Promise<DiagnosisDTO[]> {
     const response = await fetch(ApiHost + '/diagnoses/all', { method: "GET" });
-    if (response.ok) {
-        return await response.json();
-    } else {
-        throw Error("Не удалось загрузить каталог диагнозов");
-    }
+    return await handleResponse<DiagnosisDTO[]>(response, "Не удалось загрузить каталог диагнозов");
 }
 
 export type { DiagnosisDTO };

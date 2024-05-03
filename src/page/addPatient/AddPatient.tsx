@@ -1,4 +1,4 @@
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Header from "../header/Header";
 import { Patient } from "../../types/CommonTypes";
@@ -21,13 +21,13 @@ function AddPatient() {
 
     const validateBeforeSubmit = (): string | null => {
         const errMsgs: string[] = [];
-        if (patient.name.trim().length == 0) {
+        if (patient.name.trim().length === 0) {
             errMsgs.push("Не заполнено имя пациента");
         }
-        if (patient.lastname.trim().length == 0) {
+        if (patient.lastname.trim().length === 0) {
             errMsgs.push("Не заполнена фамилия пациента");
         }
-        if (patient.patronymic.trim().length == 0) {
+        if (patient.patronymic.trim().length === 0) {
             errMsgs.push("Не заполнено отчество пациента");
         }
         if (!patient.gender || patient.gender === '-') {
@@ -55,8 +55,7 @@ function AddPatient() {
             setError(err);
             return;
         }
-        setLoading(true);
-        
+        setLoading(true);        
 
         try {
             const data = await patientService.saveNewPatient(patient);

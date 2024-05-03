@@ -24,7 +24,11 @@ function PatientCard() {
                 const data = await patientService.getPatientById(patientId);
                 setPatient(data);
             } catch (err) {
-                setError("Ошибка загрузки: " + err);
+                if (err instanceof Error) {
+                    setError("Ошибка: " + err.message);
+                } else {
+                    setError("Ошибка загрузки: " + err);
+                }
             }
             setLoading(false);
         }

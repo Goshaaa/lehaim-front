@@ -30,7 +30,11 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                 const data = await patientService.listAllPatientOncoTests(patientId);
                 setOncoTests(data);
             } catch (err) {
-                setError("Ошибка загрузки: " + err);
+                if (err instanceof Error) {
+                    setError("Ошибка: " + err.message);
+                } else {
+                    setError("Ошибка загрузки: " + err);
+                }
             }
         }
     }
@@ -44,23 +48,7 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
         selectAnalyzeCallback!!(id);
     }
 
-    const handleDelete = async (event: React.MouseEvent, id: string) => {
-        event.preventDefault();
-        event.stopPropagation();
-        try {
-            selectAnalyzeCallback!!();
-            await oncoTestService.deleteOncoTest(Number(id));
-            const result = oncoTests.filter((item) => {
-                return item.id !== id
-            });
-            setOncoTests(result);
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
     const handleEdit = (event: React.MouseEvent, id: string) => {
-        console.log("handleEdit");
         event.preventDefault();
         event.stopPropagation();
         navigate("/patient/" + patientId + "/analyzes/" + id);
@@ -107,7 +95,7 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                                     onClick={(event) => handleEdit(event, test.id!!)}
                                     icon={faEdit}
                                     role="button"
-                                    title="Редактировать" />
+                                    title="Редактировать обследование" />
 
                                 <FontAwesomeIcon
                                     className="ps-1"
@@ -115,7 +103,7 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                                     icon={faTrash}
                                     onClick={() => onClickDelete(test)}
                                     role="button"
-                                    title="Удалить" />
+                                    title="Удалить обследование" />
                             </div>
                         </div>
                     </li>

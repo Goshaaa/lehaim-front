@@ -1,14 +1,10 @@
-import { AnalyzeDetailedInfo } from "../types/CommonTypes";
+import { AnalyzeDetailedInfo, CatalogItem } from "../types/CommonTypes";
 import { ApiHost } from "../config";
-import { CatalogItem } from '../types/CommonTypes';
+import { handleResponse } from "./ResponseHandler"
 
 export async function loadOncoTestCatalog(): Promise<CatalogItem[]> {
     const response = await fetch(ApiHost + '/catalog/all', { method: "GET" });
-    if (response.ok) {
-        return await response.json();
-    } else {
-        throw Error("Не удалось загрузить каталог параметров");
-    }
+    return await handleResponse<CatalogItem[]>(response, "Не удалось загрузить каталог параметров");
 }
 
 export async function getAllOncoTestParams(testId: number): Promise<AnalyzeDetailedInfo[]> {
@@ -17,11 +13,7 @@ export async function getAllOncoTestParams(testId: number): Promise<AnalyzeDetai
             method: "GET"
         }
     );
-    if (response.ok) {
-        return response.json();
-    } else {
-        throw Error("[" + response.status + "] Ошибка загрузики сведений об обследовании");
-    }
+    return await handleResponse<AnalyzeDetailedInfo[]>(response, "Ошибка загрузики сведений об обследовании");
 }
 
 
@@ -32,6 +24,6 @@ export async function deleteOncoTest(testId: number) {
         }
     );
     if (!response.ok) {
-        throw Error("[" + response.status + "] Ошибка удаления сведений об обследовании");
+        throw new Error("[" + response.status + "] Ошибка удаления сведений об обследовании");
     }
 }

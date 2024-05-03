@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../header/Header";
 import * as patientService from '../../services/PatientService';
-import { PatientSearchParam, NotFoundError } from "../../types/CommonTypes";
+import { PatientSearchParam } from "../../types/CommonTypes";
 
 
 function SearchPatient() {
@@ -26,8 +26,8 @@ function SearchPatient() {
             const data = await patientService.searchPatient(searchData);
             navigate("/patient/" + data.id);
         } catch (err) {
-            if (err instanceof NotFoundError) {
-                setError(err.message);
+            if (err instanceof Error) {
+                setError("Ошибка: " + err.message);
             } else {
                 setError("Ошибка загрузки: " + err);
             }

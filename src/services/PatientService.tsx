@@ -1,13 +1,10 @@
-import { Patient, PatientSearchParam, NotFoundError, AnalyzeBriefInfo, OncologicalTestRestDTO, OncoTestData } from "../types/CommonTypes";
+import { Patient, PatientSearchParam, AnalyzeBriefInfo, OncologicalTestRestDTO, OncoTestData } from "../types/CommonTypes";
+import { handleResponse } from "./ResponseHandler"
 import { ApiHost } from "../config";
 
 export async function getPatientById(patientId: string): Promise<Patient> {
     const response = await fetch(ApiHost + '/patients/' + patientId, { method: "GET" });
-    if (response.ok) {
-        return response.json();
-    } else {
-        throw Error("[" + response.status + "] Ошибка загрузики сведений о пациенте");
-    }
+    return await handleResponse<Patient>(response, "Ошибка загрузки сведений о пациенте");
 }
 
 export async function saveNewPatient(patient: Patient): Promise<Patient> {
@@ -18,18 +15,7 @@ export async function saveNewPatient(patient: Patient): Promise<Patient> {
             body: JSON.stringify(patient)
         }
     );
-    if (response.ok) {
-        return response.json();
-    } else {
-        var errorMsg = "[" + response.status + "] Ошибка сохранения сведений о пациенте";
-        try {
-            const errBody = await response.json();
-            errorMsg = errBody['msg'] ?? errorMsg;
-        } catch (err) {
-            console.log("Не удалось распарсить сообщение")
-        }
-        throw Error(errorMsg);
-    }
+    return await handleResponse<Patient>(response, "Ошибка сохранения сведений о пациенте");
 }
 
 export async function updatePatient(patient: Patient): Promise<Patient> {
@@ -40,11 +26,7 @@ export async function updatePatient(patient: Patient): Promise<Patient> {
             body: JSON.stringify(patient)
         }
     );
-    if (response.ok) {
-        return response.json();
-    } else {
-        throw Error("[" + response.status + "] Ошибка сохранения сведений о пациенте");
-    }
+    return await handleResponse<Patient>(response, "Ошибка сохранения сведений о пациенте");
 }
 
 export async function searchPatient(searchParam: PatientSearchParam): Promise<Patient> {
@@ -60,14 +42,7 @@ export async function searchPatient(searchParam: PatientSearchParam): Promise<Pa
             headers: { "Content-Type": "application/json" }
         }
     );
-
-    if (response.ok) {
-        return response.json();
-    } else if (response.status == 404) {
-        throw new NotFoundError("Пациент не найден");
-    } else {
-        throw new Error("Ошибка загрузки");
-    }
+    return await handleResponse<Patient>(response, "Пациент не найден");
 }
 
 export async function listAllPatientOncoTests(patientId: string): Promise<AnalyzeBriefInfo[]> {
@@ -76,28 +51,15 @@ export async function listAllPatientOncoTests(patientId: string): Promise<Analyz
             method: "GET"
         }
     );
-    if (response.ok) {
-        return response.json();
-    } else {
-        throw Error("[" + response.status + "] Ошибка загрузики сведений об обследованиях пациента");
-    }
+    return await handleResponse<AnalyzeBriefInfo[]>(response, "Ошибка загрузики сведений об обследованиях");
 }
 
 export async function getPatientOncoTest(patientId: string, testId: number): Promise<OncologicalTestRestDTO> {
-    const response = await fetch(ApiHost + '/patients/' + patientId + "/test/" + testId,
-        {
-            method: "GET"
-        }
-    );
-    if (response.ok) {
-        return response.json();
-    } else {
-        throw Error("[" + response.status + "] Ошибка загрузики сведений об обследованиях пациента");
-    }
+    const response = await fetch(ApiHost + '/patients/' + patientId + "/test/" + testId, { method: "GET" });
+    return await handleResponse<OncologicalTestRestDTO>(response, "Ошибка загрузики сведений об обследованиях");
 }
 
 export async function addNewPatientOncoTestData(patientId: string, oncoTestData: OncoTestData) {
-    console.log("addNewPatientOncoTestData");
     const payload = {
         testDate: oncoTestData.testDate,
         results: Object.entries(oncoTestData.params)
@@ -116,11 +78,7 @@ export async function addNewPatientOncoTestData(patientId: string, oncoTestData:
             body: JSON.stringify(payload)
         }
     );
-    if (response.ok) {
-        return response.json();
-    } else {
-        throw Error("[" + response.status + "] Ошибка сохранения сведений об обследовании");
-    }
+    return await handleResponse<void>(response, "Ошибка сохранения сведений об обследовании");
 }
 
 export async function editPatientOncoTestData(patientId: string, oncoTestData: OncoTestData) {
@@ -142,9 +100,5 @@ export async function editPatientOncoTestData(patientId: string, oncoTestData: O
             body: JSON.stringify(payload)
         }
     );
-    if (response.ok) {
-        return response.json();
-    } else {
-        throw Error("[" + response.status + "] Ошибка сохранения сведений об обследовании");
-    }
+    return await handleResponse<void>(response, "Ошибка сохранения сведений об обследовании");
 }

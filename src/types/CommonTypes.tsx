@@ -52,12 +52,6 @@ interface OncoTestData {
     params: TestParamType
 }
 
-interface AnalyzesData {
-    id?: number,
-    testDate?: string,
-    results: Map<number, number>;
-}
-
 interface AnalyzeBriefInfo {
     id?: string,
     testDate?: string
@@ -90,14 +84,6 @@ interface CatalogItem {
     isActive: boolean
 }
 
-interface GroupedCatalogData {
-    Cytokine: CatalogItem[],
-    Immunological: CatalogItem[],
-    Hematological: CatalogItem[]
-}
-
-export class NotFoundError extends Error {}
-
 export enum ChartType {
     B_Type,
     T_Type,
@@ -108,4 +94,4 @@ export enum ChartType {
 interface SelectAnalyzeCallback { (analyzeId?: string | undefined): void }
 
 export type { Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter,
-    CatalogItem, AnalyzesData, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO };
+    CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO };

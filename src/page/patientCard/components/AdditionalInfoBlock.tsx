@@ -24,7 +24,11 @@ function AdditionaInfolBlock({ patient }: Props) {
             const data = await diagnosisService.loadAllDiagnosis();
             setDiagnosisCatalog(data);
         } catch (err) {
-            setError("Ошибка загрузки: " + err);
+            if (err instanceof Error) {
+                setError("Ошибка: " + err.message);
+            } else {
+                setError("Ошибка загрузки: " + err);
+            }
         }
         setLoading(false);
 
@@ -57,7 +61,11 @@ function AdditionaInfolBlock({ patient }: Props) {
             setChangePatient(data);
             setEditMode(false);
         } catch (err) {
-            setError("Ошибка сохранения: " + err);
+            if (err instanceof Error) {
+                setError("Ошибка: " + err.message);
+            } else {
+                setError("Ошибка сохранения: " + err);
+            }
         }
         setLoading(false);
     }
@@ -194,7 +202,8 @@ function AdditionaInfolBlock({ patient }: Props) {
                         {editMode &&
                             <button type="submit"
                                 className="btn btn-outline-success float-end"
-                                disabled={loading}>
+                                disabled={loading}
+                                title="Сохранить изменения">
                                 {loading &&
                                     <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                                 }
@@ -205,7 +214,9 @@ function AdditionaInfolBlock({ patient }: Props) {
                             type="button"
                             onClick={toggleEditMode}
                             className="btn btn-outline-secondary ms-3 float-end"
-                            disabled={loading}>
+                            disabled={loading}
+                            title={editMode ? "Отмена изменений" : "Редактировать сведения"}
+                            >
                             {editMode ? "Отмена" : "Редактировать"}
                         </button>
                     </div>

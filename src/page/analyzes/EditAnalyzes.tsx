@@ -52,7 +52,11 @@ function EditAnalyzes() {
 
             setOncoTestData(oncoTestData);
         } catch (err) {
-            setError("Не удалось загрузить результаты обследования");
+            if (err instanceof Error) {
+                setError("Ошибка: " + err.message);
+            } else {
+                setError("Ошибка загрузки: " + err);
+            }
         }
     }
 
@@ -89,7 +93,11 @@ function EditAnalyzes() {
             }
             navigate("/patient/" + patientId);
         } catch (err) {
-            setError("" + err);
+            if (err instanceof Error) {
+                setError("Ошибка: " + err.message);
+            } else {
+                setError("Ошибка сохранения: " + err);
+            }
         }
         setLoading(false);
     }
@@ -103,7 +111,7 @@ function EditAnalyzes() {
     }
 
     const mapCatalogDataToAnalyzeResult = () => {
-        const data = new Array<AnalyzeDetailedInfo>;
+        const data = new Array<AnalyzeDetailedInfo>();
         catalogData?.forEach(catalogItem => {
             data.push({
                 value: oncoTestData.params[catalogItem.id] ?? 0,
