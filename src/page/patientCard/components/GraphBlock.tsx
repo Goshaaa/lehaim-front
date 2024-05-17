@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import * as oncoTestService from '../../../services/OncoTestSerive';
 import { AnalyzeDetailedInfo, ChartType } from '../../../types/CommonTypes';
-import RadarChat from '../../chart/RadarChart';
+import RadarChart from '../../chart/RadarChart';
 
 
 interface Props {
@@ -41,25 +41,25 @@ function GraphBlock({ selectedAnayzeId }: Props) {
                 ? <h5 className="text-center m-3">Не выбрано обследование, по которому построить графики</h5>
                 : <div>
                     <div className='container'>
-                        <RadarChat
+                        <RadarChart
                             chartType={ChartType.Regeneration_Type}
                             data={analyzeResult}
                         />
                     </div>
                     <div className='container'>
-                        <RadarChat
+                        <RadarChart
                             chartType={ChartType.B_Type}
                             data={analyzeResult}
                         />
                     </div>
                     <div className='container'>
-                        <RadarChat
+                        <RadarChart
                             chartType={ChartType.T_Type}
                             data={analyzeResult}
                         />
                     </div>
                     <div className='container'>
-                        <RadarChat
+                        <RadarChart
                             chartType={ChartType.Cytokine_Type}
                             data={analyzeResult}
                         />

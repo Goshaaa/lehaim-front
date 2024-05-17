@@ -4,9 +4,10 @@ import { AnalyzeBriefInfo, SelectAnalyzeCallback } from '../../../types/CommonTy
 import * as patientService from '../../../services/PatientService';
 import * as oncoTestService from '../../../services/OncoTestSerive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faPrint, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import ConfirmationModal from '../../../components/ConfirmationModal';
+import { saveAs } from 'file-saver';
+import * as PdfReportGenerator from '../../report/PdfReportGenerator';
 
 
 interface Props {
@@ -54,6 +55,13 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
         navigate("/patient/" + patientId + "/analyzes/" + id);
     }
 
+    const buildPdfReport = async (event: React.MouseEvent, id: string) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const blob = await PdfReportGenerator.generateReportBlob();
+        saveAs(blob, "pdfReport.pdf");
+    }
+
     const onClickDelete = (selectedTest: AnalyzeBriefInfo) => {
         setTestToDelete(selectedTest);
     }
@@ -90,6 +98,13 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                                 Обследование от {test.testDate}
                             </div>
                             <div>
+                                <FontAwesomeIcon
+                                    className="ps-1 me-3"
+                                    icon={faPrint}
+                                    onClick={(event) => buildPdfReport(event, test.id!!)}
+                                    role="button"
+                                    title="Сформировать отчет" />
+
                                 <FontAwesomeIcon
                                     className="ps-1 me-3"
                                     onClick={(event) => handleEdit(event, test.id!!)}
