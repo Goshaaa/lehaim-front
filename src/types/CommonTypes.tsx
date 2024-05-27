@@ -91,7 +91,21 @@ export enum ChartType {
     Regeneration_Type
 }
 
+interface ChartsDataUrl {
+    regenerationChartData?: string | null,
+    bTypeData?: string | null,
+    tTypeData?: string | null,
+    cytokineTypeData?: string | null,
+}
+
+interface PatientPdfReportData {
+    firstName?: string,
+    lastName?: string,
+    middleName? : string
+    chartData?: ChartsDataUrl | null
+}
+
 interface SelectAnalyzeCallback { (analyzeId?: string | undefined): void }
 
 export type { Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter,
-    CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO };
+    CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO, ChartsDataUrl, PatientPdfReportData };

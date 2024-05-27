@@ -6,7 +6,6 @@ interface Indicator {
     max?: number
 }
 
-
 interface ChartDataParam {
     min: number,
     max: number,
@@ -19,21 +18,21 @@ interface ChartDataParams {
     values: number[]
 }
 
-function getOptions(data: AnalyzeDetailedInfo[], chartType: ChartType) {
+function getOptions(data: AnalyzeDetailedInfo[], chartType: ChartType, printMode: boolean) {
     if (ChartType.B_Type === chartType) {
-        return getBOption(filterForBChart(data));
+        return getBOption(filterForBChart(data), printMode);
     } else if (ChartType.T_Type === chartType) {
-        return getTOption(filterForTChart(data));
+        return getTOption(filterForTChart(data), printMode);
     } else if (ChartType.Cytokine_Type === chartType) {
-        return getCytokineOption(filterForCytokineChart(data));
+        return getCytokineOption(filterForCytokineChart(data), printMode);
     } else if (ChartType.Regeneration_Type === chartType) {
-        return getRegenerationOption(filterForRegenerationChart(data));
+        return getRegenerationOption(filterForRegenerationChart(data), printMode);
     }
     return null;
 }
 
 
-function getBOption(data: ChartDataParams) {
+function getBOption(data: ChartDataParams, printMode: boolean) {
     let chartTitle = 'Относительные параметры B - клеточного звена иммунитета'
     let radarIndicator: Indicator[] = [
         { name: 'NEU/CD19' },
@@ -42,11 +41,11 @@ function getBOption(data: ChartDataParams) {
         { name: 'CD19/CD4' },
     ]
 
-    let option = getBaseOption(chartTitle, radarIndicator, data)
+    let option = getBaseOption(chartTitle, radarIndicator, data, printMode)
     return option
 }
 
-function getTOption(data: ChartDataParams) {
+function getTOption(data: ChartDataParams, printMode: boolean) {
     let chartTitle = 'Относительные параметры T - клеточного звена иммунитета'
     let radarIndicator: Indicator[] = [
         { name: 'NEU/CD3' },
@@ -55,11 +54,11 @@ function getTOption(data: ChartDataParams) {
         { name: 'NEU/CD4' }
     ]
 
-    let option = getBaseOption(chartTitle, radarIndicator, data)
+    let option = getBaseOption(chartTitle, radarIndicator, data, printMode)
     return option
 }
 
-function getCytokineOption(data: ChartDataParams) {
+function getCytokineOption(data: ChartDataParams, printMode: boolean) {
     let scale = 1.2;
     let maxValue = Math.max(...data.min, ...data.values, ...data.max);
     let chartTitle = 'Цитокиновые пары';
@@ -69,11 +68,11 @@ function getCytokineOption(data: ChartDataParams) {
         { name: 'IL2', max: maxValue * scale },
     ];
 
-    let option = getBaseOption(chartTitle, radarIndicator, data);
+    let option = getBaseOption(chartTitle, radarIndicator, data, printMode);
     return option;
 }
 
-function getRegenerationOption(data: ChartDataParams) {
+function getRegenerationOption(data: ChartDataParams, printMode: boolean) {
     let upAxisMaxValue = Math.max(data.min[0], data.values[0], data.max[0]);
     let rightAxisMaxValue = Math.max(data.min[1], data.values[1], data.max[1]);
     let leftAxisMaxValue = Math.max(data.min[2], data.values[2], data.max[2]);
@@ -85,33 +84,37 @@ function getRegenerationOption(data: ChartDataParams) {
         { name: 'LYMF/MON', max: leftAxisMaxValue },
     ];
 
-    let option = getBaseOption(chartTitle, radarIndicator, data);
+    let option = getBaseOption(chartTitle, radarIndicator, data, printMode);
     return option
 }
 
-function getBaseOption(chartTitle: string, indicator: Indicator[], params: ChartDataParams) {
+function getBaseOption(chartTitle: string, indicator: Indicator[], params: ChartDataParams, printMode: boolean) {
     return {
         title: {
             show: false,
             text: chartTitle
         },
+        animation: printMode ? false : true,
         tooltip: {
             trigger: 'axis'
         },
         legend: {
             top: 30,
-            data: ['Нижние референтные значения', 'Результат', 'Верхние референтные значения']
+            data: printMode
+                ? ['Референтные значения', 'Результат', 'true']
+                : ['Нижние референтные значения', 'Результат', 'Верхние референтные значения']
         },
         radar: {
             indicator: indicator,
+            scale: false,
+            silent: true,
             axisName: {
                 fontWeight: 'bold',
                 color: 'black',
                 width: 20,
-                padding: 2,
-                overflow: 'breakAll',
-                scale: true
-            } 
+                margin: 7,
+                padding: 7
+            }
         },
         series: [
             {
@@ -124,7 +127,7 @@ function getBaseOption(chartTitle: string, indicator: Indicator[], params: Chart
                     {
                         label: { show: true, },
                         value: params.min,
-                        name: 'Нижние референтные значения',
+                        name: printMode ? 'Референтные значения' : 'Нижние референтные значения',
                         itemStyle: {
                             color: '#228B22'
                         },
@@ -135,7 +138,7 @@ function getBaseOption(chartTitle: string, indicator: Indicator[], params: Chart
                     {
                         label: { show: true, },
                         value: params.max,
-                        name: 'Верхние референтные значения',
+                        name: printMode ? 'Референтные значения' : 'Верхние референтные значения',
                         itemStyle: {
                             color: '#228B22'
                         },

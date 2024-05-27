@@ -58,8 +58,9 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
     const buildPdfReport = async (event: React.MouseEvent, id: string) => {
         event.preventDefault();
         event.stopPropagation();
-        const blob = await PdfReportGenerator.generateReportBlob();
-        saveAs(blob, "pdfReport.pdf");
+        navigate("/patient/" + patientId + "/analyzes/" + id + "/pdf");
+        // const blob = await PdfReportGenerator.generateReportBlob();
+        // saveAs(blob, "pdfReport.pdf");
     }
 
     const onClickDelete = (selectedTest: AnalyzeBriefInfo) => {

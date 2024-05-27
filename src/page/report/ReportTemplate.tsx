@@ -1,6 +1,7 @@
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
 import RadarChart from '../chart/RadarChart';
-import { AnalyzeDetailedInfo, ChartType } from '../../types/CommonTypes';
+import { AnalyzeDetailedInfo, ChartType, ChartsDataUrl, PatientPdfReportData } from '../../types/CommonTypes';
+import { ReportDTO } from '../../services/ReportService';
 import { Font } from "@react-pdf/renderer";
 import { useEffect } from 'react';
 
@@ -21,8 +22,6 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto",
     fontSize: 12,
     padding: 10
-    // flexDirection: 'row',
-    //backgroundColor: '#E4E4E4'
   },
   header: {
     textAlign: "center",
@@ -35,66 +34,93 @@ const styles = StyleSheet.create({
   section: {
     flexDirection: 'row',
     padding: 3
+  }, 
+  chart: {
+    width: 500,
+    height: 500
   }
 });
 
 interface Props {
-  chartDataUrl?: string | null;
+  reportData: ReportDTO;
 }
 
 
-function PatientReport({ chartDataUrl }: Props) {
+function PatientReport({ reportData }: Props) {
+
   useEffect(() => {
-    console.log("chartDataUrl changed for  PatientReport ")
-  }, [chartDataUrl])
+    console.log("PatientReport mounted");
+  }, []);
+
+
   return (
     <>
       <Document>
         <Page size="A4" style={styles.page}>
           <View style={styles.header}>
-            <Text>Отчет об обследовании за 27-05-2024</Text>
+            <Text>Отчет об обследовании за {reportData.currentTestDate}</Text>
           </View>
 
           <View style={styles.section}>
             <Text style={styles.propertyLabel}>ФИО: </Text>
-            <Text>Бупкина Ирина Андреевна</Text>
+            <Text>{reportData.patient.name} {reportData.patient.lastname} {reportData.patient.patronymic}</Text>
           </View>
           <View style={styles.section}>
             <Text style={styles.propertyLabel}>Дата рождения: </Text>
-            <Text>25-10-1950</Text>
+            <Text>{reportData.patient.birthdate}</Text>
           </View>
           <View style={styles.section}>
             <Text style={styles.propertyLabel}>Диагноз: </Text>
-            <Text>C50, T-1, N-1, M-1</Text>
+            <Text>TODO, T-{reportData.patient.t}, N-{reportData.patient.n}, M-{reportData.patient.m}</Text>
           </View>
           <View style={styles.section}>
             <Text style={styles.propertyLabel}>Комментарий о диагнозе: </Text>
-            <Text>Лб хт бусерелин лучи</Text>
+            <Text>{reportData.patient.diagnosisComments}</Text>
           </View>
           <View style={styles.section}>
             <Text style={styles.propertyLabel}>Комментарий об операции: </Text>
-            <Text>Подкожная мэ</Text>
+            <Text>{reportData.patient.operationComments}</Text>
           </View>
           <View style={styles.section}>
             <Text style={styles.propertyLabel}>Комментарий о курсах химеотерапии: </Text>
-            <Text>-</Text>
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.propertyLabel}>Дата анализа: </Text>
-            <Text>27-05-2024</Text>
+            <Text>{reportData.patient.chemotherapyComments}</Text>
           </View>
           <View style={styles.section}>
             <Text style={styles.propertyLabel}>Возраст на момент сдачи анализа: </Text>
-            <Text>21</Text>
+            <Text>TODO</Text>
           </View>
 
-          <View style={styles.header}>
-            <Text>Расчет вида регенерации</Text>
-          </View>
-          {chartDataUrl
-            ? <Image source={chartDataUrl!!}/>
-            : <Text>Empty</Text>
+          {/* {reportData.chartData?.regenerationChartData ?
+            <View style={styles.header}>
+              <Text>Расчет вида регенерации</Text>
+              <Image style={styles.chart} source={reportData.chartData.regenerationChartData} />
+            </View>
+            : null
           }
+
+          {reportData.chartData?.bTypeData ?
+            <View style={styles.header}>
+              <Text>Относительные параметры B - клеточного звена иммунитета</Text>
+              <Image source={reportData.chartData.bTypeData} />
+            </View>
+            : null
+          }
+
+          {reportData.chartData?.tTypeData ?
+            <View style={styles.header}>
+              <Text>Относительные параметры T - клеточного звена иммунитета</Text>
+              <Image source={reportData.chartData.tTypeData} />
+            </View>
+            : null
+          }
+
+          {reportData.chartData?.cytokineTypeData ?
+            <View style={styles.header}>
+              <Text>Цитокиновые пары</Text>
+              <Image source={reportData.chartData.cytokineTypeData} />
+            </View>
+            : null
+          } */}
         </Page>
       </Document>
     </>
