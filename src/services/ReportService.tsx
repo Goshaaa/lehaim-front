@@ -1,13 +1,13 @@
 import { ApiHost } from "../config";
 import { handleResponse } from "./ResponseHandler"
-import { Patient, ParameterResultRestDTO } from "../types/CommonTypes";
+import { Patient, AnalyzeDetailedInfo } from "../types/CommonTypes";
 
 
 interface ReportDTO {
     patient: Patient,
     currentTestDate: string,
-    currentResults: ParameterResultRestDTO,
-    previousResults: ParameterResultRestDTO,
+    currentResults: AnalyzeDetailedInfo[],
+    previousResults: AnalyzeDetailedInfo[],
     season: string
 }
 

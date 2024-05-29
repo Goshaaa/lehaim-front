@@ -5,7 +5,7 @@ import SearchPatient from './page/searchPatient/SearchPatient';
 import AddPatient from './page/addPatient/AddPatient';
 import PatientCard from "./page/patientCard/PatientCard";
 import EditAnalyzes from "./page/analyzes/EditAnalyzes";
-import PdfReportDemoPage from "./page/report/pdfReportDemoPage";
+import PdfReportDemoPage from "./page/report/PdfReportPage";
 
 
 function App() {

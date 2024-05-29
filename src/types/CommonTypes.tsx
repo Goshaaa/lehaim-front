@@ -98,14 +98,7 @@ interface ChartsDataUrl {
     cytokineTypeData?: string | null,
 }
 
-interface PatientPdfReportData {
-    firstName?: string,
-    lastName?: string,
-    middleName? : string
-    chartData?: ChartsDataUrl | null
-}
-
 interface SelectAnalyzeCallback { (analyzeId?: string | undefined): void }
 
 export type { Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter,
-    CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO, ChartsDataUrl, PatientPdfReportData };
+    CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO, ChartsDataUrl };

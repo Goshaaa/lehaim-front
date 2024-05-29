@@ -6,9 +6,6 @@ import * as oncoTestService from '../../../services/OncoTestSerive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPrint, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import ConfirmationModal from '../../../components/ConfirmationModal';
-import { saveAs } from 'file-saver';
-import * as PdfReportGenerator from '../../report/PdfReportGenerator';
-
 
 interface Props {
     patientId: string,
