@@ -13,6 +13,7 @@ import { DiagnosisDTO } from '../../services/DiagnosisService';
 function PdfReportDemoPage() {
     const [chartData, setChartData] = useState<ChartsDataUrl | null>(null);
     const [reportData, setReportData] = useState<ReportDTO | null>(null);
+    const [readyForBuildPdf, setReadyForBuildPdf] = useState<boolean>(false);
     const [diagnosisCatalog, setDiagnosisCatalog] = useState<DiagnosisDTO[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -34,14 +35,27 @@ function PdfReportDemoPage() {
                     setError("Ошибка загрузки: " + err);
                 }
             }
-            setLoading(false);
         }
+        console.log("Before loadind report data");
+        setChartData(null);
+        setReportData(null);
+        setReadyForBuildPdf(false);
         loadReportData();
     }, [patientId, testId]);
+
+    useEffect(() => {
+        if (reportData && chartData) {
+            setTimeout(() => {
+                setLoading(false);
+                setReadyForBuildPdf(true);
+            }, 1000);
+        }
+    }, [reportData, chartData]);
 
 
     const chartDataUrlHandler = (chartType: ChartType, chartDataUrl: string) => {
         if (chartDataUrl) {
+            console.log("chartDataUrlHandler chartType = " + chartType);
             if (chartType === ChartType.Regeneration_Type) {
                 setChartData(prevData => ({ ...prevData, ['regenerationChartData']: chartDataUrl }))
             } else if (chartType === ChartType.B_Type) {
@@ -66,38 +80,42 @@ function PdfReportDemoPage() {
                     <h3>{error}</h3>
                 </div>
             }
-            {reportData && (
-                <div>
+            {
+                reportData && (
                     <div>
-                        <PDFViewer width={'100%'} height={window.innerHeight - 7}>
-                            <PatientReport reportData={reportData} chartData={chartData} diagnosisCatalog={diagnosisCatalog} />
-                        </PDFViewer>
+                        {
+                            readyForBuildPdf && (
+                                <PDFViewer width={'100%'} height={window.innerHeight - 7}>
+                                    <PatientReport reportData={reportData} chartData={chartData} diagnosisCatalog={diagnosisCatalog} />
+                                </PDFViewer>
+                            )
+                        }
+                        <div style={{ "display": "none" }}>
+                            <RadarChart
+                                chartType={ChartType.Regeneration_Type}
+                                data={reportData.currentResults}
+                                dataUrlHandler={chartDataUrlHandler}
+                                printMode={true} />
+                            <RadarChart
+                                chartType={ChartType.B_Type}
+                                data={reportData.currentResults}
+                                dataUrlHandler={chartDataUrlHandler}
+                                printMode={true} />
+                            <RadarChart
+                                chartType={ChartType.T_Type}
+                                data={reportData.currentResults}
+                                dataUrlHandler={chartDataUrlHandler}
+                                printMode={true} />
+                            <RadarChart
+                                chartType={ChartType.Cytokine_Type}
+                                data={reportData.currentResults}
+                                dataUrlHandler={chartDataUrlHandler}
+                                printMode={true} />
+                        </div>
                     </div>
-                    <div style={{ "display": "none" }}>
-                        <RadarChart
-                            chartType={ChartType.Regeneration_Type}
-                            data={reportData.currentResults}
-                            dataUrlHandler={chartDataUrlHandler}
-                            printMode={true} />
-                        <RadarChart
-                            chartType={ChartType.B_Type}
-                            data={reportData.currentResults}
-                            dataUrlHandler={chartDataUrlHandler}
-                            printMode={true} />
-                        <RadarChart
-                            chartType={ChartType.T_Type}
-                            data={reportData.currentResults}
-                            dataUrlHandler={chartDataUrlHandler}
-                            printMode={true} />
-                        <RadarChart
-                            chartType={ChartType.Cytokine_Type}
-                            data={reportData.currentResults}
-                            dataUrlHandler={chartDataUrlHandler}
-                            printMode={true} />
-                    </div>
-                </div>
-            )
+                )
             }
+
         </>
     )
 }

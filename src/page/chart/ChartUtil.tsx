@@ -119,9 +119,10 @@ function getBaseOption(chartTitle: string, indicator: Indicator[], params: Chart
         series: [
             {
                 tooltip: {
-                    trigger: 'item'
+                    trigger: 'item',
+                    // formatter: '{a0} -  {b0}: {c0}, {d0}, {e0}'
                 },
-                name: '',
+                
                 type: 'radar',
                 data: [
                     {

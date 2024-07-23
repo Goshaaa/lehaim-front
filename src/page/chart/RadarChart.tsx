@@ -23,11 +23,14 @@ function RadarChat({ chartType, data, dataUrlHandler, printMode = false }: Props
 
 
     useEffect(() => {
-        const dataUrl = chartRef?.current?.getEchartsInstance()?.getDataURL();
-        if (dataUrlHandler) {
-            dataUrlHandler(chartType, dataUrl);   
+        const dataUrl = chartRef?.current?.getEchartsInstance()?.getConnectedDataURL({type: "png"});
+        if (dataUrlHandler && dataUrl && dataUrl.length > 0) {
+            setTimeout(() => {
+                dataUrlHandler(chartType, dataUrl);
+            }, 1000);
         }
     }, [options]);
+
 
     return (
         <>
@@ -38,16 +41,9 @@ function RadarChat({ chartType, data, dataUrlHandler, printMode = false }: Props
                     <ReactECharts
                         option={options}
                         notMerge={true}
-                        lazyUpdate={true}
-                        // style={{ height: '500px', width: '500px' }}
+                        lazyUpdate={false}
                         style={printMode ? { height: '700px', width: '700px' } : { height: '700px', width: '100%' }}
                         ref={chartRef}
-                        // onEvents={
-                        //     {
-                        //         'finished': onFinishedCallback,
-                        //         'rendered': onRenderedCallback
-                        //     }
-                        // }
                     />
                 </div>
 

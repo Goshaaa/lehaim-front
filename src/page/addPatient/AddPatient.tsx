@@ -55,7 +55,7 @@ function AddPatient() {
             setError(err);
             return;
         }
-        setLoading(true);        
+        setLoading(true);
 
         try {
             const data = await patientService.saveNewPatient(patient);

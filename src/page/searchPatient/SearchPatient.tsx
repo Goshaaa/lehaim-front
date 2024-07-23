@@ -14,7 +14,7 @@ function SearchPatient() {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setSearchData(prevData => ({ ...prevData, [name]: value }))
+        setSearchData(prevData => ({ ...prevData, [name]: value.trim() }))
     }
 
     const handleSubmit = async (event: FormEvent) => {
@@ -37,9 +37,9 @@ function SearchPatient() {
 
     const handleClickAddNew = () => {
         navigate("/addPatient?firstName=" + (searchData.firstName ?? "") +
-         "&lastName=" + (searchData.lastName ?? "") + 
-         "&middleName=" + (searchData.patronymic ?? "") + 
-         "&birthDate=" + (searchData.birthDate ?? "")
+         "&lastName=" + (searchData.lastName?.trim() ?? "") + 
+         "&middleName=" + (searchData.patronymic?.trim() ?? "") + 
+         "&birthDate=" + (searchData.birthDate?.trim() ?? "")
         );
     }
 
