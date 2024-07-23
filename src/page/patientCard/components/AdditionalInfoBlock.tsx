@@ -17,26 +17,25 @@ function AdditionaInfolBlock({ patient }: Props) {
 
     const [diagnosisCatalog, setDiagnosisCatalog] = useState<DiagnosisDTO[]>([]);
 
-    const loadDiagnosisCatalog = async () => {
-        setError("");
-        setLoading(true);
-        try {
-            const data = await diagnosisService.loadAllDiagnosis();
-            setDiagnosisCatalog(data);
-        } catch (err) {
-            if (err instanceof Error) {
-                setError("Ошибка: " + err.message);
-            } else {
-                setError("Ошибка загрузки: " + err);
-            }
-        }
-        setLoading(false);
-
-    }
-
     useEffect(() => {
+        const loadDiagnosisCatalog = async () => {
+            setError("");
+            setLoading(true);
+            try {
+                const data = await diagnosisService.loadAllDiagnosis();
+                setDiagnosisCatalog(data);
+            } catch (err) {
+                if (err instanceof Error) {
+                    setError("Ошибка: " + err.message);
+                } else {
+                    setError("Ошибка загрузки: " + err);
+                }
+            }
+            setLoading(false);
+        }
+
         loadDiagnosisCatalog()
-    }, [diagnosisCatalog.length > 0]);
+    }, []);
 
     const toggleEditMode = () => {
         if (editMode) {

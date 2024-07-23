@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import ReactECharts from 'echarts-for-react';
+import { useState, useEffect, useRef } from 'react';
+import ReactECharts, { EChartsInstance } from 'echarts-for-react';
 
 import { AnalyzeDetailedInfo, ChartType } from "../../types/CommonTypes";
 import getOptions from './ChartUtil'
@@ -7,15 +7,30 @@ import getOptions from './ChartUtil'
 
 interface Props {
     chartType: ChartType;
-    data: AnalyzeDetailedInfo[]
+    data: AnalyzeDetailedInfo[],
+    dataUrlHandler?: Function,
+    printMode?: boolean
 }
 
-function RadarChat({ chartType, data }: Props) {
+function RadarChat({ chartType, data, dataUrlHandler, printMode = false }: Props) {
     const [options, setOptions] = useState<any>(null);
+    const chartRef = useRef<ReactECharts>(null);
+
 
     useEffect(() => {
-        setOptions(getOptions(data, chartType))
+        setOptions(getOptions(data, chartType, printMode));
     }, [data, chartType]);
+
+
+    useEffect(() => {
+        const dataUrl = chartRef?.current?.getEchartsInstance()?.getConnectedDataURL({type: "png"});
+        if (dataUrlHandler && dataUrl && dataUrl.length > 0) {
+            setTimeout(() => {
+                dataUrlHandler(chartType, dataUrl);
+            }, 1000);
+        }
+    }, [options]);
+
 
     return (
         <>
@@ -26,9 +41,9 @@ function RadarChat({ chartType, data }: Props) {
                     <ReactECharts
                         option={options}
                         notMerge={true}
-                        lazyUpdate={true}
-                        theme={"theme_name"}
-                        style={{ height: '650px', width: '100%' }}
+                        lazyUpdate={false}
+                        style={printMode ? { height: '700px', width: '700px' } : { height: '700px', width: '100%' }}
+                        ref={chartRef}
                     />
                 </div>
 

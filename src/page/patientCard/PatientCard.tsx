@@ -36,8 +36,7 @@ function PatientCard() {
 
     useEffect(() => {
         loadPatient() 
-    }, [patientId]);
-
+    }, []);
 
     const selectAnalyzeCallback: SelectAnalyzeCallback = (selectedAnalyzeId?: string) => {
         setSelectedAnalyzeId(selectedAnalyzeId);

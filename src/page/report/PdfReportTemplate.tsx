@@ -1,0 +1,258 @@
+import { Font } from "@react-pdf/renderer";
+import { useEffect, useState } from 'react';
+import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
+import { ChartsDataUrl, AnalyzeDetailedInfo } from '../../types/CommonTypes';
+import { ReportDTO } from '../../services/ReportService';
+import { DiagnosisDTO } from '../../services/DiagnosisService';
+
+Font.register({
+  family: "Roboto",
+  fonts: [
+    { src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-light-webfont.ttf", fontWeight: 300 },
+    { src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-regular-webfont.ttf", fontWeight: 400 },
+    { src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-medium-webfont.ttf", fontWeight: 500 },
+    { src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-bold-webfont.ttf", fontWeight: 600 },
+  ],
+})
+
+const styles = StyleSheet.create({
+  page: {
+    fontFamily: "Roboto",
+    fontSize: 12,
+    padding: 10
+  },
+  header: {
+    textAlign: "center",
+    fontSize: 20,
+    margin: 15
+  },
+  propertyLabel: {
+    fontWeight: 600
+  },
+  section: {
+    flexDirection: 'row',
+    padding: 3
+  },
+  sectionTitle: {
+    textAlign: "center",
+    margin: 10,
+    fontSize: 14,
+    fontWeight: 600
+  },
+  chartSection: {
+    marginBottom: 15
+  },
+  chart: {
+    width: 300,
+    height: 300
+  },
+  table: {
+    paddingLeft: 5,
+    paddingRight: 5,
+    width: '100%'
+  },
+  row: {
+    display: 'flex',
+    flexDirection: 'row',
+    borderTop: '1px solid #EEE',
+    paddingTop: 3,
+    paddingBottom: 3,
+  },
+  tableHeader: {
+    borderTop: 'none',
+    textAlign: "center",
+  },
+  bold: {
+    fontWeight: 'bold',
+  },
+  col1: {
+    width: '5%',
+    textAlign: "center",
+  },
+  col2: {
+    width: '50%',
+  },
+  col3: {
+    width: '15%',
+    textAlign: "center",
+  },
+  col4: {
+    width: '15%',
+    textAlign: "center",
+  },
+  col5: {
+    width: '15%',
+    textAlign: "center",
+  },
+
+});
+
+interface Props {
+  reportData: ReportDTO,
+  chartData?: ChartsDataUrl | null,
+  diagnosisCatalog?: DiagnosisDTO[] | null
+}
+
+interface ResultDataHolder {
+  [key: number]: ResultData;
+}
+
+interface ResultData {
+  current?: AnalyzeDetailedInfo | null,
+  prev?: AnalyzeDetailedInfo | null
+}
+
+function PatientReport({ reportData, chartData, diagnosisCatalog }: Props) {
+  const [resultMap, setResultMap] = useState<ResultData | null>(null);
+
+  useEffect(() => {
+    var mapData: ResultDataHolder = {};
+
+    reportData.currentResults?.forEach((item => {
+      if (item?.parameter?.id) {
+        mapData[item.parameter.id] = { current: item };
+      }
+    }));
+    reportData.previousResults?.forEach((item => {
+      if (item?.parameter?.id) {
+        mapData[item.parameter.id] = {
+          current: mapData[item.parameter.id]?.current ?? null,
+          prev: item
+        };
+      }
+    }));
+    setResultMap(mapData);
+  }, [reportData]);
+
+  const calcDiff = (prev?: number, current?: number): string => {
+    if (prev && current) {
+      return (((current - prev) / prev) * 100).toFixed(2) + "%";
+    } else {
+      return "-";
+    }
+  }
+
+  const getDiagnosisName = (diagnosisId?: number,): string => {
+    if (diagnosisCatalog && diagnosisId) {
+      return diagnosisCatalog?.find((catalogItem) => {
+        return catalogItem.id === diagnosisId
+      })?.description ?? "";
+    } else {
+      return "-"
+    }
+  }
+
+  const getParamName = (result: ResultData): string => {
+    const actualData = result.current ?? result.prev;
+
+    if (actualData) {
+      return actualData.parameter!!.name + " (" + actualData.parameter!!.additionalName + ")";
+    } else {
+      return "-"
+    }
+  }
+
+  return (
+    <>
+      <Document title={"Отчет " + reportData.patient.lastname + " " + reportData.patient.name + " от " + reportData.currentTestDate}>
+        <Page size="A4" style={styles.page}>
+          <View style={styles.header}>
+            <Text>Отчет об обследовании за {reportData.currentTestDate}</Text>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.propertyLabel}>ФИО: </Text>
+            <Text>{reportData.patient.lastname} {reportData.patient.name} {reportData.patient.patronymic ?? ""}</Text>
+          </View>
+          <View style={styles.section}>
+            <Text style={styles.propertyLabel}>Дата рождения: </Text>
+            <Text>{reportData.patient.birthdate}</Text>
+          </View>
+          <View style={styles.section}>
+            <Text style={styles.propertyLabel}>Диагноз: </Text>
+            <Text>{getDiagnosisName(reportData.patient.diagnosisId)}, T-{reportData.patient.t}, N-{reportData.patient.n}, M-{reportData.patient.m}</Text>
+          </View>
+          <View style={styles.section}>
+            <Text style={styles.propertyLabel}>Комментарий о диагнозе: </Text>
+            <Text>{reportData.patient.diagnosisComments}</Text>
+          </View>
+          <View style={styles.section}>
+            <Text style={styles.propertyLabel}>Комментарий об операции: </Text>
+            <Text>{reportData.patient.operationComments}</Text>
+          </View>
+          <View style={styles.section}>
+            <Text style={styles.propertyLabel}>Комментарий о курсах химеотерапии: </Text>
+            <Text>{reportData.patient.chemotherapyComments}</Text>
+          </View>
+
+          {chartData?.regenerationChartData ?
+            <View style={styles.chartSection}>
+              <Text style={styles.sectionTitle}>Расчет вида регенерации</Text>
+              <Image
+                style={styles.chart}
+                source={chartData.regenerationChartData} />
+            </View>
+            : null
+          }
+
+          {chartData?.bTypeData ?
+            <View style={styles.chartSection} wrap={false}>
+              <Text style={styles.sectionTitle}>Относительные параметры B - клеточного звена иммунитета</Text>
+              <Image
+                style={styles.chart}
+                source={chartData.bTypeData} />
+            </View>
+            : null
+          }
+
+          {chartData?.tTypeData ?
+            <View style={styles.chartSection} wrap={false}>
+              <Text style={styles.sectionTitle}>Относительные параметры T - клеточного звена иммунитета</Text>
+              <Image
+                style={styles.chart}
+                source={chartData.tTypeData} />
+            </View>
+            : null
+          }
+
+          {chartData?.cytokineTypeData ?
+            <View style={styles.chartSection} wrap={false}>
+              <Text style={styles.sectionTitle}>Цитокиновые пары</Text>
+              <Image
+                style={styles.chart}
+                source={chartData.cytokineTypeData} />
+            </View>
+            : null
+          }
+
+          {resultMap &&
+            <View>
+              <Text style={styles.sectionTitle}>Сравнение показателей</Text>
+              <View style={styles.table}>
+                <View style={[styles.row, styles.bold, styles.tableHeader]}>
+                  <Text style={styles.col1}>№</Text>
+                  <Text style={styles.col2}>Наименование</Text>
+                  <Text style={styles.col3}>Предыдущие (средние)</Text>
+                  <Text style={styles.col4}>Текущие</Text>
+                  <Text style={styles.col5}>Изменение</Text>
+                </View>
+                {Object.entries(resultMap)
+                  .map(([key, value], index) =>
+                    <View style={[styles.row]} wrap={false} key={index}>
+                      <Text style={styles.col1}>{index + 1}</Text>
+                      <Text style={styles.col2}>{getParamName(value)}</Text>
+                      <Text style={styles.col3}>{value.prev?.value.toFixed(2) ?? "-"}</Text>
+                      <Text style={styles.col4}>{value.current?.value.toFixed(2) ?? "-"}</Text>
+                      <Text style={styles.col5}>{calcDiff(value?.prev?.value, value?.current?.value)}</Text>
+                    </View>
+                  )}
+              </View>
+            </View>
+          }
+        </Page>
+      </Document>
+    </>
+  )
+}
+
+export default PatientReport;

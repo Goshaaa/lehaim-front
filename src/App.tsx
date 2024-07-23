@@ -5,6 +5,7 @@ import SearchPatient from './page/searchPatient/SearchPatient';
 import AddPatient from './page/addPatient/AddPatient';
 import PatientCard from "./page/patientCard/PatientCard";
 import EditAnalyzes from "./page/analyzes/EditAnalyzes";
+import PdfReportDemoPage from "./page/report/PdfReportPage";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/patient/:patientId" element={<PatientCard />} />
         <Route path="/patient/:patientId/analyzes/" element={<EditAnalyzes />} />
         <Route path="/patient/:patientId/analyzes/:testId" element={<EditAnalyzes />} />
+        <Route path="/patient/:patientId/analyzes/:testId/pdf" element={<PdfReportDemoPage />} />
       </Routes>
     </BrowserRouter>
   );
