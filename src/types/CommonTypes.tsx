@@ -91,6 +91,13 @@ export enum ChartType {
     Regeneration_Type
 }
 
+export enum ChartType2 {
+    B_Type = "B_CELL",
+    T_Type = "T_CELL",
+    Cytokine_Type = "CYTOKINE_PAIRS",
+    Regeneration_Type = "REGENERATION"
+}
+
 interface ChartsDataUrl {
     regenerationChartData?: string | null,
     bTypeData?: string | null,
@@ -100,5 +107,23 @@ interface ChartsDataUrl {
 
 interface SelectAnalyzeCallback { (analyzeId?: string | undefined): void }
 
+interface Recommendation {
+    id?: string,
+    name?: string,
+    conclusion?: string,
+    recommendation?: string,
+    chartType: string,
+}
+
+interface Recommendations {
+    [key: string]: {
+        id?: string,
+        name?: string,
+        conclusion?: string,
+        recommendation?: string,
+        chartType: string,
+    }
+}
+
 export type { Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter,
-    CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO, ChartsDataUrl };
+    CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO, ChartsDataUrl, Recommendations, Recommendation };

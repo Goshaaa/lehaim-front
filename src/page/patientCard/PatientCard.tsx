@@ -59,7 +59,7 @@ function PatientCard() {
                         </div>
                         <div className="col-md-8 col-sm-12">
                             <AnalyzesBlock selectAnalyzeCallback={selectAnalyzeCallback}></AnalyzesBlock>
-                            <GraphBlock selectedAnayzeId={selectedAnalyzeId}></GraphBlock>
+                            <GraphBlock selectedAnalyzeId={selectedAnalyzeId}></GraphBlock>
                         </div>
                     </div>
                 </div>
