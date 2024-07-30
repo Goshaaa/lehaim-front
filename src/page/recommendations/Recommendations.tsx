@@ -27,14 +27,17 @@ export default function RecommendationsBlock({
 
       if (selectedAnalyzeId) {
         try {
-          const data = await recommendationsServise.getRecommendationById(Number(selectedAnalyzeId));
-          const chartData = data[chartType];
-          setConclusion(chartData.conclusion ?? "");
-          setRecommendation(chartData.recommendation ?? "");
+          const data = await recommendationsServise.getRecommendationById(Number(selectedAnalyzeId), chartType);
+          setConclusion(data.conclusion ?? "");
+          setRecommendation(data.recommendation ?? "");
         } catch (err) {
           if (err instanceof Error) {
+            setConclusion("");
+            setRecommendation("");
             setError("Ошибка: " + err.message);
           } else {
+            setConclusion("");
+            setRecommendation("");
             setError("Ошибка загрузки: " + err);
           }
         }
@@ -66,8 +69,8 @@ export default function RecommendationsBlock({
         }
         let data;
         if (selectedAnalyzeId) {
-          const existRecommendation = await recommendationsServise.getRecommendationById(Number(selectedAnalyzeId));
-          const recommendationId = existRecommendation[chartType]?.id;
+          const existRecommendation = await recommendationsServise.getRecommendationById(Number(selectedAnalyzeId), chartType);
+          const recommendationId = existRecommendation.id;
           if (recommendationId) {
             data = await recommendationsServise.updateRecommendation(recommendationData, recommendationId);
           } else {
@@ -78,23 +81,19 @@ export default function RecommendationsBlock({
           setConclusion(data.conclusion ?? conclusion);
           setRecommendation(data.recommendation ?? recommendation);
         } else {
+          setConclusion("");
+          setRecommendation("");
           setError("Ошибка: данные не были получены")
         }
-        // if (data.conclusion !== undefined) {
-        //   setConclusion(data.conclusion);
-        // } else {
-        //   setConclusion(conclusion);
-        // }
-        // if (data.recommendation !== undefined) {
-        //   setRecommendation(data.recommendation);
-        // } else {
-        //   setRecommendation(recommendation);
-        // }
         setEditMode(false);
       } catch (err) {
           if (err instanceof Error) {
+              setConclusion("");
+              setRecommendation("");
               setError("Ошибка: " + err.message);
           } else {
+              setConclusion("");
+              setRecommendation("");
               setError("Ошибка сохранения: " + err);
           }
       }

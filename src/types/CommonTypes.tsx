@@ -115,15 +115,15 @@ interface Recommendation {
     chartType: string,
 }
 
-interface Recommendations {
-    [key: string]: {
-        id?: string,
-        name?: string,
-        conclusion?: string,
-        recommendation?: string,
-        chartType: string,
-    }
-}
+// interface Recommendations {
+//     [key: string]: {
+//         id?: string,
+//         name?: string,
+//         conclusion?: string,
+//         recommendation?: string,
+//         chartType: string,
+//     }
+// }
 
 export type { Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter,
-    CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO, ChartsDataUrl, Recommendations, Recommendation };
+    CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO, ChartsDataUrl, Recommendation };

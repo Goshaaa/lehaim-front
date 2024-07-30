@@ -1,10 +1,10 @@
-import { Recommendation, Recommendations } from "../types/CommonTypes";
+import { Recommendation } from "../types/CommonTypes";
 import { handleResponse } from "./ResponseHandler"
 import { ApiHost } from "../config";
 
-export async function getRecommendationById(testId: number): Promise<Recommendations> {
-  const response = await fetch(ApiHost + '/recommendations/' + testId, { method: "GET" });
-  return await handleResponse<Recommendations>(response, "Ошибка загрузки сведений о рекомендациях");
+export async function getRecommendationById(testId: number, chartType: string): Promise<Recommendation> {
+  const response = await fetch(ApiHost + '/recommendations/' + testId + '/' + chartType, { method: "GET" });
+  return await handleResponse<Recommendation>(response, "Ошибка загрузки сведений о рекомендациях");
 }
 
 export async function saveNewRecommendation(recommendation: Recommendation, testId: number): Promise<Recommendation> {
