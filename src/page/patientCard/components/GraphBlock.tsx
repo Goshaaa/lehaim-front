@@ -47,17 +47,35 @@ function GraphBlock({ selectedAnalyzeId }: Props) {
                         />
                     </div>
                     <div className='container'>
+                        <RecommendationsBlock 
+                            selectedAnalyzeId={selectedAnalyzeId}
+                            chartType={ChartType2.Regeneration_Type}
+                        />
+                    </div>
+                    <div className='container'>
                         <RadarChart
                             chartType={ChartType.B_Type}
                             data={analyzeResult}
                         />
                     </div>
+                    {/* <div className='container'>
+                        <RecommendationsBlock 
+                            selectedAnalyzeId={selectedAnalyzeId}
+                            chartType={ChartType2.B_Type}
+                        />
+                    </div> */}
                     <div className='container'>
                         <RadarChart
                             chartType={ChartType.T_Type}
                             data={analyzeResult}
                         />
                     </div>
+                    {/* <div className='container'>
+                        <RecommendationsBlock 
+                            selectedAnalyzeId={selectedAnalyzeId}
+                            chartType={ChartType2.T_Type}
+                        />
+                    </div> */}
                     <div className='container'>
                         <RadarChart
                             chartType={ChartType.Cytokine_Type}
