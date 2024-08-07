@@ -15,7 +15,8 @@ export default function RecommendationsBlock({
     const [recommendation, setRecommendation] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-
+    const [dataLoad, setDataLoad] = useState(false);
+    
     const toggleEditMode = () => {
       setEditMode(!editMode);
     }
@@ -30,15 +31,18 @@ export default function RecommendationsBlock({
           const data = await recommendationsServise.getRecommendationById(Number(selectedAnalyzeId), chartType);
           setConclusion(data.conclusion ?? "");
           setRecommendation(data.recommendation ?? "");
+          setDataLoad(true);
         } catch (err) {
           if (err instanceof Error) {
             setConclusion("");
             setRecommendation("");
-            setError("Ошибка: " + err.message);
+            // setError("Ошибка: " + err.message);
+            setDataLoad(false);
           } else {
             setConclusion("");
             setRecommendation("");
-            setError("Ошибка загрузки: " + err);
+            // setError("Ошибка загрузки: " + err);
+            setDataLoad(false);
           }
         }
         setLoading(false);
@@ -102,63 +106,65 @@ export default function RecommendationsBlock({
 
     return (
       <>
-        <form onSubmit={handleSubmit} className="container-fluid">
-          <div>
-            <label htmlFor="conclusionArea" className="fw-bold">Заключение:</label>
-            <div className="mt-2">
-              <textarea
-                className="w-100"
-                id="conclusionArea"
-                name="conclusion"
-                value={conclusion}
-                onChange={handleChange}
-                disabled={!editMode}
-              />
+        {dataLoad &&
+          <form onSubmit={handleSubmit} className="container-fluid">
+            <div>
+              <label htmlFor="conclusionArea" className="fw-bold">Заключение:</label>
+              <div className="mt-2">
+                <textarea
+                  className="w-100"
+                  id="conclusionArea"
+                  name="conclusion"
+                  value={conclusion}
+                  onChange={handleChange}
+                  disabled={!editMode}
+                />
+              </div>
             </div>
-          </div>
 
-          <div>
-            <label htmlFor="recommendationArea" className="fw-bold">Рекомендация:</label>
-            <div className="mt-2">
-              <textarea
-                className="w-100"
-                id="recommendationArea"
-                name="recommendation"
-                value={recommendation}
-                onChange={handleChange}
-                disabled={!editMode}
-              />
+            <div>
+              <label htmlFor="recommendationArea" className="fw-bold">Рекомендация:</label>
+              <div className="mt-2">
+                <textarea
+                  className="w-100"
+                  id="recommendationArea"
+                  name="recommendation"
+                  value={recommendation}
+                  onChange={handleChange}
+                  disabled={!editMode}
+                />
+              </div>
             </div>
-          </div>
-          {error &&
-            <div className="alert alert-danger" role="alert">
-              {error}
-            </div>
-          }
-
-          <div className="d-flex justify-content-end mt-3">
-            {editMode &&
-              <button type="submit"
-                className="btn btn-outline-success float-end"
-                disabled={loading}
-                title="Сохранить изменения">
-                  {loading &&
-                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                  }
-                Сохранить
-              </button>
+            {error &&
+              <div className="alert alert-danger" role="alert">
+                {error}
+              </div>
             }
-            <button
-              type="button"
-              onClick={toggleEditMode}
-              className="btn btn-outline-secondary ms-3 float-end"
-              disabled={loading}
-              title={editMode ? "Отмена изменений" : "Редактировать сведения"}
-              >
-              {editMode ? "Отмена" : "Редактировать"}
-            </button>
-          </div>
-        </form>
+
+            <div className="d-flex justify-content-end mt-3">
+              {editMode &&
+                <button type="submit"
+                  className="btn btn-outline-success float-end"
+                  disabled={loading}
+                  title="Сохранить изменения">
+                    {loading &&
+                      <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    }
+                  Сохранить
+                </button>
+              }
+              <button
+                type="button"
+                onClick={toggleEditMode}
+                className="btn btn-outline-secondary ms-3 float-end"
+                disabled={loading}
+                title={editMode ? "Отмена изменений" : "Редактировать сведения"}
+                >
+                {editMode ? "Отмена" : "Редактировать"}
+              </button>
+            </div>
+          </form>
+        }
       </>
     )
 };
