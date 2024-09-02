@@ -113,7 +113,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                         <input className="col"
                             type="date"
                             id="birthDateArea"
-                            name="birthDate"
+                            name="birthdate"
                             value={changePatient.birthdate}
                             onChange={handleChange}
                             disabled={!editMode}
