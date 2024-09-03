@@ -3,6 +3,7 @@ import { Patient } from "../../../types/CommonTypes";
 import * as patientService from '../../../services/PatientService';
 import * as diagnosisService from '../../../services/DiagnosisService';
 import { DiagnosisDTO } from "../../../services/DiagnosisService";
+// import GeneticsInfoBlock from "./GeneticsInfoBlock";
 
 interface Props {
     patient: Patient;
@@ -14,9 +15,9 @@ function AdditionaInfolBlock({ patient }: Props) {
     const [changePatient, setChangePatient] = useState<Patient>(patient);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    // const [diagnosisCode, setDiagnosisCode] = useState("");
 
     const [diagnosisCatalog, setDiagnosisCatalog] = useState<DiagnosisDTO[]>([]);
-
     useEffect(() => {
         const loadDiagnosisCatalog = async () => {
             setError("");
@@ -44,9 +45,13 @@ function AdditionaInfolBlock({ patient }: Props) {
         setEditMode(!editMode);
     }
 
-    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement | HTMLInputElement>) => {
         const { name, value } = e.target;
-        setChangePatient(prevData => ({ ...prevData, [name]: value }))
+        setChangePatient(prevData => ({ ...prevData, [name]: value }));
+        // if (name === "diagnosisId") {
+        //     const selectedDiagnosis = diagnosisCatalog.find(diag => diag.id === Number(value))
+        //     setDiagnosisCode(selectedDiagnosis ? selectedDiagnosis.code : "")
+        // }
     }
 
     const handleSubmit = async (event: FormEvent) => {
@@ -73,7 +78,49 @@ function AdditionaInfolBlock({ patient }: Props) {
         <>
             <div className="border border-secondary rounded-3 text-secondary p-3 clearfix">
                 <form onSubmit={handleSubmit} className="container-fluid">
-                    <div className="mb-3">
+                    <div className="row">
+                        <label htmlFor="lastNameArea" className="col fw-bold">Фамилия</label>
+                        <input className="col"
+                            id="lastNameArea"
+                            name="lastname"
+                            value={changePatient.lastname ?? ""}
+                            onChange={handleChange}
+                            disabled={!editMode}
+                        />
+                    </div>
+                    <div className="row mt-2">
+                        <label htmlFor="nameArea" className="col fw-bold">Имя</label>
+                        <input className="col"
+                            id="nameArea"
+                            name="name"
+                            value={changePatient.name ?? ""}
+                            onChange={handleChange}
+                            disabled={!editMode}
+                        />
+                    </div>
+                    <div className="row mt-2">
+                        <label htmlFor="patronymicArea" className="col fw-bold">Отчество</label>
+                        <input className="col"
+                            id="patronymicArea"
+                            name="patronymic"
+                            value={changePatient.patronymic ?? ""}
+                            onChange={handleChange}
+                            disabled={!editMode}
+                        />
+                    </div>
+                    <div className="row mt-2">
+                        <label htmlFor="birthDateArea" className="col fw-bold">Дата рождения</label>
+                        <input className="col"
+                            type="date"
+                            id="birthDateArea"
+                            name="birthdate"
+                            value={changePatient.birthdate}
+                            onChange={handleChange}
+                            disabled={!editMode}
+                        />
+                    </div>
+
+                    <div className="mb-3 mt-2">
                         <label htmlFor="mainDiagnosisArea"
                             className="fw-bold">Диагноз:</label>
                         <div className="mt-2">
@@ -97,7 +144,7 @@ function AdditionaInfolBlock({ patient }: Props) {
 
                     </div>
 
-                    <div className="d-flex justify-content-between">
+                    <div className="mb-3 d-flex justify-content-between">
                         <div>
                             <label htmlFor="TArea"
                                 className="fw-bold me-3">T:</label>
@@ -153,7 +200,22 @@ function AdditionaInfolBlock({ patient }: Props) {
                         </div>
                     </div>
 
+                    {/* <GeneticsInfoBlock
+                        diagnosisCode={diagnosisCode} /> */}
 
+                    {/* <div className="mb-3">
+                        <label htmlFor="operationDate" className="fw-bold">Дата операции:</label>
+                        <div className="mt-2">
+                            <input className="w-100"
+                                type="date"
+                                id="operationDate"
+                                name="operationDate"
+                                autoComplete="off"
+                                // value={changePatient.diagnosisComments ?? ""}
+                                // onChange={handleChange}
+                                disabled={!editMode} />
+                        </div>
+                    </div> */}
 
                     <div>
                         <label htmlFor="diagnosisArea"

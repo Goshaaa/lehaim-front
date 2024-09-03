@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import Header from "../header/Header";
-import PatientInfo from "./components/PatientInfo";
+// import PatientInfo from "./components/PatientInfo";
 import AdditionaInfolBlock from './components/AdditionalInfoBlock';
 import AnalyzesBlock from "./components/AnalyzesBlock";
 import GraphBlock from "./components/GraphBlock";
@@ -54,7 +54,7 @@ function PatientCard() {
                 <div className="container-lg">
                     <div className="row">
                         <div className="col-md-4 col-sm-12 mb-3">
-                            <PatientInfo patient={patient}></PatientInfo>
+                            {/* <PatientInfo patient={patient}></PatientInfo> */}
                             <AdditionaInfolBlock patient={patient}></AdditionaInfolBlock>
                         </div>
                         <div className="col-md-8 col-sm-12">
