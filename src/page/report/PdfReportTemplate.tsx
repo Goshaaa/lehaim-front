@@ -195,6 +195,16 @@ function PatientReport({ reportData, chartData, diagnosisCatalog }: Props) {
             : null
           }
 
+          {chartData?.inflammationTypeData ?
+            <View style={styles.chartSection} wrap={false}>
+              <Text style={styles.sectionTitle}>Индексы системного воспаления</Text>
+              <Image
+                style={styles.chart}
+                source={chartData.inflammationTypeData} />
+            </View>
+            : null
+          }
+
           {chartData?.bTypeData ?
             <View style={styles.chartSection} wrap={false}>
               <Text style={styles.sectionTitle}>Относительные параметры B - клеточного звена иммунитета</Text>

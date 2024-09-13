@@ -55,7 +55,6 @@ function PdfReportDemoPage() {
 
     const chartDataUrlHandler = (chartType: ChartType, chartDataUrl: string) => {
         if (chartDataUrl) {
-            console.log("chartDataUrlHandler chartType = " + chartType);
             if (chartType === ChartType.Regeneration_Type) {
                 setChartData(prevData => ({ ...prevData, ['regenerationChartData']: chartDataUrl }))
             } else if (chartType === ChartType.B_Type) {
@@ -64,6 +63,8 @@ function PdfReportDemoPage() {
                 setChartData(prevData => ({ ...prevData, ['tTypeData']: chartDataUrl }))
             } else if (chartType === ChartType.Cytokine_Type) {
                 setChartData(prevData => ({ ...prevData, ['cytokineTypeData']: chartDataUrl }))
+            } else if (chartType === ChartType.Inflammation_Type) {
+                setChartData(prevData => ({ ...prevData, ['inflammationTypeData']: chartDataUrl }))
             }
         }
     }
@@ -93,6 +94,11 @@ function PdfReportDemoPage() {
                         <div style={{ "display": "none" }}>
                             <RadarChart
                                 chartType={ChartType.Regeneration_Type}
+                                data={reportData.currentResults}
+                                dataUrlHandler={chartDataUrlHandler}
+                                printMode={true} />
+                            <RadarChart
+                                chartType={ChartType.Inflammation_Type}
                                 data={reportData.currentResults}
                                 dataUrlHandler={chartDataUrlHandler}
                                 printMode={true} />

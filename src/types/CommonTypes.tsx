@@ -88,14 +88,16 @@ export enum ChartType {
     B_Type,
     T_Type,
     Cytokine_Type,
-    Regeneration_Type
+    Regeneration_Type,
+    Inflammation_Type
 }
 
 export enum ChartType2 {
     B_Type = "B_CELL",
     T_Type = "T_CELL",
     Cytokine_Type = "CYTOKINE_PAIRS",
-    Regeneration_Type = "REGENERATION"
+    Regeneration_Type = "REGENERATION",
+    Inflammation_Type = "Inflammation"
 }
 
 interface ChartsDataUrl {
@@ -103,6 +105,7 @@ interface ChartsDataUrl {
     bTypeData?: string | null,
     tTypeData?: string | null,
     cytokineTypeData?: string | null,
+    inflammationTypeData?: string | null
 }
 
 interface SelectAnalyzeCallback { (analyzeId?: string | undefined): void }

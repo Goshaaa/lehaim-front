@@ -27,6 +27,8 @@ function getOptions(data: AnalyzeDetailedInfo[], chartType: ChartType, printMode
         return getCytokineOption(filterForCytokineChart(data), printMode);
     } else if (ChartType.Regeneration_Type === chartType) {
         return getRegenerationOption(filterForRegenerationChart(data), printMode);
+    } else if (ChartType.Inflammation_Type === chartType) {
+        return getInflammationOption(filterForInflamiationChart(data), printMode);
     }
     return null;
 }
@@ -82,6 +84,22 @@ function getRegenerationOption(data: ChartDataParams, printMode: boolean) {
         { name: 'NEU/MON', max: upAxisMaxValue },
         { name: 'NEU/LYMF', max: rightAxisMaxValue },
         { name: 'LYMF/MON', max: leftAxisMaxValue },
+    ];
+
+    let option = getBaseOption(chartTitle, radarIndicator, data, printMode);
+    return option
+}
+
+function getInflammationOption(data: ChartDataParams, printMode: boolean) {
+    let upAxisMaxValue = Math.max(data.min[0], data.values[0], data.max[0]);
+    let rightAxisMaxValue = Math.max(data.min[1], data.values[1], data.max[1]);
+    let leftAxisMaxValue = Math.max(data.min[2], data.values[2], data.max[2]);
+
+    let chartTitle = 'Индексы системного воспаления';
+    let radarIndicator: Indicator[] = [
+        { name: 'SiRi', max: upAxisMaxValue },
+        { name: 'Плотность\n sнейтрофилов', max:  rightAxisMaxValue},
+        { name: 'PiV', max: leftAxisMaxValue }
     ];
 
     let option = getBaseOption(chartTitle, radarIndicator, data, printMode);
@@ -253,6 +271,26 @@ function filterForRegenerationChart(results: AnalyzeDetailedInfo[]): ChartDataPa
     }
 }
 
+function filterForInflamiationChart(results: AnalyzeDetailedInfo[]): ChartDataParams {
+    let NEU = getValueAndParambyAddName(results, "NEU").value ?? 0;
+    let MON = getValueAndParambyAddName(results, "MON").value ?? 0;
+    let LYMF = getValueAndParambyAddName(results, "LYMF").value ?? 0;
+    let PLT = getValueAndParambyAddName(results, "PLT").value ?? 0;
+
+    let SiRi = roundResult(divideValue((NEU * MON), LYMF));
+    let PiV = roundResult(divideValue((NEU * MON * PLT), LYMF));
+    let density = roundResult(divideValue(NEU, (LYMF + MON)));
+
+    let mins = [0.25, 37.8, 1.43];
+    let max = [1.33, 466.67, 1.5];
+    let values = [SiRi, PiV, density];
+    return {
+        min: mins,
+        max: max,
+        values: values
+    }
+}
+
 function getValueAndParambyAddName(results: AnalyzeDetailedInfo[], param: string): ChartDataParam {
     if (results !== null) {
         for (var p of results) {
@@ -282,15 +320,23 @@ function getValueAndParambyId(results: AnalyzeDetailedInfo[], id: number): Chart
 }
 
 function divide(first: ChartDataParam, sec: ChartDataParam): ChartDataParam {
-    let calcMin = sec.min !== 0 ? (first.min / sec.min) : 0;
-    let val = sec.value !== 0 ? (first.value / sec.value) : 0;
-    let calcMax = sec.max !== 0 ? (first.max / sec.max) : 0;
+    let calcMin = divideValue(first.min, sec.min);
+    let val = divideValue(first.value, sec.value);
+    let calcMax = divideValue(first.max, sec.max);
 
     return {
-        "min": Math.round(Math.min(calcMin, calcMax) * 100) / 100,
-        "max": Math.round(Math.max(calcMin, calcMax) * 100) / 100,
-        "value": Math.round(val * 100) / 100
+        "min": roundResult(Math.min(calcMin, calcMax)),
+        "max": roundResult(Math.max(calcMin, calcMax)),
+        "value": roundResult(val)
     }
+}
+
+function divideValue(first: number, second: number) {
+    return second !== 0 ? (first / second) : 0;
+}
+
+function roundResult(val: number) {
+    return Math.round(val * 100) / 100
 }
 
 export default getOptions;
