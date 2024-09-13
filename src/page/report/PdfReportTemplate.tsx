@@ -12,6 +12,7 @@ Font.register({
     { src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-regular-webfont.ttf", fontWeight: 400 },
     { src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-medium-webfont.ttf", fontWeight: 500 },
     { src: "https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/fonts/Roboto/roboto-bold-webfont.ttf", fontWeight: 600 },
+
   ],
 })
 
@@ -21,17 +22,25 @@ const styles = StyleSheet.create({
     fontSize: 12,
     padding: 10
   },
+  pagination: {
+    position: "absolute",
+    left: '45%',
+    bottom: 10
+  },
   header: {
     textAlign: "center",
     fontSize: 20,
     margin: 15
   },
   propertyLabel: {
-    fontWeight: 600
+    color: 'black'
+  },
+  propertyComment: {
+    color: '#454545'
   },
   section: {
     flexDirection: 'row',
-    padding: 3
+    padding: 5
   },
   sectionTitle: {
     textAlign: "center",
@@ -42,7 +51,14 @@ const styles = StyleSheet.create({
   chartSection: {
     marginBottom: 15
   },
+  chartTitle: {
+    textAlign: "center",
+    fontSize: 14,
+    margin: 10,
+    fontWeight: 600
+  },
   chart: {
+    left: '25%',
     width: 300,
     height: 300
   },
@@ -156,38 +172,51 @@ function PatientReport({ reportData, chartData, diagnosisCatalog }: Props) {
     <>
       <Document title={"Отчет " + reportData.patient.lastname + " " + reportData.patient.name + " от " + reportData.currentTestDate}>
         <Page size="A4" style={styles.page}>
+
           <View style={styles.header}>
             <Text>Отчет об обследовании за {reportData.currentTestDate}</Text>
           </View>
 
           <View style={styles.section}>
-            <Text style={styles.propertyLabel}>ФИО: </Text>
-            <Text>{reportData.patient.lastname} {reportData.patient.name} {reportData.patient.patronymic ?? ""}</Text>
+            <Text style={styles.propertyComment}>
+              <Text style={styles.propertyLabel}>ФИО: </Text>
+              {reportData.patient.lastname} {reportData.patient.name} {reportData.patient.patronymic ?? ""}
+            </Text>
           </View>
           <View style={styles.section}>
-            <Text style={styles.propertyLabel}>Дата рождения: </Text>
-            <Text>{reportData.patient.birthdate}</Text>
+            <Text style={styles.propertyComment}>
+              <Text style={styles.propertyLabel}>Дата рождения: </Text>
+              {reportData.patient.birthdate}
+            </Text>
           </View>
           <View style={styles.section}>
-            <Text style={styles.propertyLabel}>Диагноз: </Text>
-            <Text>{getDiagnosisName(reportData.patient.diagnosisId)}, T-{reportData.patient.t}, N-{reportData.patient.n}, M-{reportData.patient.m}</Text>
+            <Text style={styles.propertyComment}>
+              <Text style={styles.propertyLabel}>Диагноз: </Text>
+              {getDiagnosisName(reportData.patient.diagnosisId)}, T-{reportData.patient.t}, N-{reportData.patient.n}, M-{reportData.patient.m}
+            </Text>
           </View>
           <View style={styles.section}>
-            <Text style={styles.propertyLabel}>Комментарий о диагнозе: </Text>
-            <Text>{reportData.patient.diagnosisComments}</Text>
+            <Text style={styles.propertyComment}>
+              <Text style={styles.propertyLabel}>Комментарий о диагнозе: </Text>
+              {reportData.patient.diagnosisComments}
+            </Text>
           </View>
           <View style={styles.section}>
-            <Text style={styles.propertyLabel}>Комментарий об операции: </Text>
-            <Text>{reportData.patient.operationComments}</Text>
+            <Text style={styles.propertyComment}>
+              <Text style={styles.propertyLabel}>Комментарий об операции: </Text>
+              {reportData.patient.operationComments}
+            </Text>
           </View>
           <View style={styles.section}>
-            <Text style={styles.propertyLabel}>Комментарий о курсах химеотерапии: </Text>
-            <Text>{reportData.patient.chemotherapyComments}</Text>
+            <Text style={styles.propertyComment}>
+              <Text style={styles.propertyLabel}>Комментарий о курсах химеотерапии: </Text>
+              {reportData.patient.chemotherapyComments}
+            </Text>
           </View>
 
           {chartData?.regenerationChartData ?
             <View style={styles.chartSection}>
-              <Text style={styles.sectionTitle}>Расчет вида регенерации</Text>
+              <Text style={styles.chartTitle}>Расчет вида регенерации</Text>
               <Image
                 style={styles.chart}
                 source={chartData.regenerationChartData} />
@@ -197,7 +226,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog }: Props) {
 
           {chartData?.inflammationTypeData ?
             <View style={styles.chartSection} wrap={false}>
-              <Text style={styles.sectionTitle}>Индексы системного воспаления</Text>
+              <Text style={styles.chartTitle}>Индексы системного воспаления</Text>
               <Image
                 style={styles.chart}
                 source={chartData.inflammationTypeData} />
@@ -207,7 +236,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog }: Props) {
 
           {chartData?.bTypeData ?
             <View style={styles.chartSection} wrap={false}>
-              <Text style={styles.sectionTitle}>Относительные параметры B - клеточного звена иммунитета</Text>
+              <Text style={styles.chartTitle}>Относительные параметры B - клеточного звена иммунитета</Text>
               <Image
                 style={styles.chart}
                 source={chartData.bTypeData} />
@@ -217,7 +246,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog }: Props) {
 
           {chartData?.tTypeData ?
             <View style={styles.chartSection} wrap={false}>
-              <Text style={styles.sectionTitle}>Относительные параметры T - клеточного звена иммунитета</Text>
+              <Text style={styles.chartTitle}>Относительные параметры T - клеточного звена иммунитета</Text>
               <Image
                 style={styles.chart}
                 source={chartData.tTypeData} />
@@ -227,7 +256,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog }: Props) {
 
           {chartData?.cytokineTypeData ?
             <View style={styles.chartSection} wrap={false}>
-              <Text style={styles.sectionTitle}>Цитокиновые пары</Text>
+              <Text style={styles.chartTitle}>Цитокиновые пары</Text>
               <Image
                 style={styles.chart}
                 source={chartData.cytokineTypeData} />
@@ -259,6 +288,11 @@ function PatientReport({ reportData, chartData, diagnosisCatalog }: Props) {
               </View>
             </View>
           }
+
+          <Text style={styles.pagination} render={({ pageNumber, totalPages }) => (
+            `Страница ${pageNumber} из ${totalPages}`
+          )} fixed />
+
         </Page>
       </Document>
     </>

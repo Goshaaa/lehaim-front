@@ -23,7 +23,7 @@ function RadarChat({ chartType, data, dataUrlHandler, printMode = false }: Props
 
 
     useEffect(() => {
-        const dataUrl = chartRef?.current?.getEchartsInstance()?.getConnectedDataURL({type: "png"});
+        const dataUrl = chartRef?.current?.getEchartsInstance()?.getConnectedDataURL({ type: "png" });
         if (dataUrlHandler && dataUrl && dataUrl.length > 0) {
             setTimeout(() => {
                 dataUrlHandler(chartType, dataUrl);

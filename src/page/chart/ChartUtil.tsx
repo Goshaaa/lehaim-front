@@ -339,4 +339,9 @@ function roundResult(val: number) {
     return Math.round(val * 100) / 100
 }
 
+export function isGraphFilled(options: any): boolean {
+    const isAllGraphEmpty = options?.series[0]?.data[2]?.value?.every((value: number) => value === 0);
+    return isAllGraphEmpty ? false : true;;
+}
+
 export default getOptions;

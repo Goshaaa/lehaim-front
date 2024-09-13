@@ -56,8 +56,6 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
         event.preventDefault();
         event.stopPropagation();
         navigate("/patient/" + patientId + "/analyzes/" + id + "/pdf");
-        // const blob = await PdfReportGenerator.generateReportBlob();
-        // saveAs(blob, "pdfReport.pdf");
     }
 
     const onClickDelete = (selectedTest: AnalyzeBriefInfo) => {
@@ -84,8 +82,9 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                 title="Подтвердите действие"
                 body={"Вы точно хотите удалить \"Обследование от " + testToDelete.testDate + "\""}
                 yesCallback={() => { handleDeleteConfirmationCallback(testToDelete.id!!) }} />
+
             {!oncoTests && <h5 className="text-center m-3">Нет данных</h5>}
-            <ul className="list-group">
+            <ul className="list-group overflow-auto" style={{ "maxHeight": "412px", "scrollbarWidth": "thin" }}>
                 {oncoTests?.map((test) =>
                     <li key={test.id}
                         role='button'
