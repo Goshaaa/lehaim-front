@@ -37,12 +37,12 @@ function RadarChat({ chartType, data, dataUrlHandler, printMode = false }: Props
             {options
                 ?
                 <div>
-                    <h4 className='text-center'>{options.title.text}</h4>
+                    <h4 className='text-center m-3'>{options.title.text}</h4>
                     <ReactECharts
                         option={options}
                         notMerge={true}
                         lazyUpdate={false}
-                        style={printMode ? { height: '700px', width: '700px' } : { height: '700px', width: '100%' }}
+                        style={printMode ? { height: '700px', width: '700px' } : { height: '500px', width: '100%' }}
                         ref={chartRef}
                     />
                 </div>

@@ -1,7 +1,7 @@
 import { Font } from "@react-pdf/renderer";
 import { useEffect, useState } from 'react';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
-import { ChartsDataUrl, AnalyzeDetailedInfo } from '../../types/CommonTypes';
+import { ChartsDataUrl, AnalyzeDetailedInfo, RecommendationData } from '../../types/CommonTypes';
 import { ReportDTO } from '../../services/ReportService';
 import { DiagnosisDTO } from '../../services/DiagnosisService';
 
@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
   page: {
     fontFamily: "Roboto",
     fontSize: 12,
-    padding: 10
+    padding: 10,
+    paddingBottom: 20
   },
   pagination: {
     position: "absolute",
@@ -106,7 +107,8 @@ const styles = StyleSheet.create({
 interface Props {
   reportData: ReportDTO,
   chartData?: ChartsDataUrl | null,
-  diagnosisCatalog?: DiagnosisDTO[] | null
+  diagnosisCatalog?: DiagnosisDTO[] | null,
+  recommendationData?: RecommendationData | null
 }
 
 interface ResultDataHolder {
@@ -118,7 +120,7 @@ interface ResultData {
   prev?: AnalyzeDetailedInfo | null
 }
 
-function PatientReport({ reportData, chartData, diagnosisCatalog }: Props) {
+function PatientReport({ reportData, chartData, diagnosisCatalog, recommendationData }: Props) {
   const [resultMap, setResultMap] = useState<ResultData | null>(null);
 
   useEffect(() => {
@@ -223,6 +225,29 @@ function PatientReport({ reportData, chartData, diagnosisCatalog }: Props) {
             </View>
             : null
           }
+          {recommendationData?.regeneration ?
+            < View >
+              {recommendationData.regeneration.recommendation ?
+                <View style={styles.section}>
+                  <Text style={styles.propertyComment}>
+                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                    {recommendationData.regeneration.recommendation}
+                  </Text>
+                </View>
+                : null
+              }
+              {recommendationData.regeneration.conclusion ?
+                <View style={styles.section}>
+                  <Text style={styles.propertyComment}>
+                    <Text style={styles.propertyLabel}>Заключение: </Text>
+                    {recommendationData.regeneration.conclusion}
+                  </Text>
+                </View>
+                : null
+              }
+            </View>
+            : null
+          }
 
           {chartData?.inflammationTypeData ?
             <View style={styles.chartSection} wrap={false}>
@@ -264,6 +289,30 @@ function PatientReport({ reportData, chartData, diagnosisCatalog }: Props) {
             : null
           }
 
+          {recommendationData?.cytokine ?
+            < View >
+              {recommendationData.cytokine.recommendation ?
+                <View style={styles.section}>
+                  <Text style={styles.propertyComment}>
+                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                    {recommendationData.cytokine.recommendation}
+                  </Text>
+                </View>
+                : null
+              }
+              {recommendationData.cytokine.conclusion ?
+                <View style={styles.section}>
+                  <Text style={styles.propertyComment}>
+                    <Text style={styles.propertyLabel}>Заключение: </Text>
+                    {recommendationData.cytokine.conclusion}
+                  </Text>
+                </View>
+                : null
+              }
+            </View>
+            : null
+          }
+
           {resultMap &&
             <View>
               <Text style={styles.sectionTitle}>Сравнение показателей</Text>
@@ -294,7 +343,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog }: Props) {
           )} fixed />
 
         </Page>
-      </Document>
+      </Document >
     </>
   )
 }

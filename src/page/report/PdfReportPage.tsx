@@ -3,16 +3,17 @@ import PatientReport from './PdfReportTemplate';
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import RadarChart from '../chart/RadarChart';
-import { ChartType, ChartsDataUrl, } from '../../types/CommonTypes';
+import { ChartType, ChartsDataUrl, ChartType2, RecommendationData } from '../../types/CommonTypes';
 import * as reportService from '../../services/ReportService';
 import * as diagnosisService from '../../services/DiagnosisService';
 import { ReportDTO } from '../../services/ReportService';
 import { DiagnosisDTO } from '../../services/DiagnosisService';
-
+import * as recommendationsServise from '../../services/RecommendationService';
 
 function PdfReportDemoPage() {
     const [chartData, setChartData] = useState<ChartsDataUrl | null>(null);
     const [reportData, setReportData] = useState<ReportDTO | null>(null);
+    const [recommendationData, setRecommendationData] = useState<RecommendationData | null>(null);
     const [readyForBuildPdf, setReadyForBuildPdf] = useState<boolean>(false);
     const [diagnosisCatalog, setDiagnosisCatalog] = useState<DiagnosisDTO[] | null>(null);
     const [loading, setLoading] = useState(true);
@@ -28,6 +29,9 @@ function PdfReportDemoPage() {
                 setReportData(reportData);
                 const diagnosis = await diagnosisService.loadAllDiagnosis();
                 setDiagnosisCatalog(diagnosis);
+
+                const recommendation = await loadRecommendations();
+                setRecommendationData(recommendation);
             } catch (err) {
                 if (err instanceof Error) {
                     setError("Ошибка: " + err.message);
@@ -36,6 +40,24 @@ function PdfReportDemoPage() {
                 }
             }
         }
+
+        const loadRecommendations = async (): Promise<RecommendationData> => {
+            const recommendationData: RecommendationData = {}
+            try {
+                recommendationData.regeneration = await recommendationsServise.getRecommendationById(Number(testId), ChartType2.Regeneration_Type);
+            } catch (err) {
+                recommendationData.regeneration = null;
+            }
+            try {
+                recommendationData.cytokine = await recommendationsServise.getRecommendationById(Number(testId), ChartType2.Cytokine_Type);
+            } catch (err) {
+                recommendationData.cytokine = null;
+            }
+            //TODO Load other types
+            return recommendationData;
+        }
+
+
         console.log("Before loadind report data");
         setChartData(null);
         setReportData(null);
@@ -87,7 +109,12 @@ function PdfReportDemoPage() {
                         {
                             readyForBuildPdf && (
                                 <PDFViewer width={'100%'} height={window.innerHeight - 7}>
-                                    <PatientReport reportData={reportData} chartData={chartData} diagnosisCatalog={diagnosisCatalog} />
+                                    <PatientReport
+                                        reportData={reportData}
+                                        chartData={chartData}
+                                        diagnosisCatalog={diagnosisCatalog}
+                                        recommendationData={recommendationData}
+                                    />
                                 </PDFViewer>
                             )
                         }

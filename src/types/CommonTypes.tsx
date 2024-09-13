@@ -107,7 +107,6 @@ interface ChartsDataUrl {
     cytokineTypeData?: string | null,
     inflammationTypeData?: string | null
 }
-
 interface SelectAnalyzeCallback { (analyzeId?: string | undefined): void }
 
 interface Recommendation {
@@ -118,5 +117,11 @@ interface Recommendation {
     chartType: string,
 }
 
+interface RecommendationData {
+    regeneration?: Recommendation | null,
+    cytokine?: Recommendation | null,
+}
+
+
 export type { Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter,
-    CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO, ChartsDataUrl, Recommendation };
+    CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO, ChartsDataUrl, Recommendation, RecommendationData };

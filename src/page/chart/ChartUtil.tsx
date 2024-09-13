@@ -98,7 +98,7 @@ function getInflammationOption(data: ChartDataParams, printMode: boolean) {
     let chartTitle = 'Индексы системного воспаления';
     let radarIndicator: Indicator[] = [
         { name: 'SiRi', max: upAxisMaxValue },
-        { name: 'Плотность\n sнейтрофилов', max:  rightAxisMaxValue},
+        { name: 'Плотность\n нейтрофилов', max:  rightAxisMaxValue},
         { name: 'PiV', max: leftAxisMaxValue }
     ];
 
@@ -117,7 +117,7 @@ function getBaseOption(chartTitle: string, indicator: Indicator[], params: Chart
             trigger: 'axis'
         },
         legend: {
-            top: 30,
+            top: 0,
             data: printMode
                 ? ['Референтные значения', 'Результат', 'true']
                 : ['Нижние референтные значения', 'Результат', 'Верхние референтные значения']
