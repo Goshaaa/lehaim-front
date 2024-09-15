@@ -203,19 +203,19 @@ function AdditionaInfolBlock({ patient }: Props) {
                     {/* <GeneticsInfoBlock
                         diagnosisCode={diagnosisCode} /> */}
 
-                    {/* <div className="mb-3">
+                    <div className="mb-3">
                         <label htmlFor="operationDate" className="fw-bold">Дата операции:</label>
                         <div className="mt-2">
                             <input className="w-100"
                                 type="date"
-                                id="operationDate"
+                                id="operationDateArea"
                                 name="operationDate"
                                 autoComplete="off"
-                                // value={changePatient.diagnosisComments ?? ""}
-                                // onChange={handleChange}
+                                value={changePatient.operationDate ?? ""}
+                                onChange={handleChange}
                                 disabled={!editMode} />
                         </div>
-                    </div> */}
+                    </div>
 
                     <div>
                         <label htmlFor="diagnosisArea"

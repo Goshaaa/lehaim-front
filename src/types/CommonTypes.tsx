@@ -10,6 +10,7 @@ interface Patient {
     diagnosisComments?: string,
     operationComments?: string,
     chemotherapyComments?: string,
+    operationDate?: string,
     m?: string,
     n?: string,
     t?: string
