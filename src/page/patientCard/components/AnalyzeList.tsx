@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
-import { AnalyzeBriefInfo, SelectAnalyzeCallback } from '../../../types/CommonTypes';
+import { AnalyzeBriefInfo, SelectAnalyzeCallback, ChartType2 } from '../../../types/CommonTypes';
 import * as patientService from '../../../services/PatientService';
 import * as oncoTestService from '../../../services/OncoTestSerive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -75,6 +75,10 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
         }
     }
 
+    const isChartIncluded = (chartName: string, charts?: string[]) => {
+        return charts ? charts.includes(chartName) : false;
+    };
+
 
     return (
         <>
@@ -93,6 +97,13 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                         <div className='d-flex justify-content-between'>
                             <div>
                                 Обследование от {test.testDate}
+                            </div>
+                            <div className="d-flex ">
+                                <div style={{ backgroundColor: isChartIncluded(ChartType2.Regeneration_Type, test.possibleCharts) ? 'green' : 'transparent' }} className="border border-secondary rounded-1 ps-2 pe-2 ms-1 me-1">О</div>
+                                <div style={{ backgroundColor: isChartIncluded(ChartType2.Inflammation_Type, test.possibleCharts) ? 'green' : 'transparent' }} className="border border-secondary rounded-1 ps-2 pe-2 ms-1 me-1">СВ</div>
+                                <div style={{ backgroundColor: isChartIncluded(ChartType2.B_Type, test.possibleCharts) ? 'green' : 'transparent' }} className="border border-secondary rounded-1 ps-2 pe-2 ms-1 me-1">В</div>
+                                <div style={{ backgroundColor: isChartIncluded(ChartType2.T_Type, test.possibleCharts) ? 'green' : 'transparent' }} className="border border-secondary rounded-1 ps-2 pe-2 ms-1 me-1">Т</div>
+                                <div style={{ backgroundColor: isChartIncluded(ChartType2.Cytokine_Type, test.possibleCharts) ? 'green' : 'transparent' }} className="border border-secondary rounded-1 ps-2 pe-2 ms-1 me-1">Ц</div>
                             </div>
                             <div>
                                 <FontAwesomeIcon
