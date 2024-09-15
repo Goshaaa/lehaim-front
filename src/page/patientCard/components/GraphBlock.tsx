@@ -47,7 +47,7 @@ function GraphBlock({ selectedAnalyzeId }: Props) {
                         />
                     </div>
                     <div className='container'>
-                        <RecommendationsBlock 
+                        <RecommendationsBlock
                             selectedAnalyzeId={selectedAnalyzeId}
                             chartType={ChartType2.Regeneration_Type}
                         />
@@ -57,6 +57,12 @@ function GraphBlock({ selectedAnalyzeId }: Props) {
                             chartType={ChartType.Inflammation_Type}
                             data={analyzeResult}
                         />
+                        {/* <div className='container'>
+                            <RecommendationsBlock
+                                selectedAnalyzeId={selectedAnalyzeId}
+                                chartType={ChartType2.Inflammation_Type}
+                            />
+                        </div> */}
                     </div>
                     <div className='container'>
                         <RadarChart
@@ -89,7 +95,7 @@ function GraphBlock({ selectedAnalyzeId }: Props) {
                         />
                     </div>
                     <div className='container'>
-                        <RecommendationsBlock 
+                        <RecommendationsBlock
                             selectedAnalyzeId={selectedAnalyzeId}
                             chartType={ChartType2.Cytokine_Type}
                         />

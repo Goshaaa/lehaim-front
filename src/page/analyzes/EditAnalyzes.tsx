@@ -192,6 +192,10 @@ function EditAnalyzes() {
                                                         chartType={ChartType.Regeneration_Type}
                                                         data={analyzeResult}
                                                     />
+                                                    <RadarChat
+                                                        chartType={ChartType.Inflammation_Type}
+                                                        data={analyzeResult}
+                                                    />
                                                 </div>
                                             </div>
                                         </div>

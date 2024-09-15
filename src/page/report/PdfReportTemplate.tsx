@@ -227,15 +227,6 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
           }
           {recommendationData?.regeneration ?
             < View >
-              {recommendationData.regeneration.recommendation ?
-                <View style={styles.section}>
-                  <Text style={styles.propertyComment}>
-                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                    {recommendationData.regeneration.recommendation}
-                  </Text>
-                </View>
-                : null
-              }
               {recommendationData.regeneration.conclusion ?
                 <View style={styles.section}>
                   <Text style={styles.propertyComment}>
@@ -245,6 +236,16 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
                 </View>
                 : null
               }
+              {recommendationData.regeneration.recommendation ?
+                <View style={styles.section}>
+                  <Text style={styles.propertyComment}>
+                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                    {recommendationData.regeneration.recommendation}
+                  </Text>
+                </View>
+                : null
+              }
+
             </View>
             : null
           }
@@ -291,20 +292,20 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
 
           {recommendationData?.cytokine ?
             < View >
-              {recommendationData.cytokine.recommendation ?
-                <View style={styles.section}>
-                  <Text style={styles.propertyComment}>
-                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                    {recommendationData.cytokine.recommendation}
-                  </Text>
-                </View>
-                : null
-              }
               {recommendationData.cytokine.conclusion ?
                 <View style={styles.section}>
                   <Text style={styles.propertyComment}>
                     <Text style={styles.propertyLabel}>Заключение: </Text>
                     {recommendationData.cytokine.conclusion}
+                  </Text>
+                </View>
+                : null
+              }
+              {recommendationData.cytokine.recommendation ?
+                <View style={styles.section}>
+                  <Text style={styles.propertyComment}>
+                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                    {recommendationData.cytokine.recommendation}
                   </Text>
                 </View>
                 : null

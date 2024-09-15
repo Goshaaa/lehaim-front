@@ -92,14 +92,15 @@ function getRegenerationOption(data: ChartDataParams, printMode: boolean) {
 
 function getInflammationOption(data: ChartDataParams, printMode: boolean) {
     let upAxisMaxValue = Math.max(data.min[0], data.values[0], data.max[0]);
-    let rightAxisMaxValue = Math.max(data.min[1], data.values[1], data.max[1]);
-    let leftAxisMaxValue = Math.max(data.min[2], data.values[2], data.max[2]);
+    let leftAxisMaxValue = Math.max(data.min[1], data.values[1], data.max[1]);
+    let rightAxisMaxValue = Math.max(data.min[2], data.values[2], data.max[2]);
+    
 
     let chartTitle = 'Индексы системного воспаления';
     let radarIndicator: Indicator[] = [
         { name: 'SiRi', max: upAxisMaxValue },
-        { name: 'Плотность\n нейтрофилов', max:  rightAxisMaxValue},
-        { name: 'PiV', max: leftAxisMaxValue }
+        { name: 'Плотность\n нейтрофилов', max:  leftAxisMaxValue},
+        { name: 'PiV', max: rightAxisMaxValue }
     ];
 
     let option = getBaseOption(chartTitle, radarIndicator, data, printMode);
@@ -277,13 +278,13 @@ function filterForInflamiationChart(results: AnalyzeDetailedInfo[]): ChartDataPa
     let LYMF = getValueAndParambyAddName(results, "LYMF").value ?? 0;
     let PLT = getValueAndParambyAddName(results, "PLT").value ?? 0;
 
+    let density = roundResult(divideValue(NEU, (LYMF + MON)));
     let SiRi = roundResult(divideValue((NEU * MON), LYMF));
     let PiV = roundResult(divideValue((NEU * MON * PLT), LYMF));
-    let density = roundResult(divideValue(NEU, (LYMF + MON)));
 
-    let mins = [0.25, 37.8, 1.43];
-    let max = [1.33, 466.67, 1.5];
-    let values = [SiRi, PiV, density];
+    let mins = [0.25, 1.43, 37.8];
+    let max = [1.33, 1.5, 466.67];
+    let values = [SiRi, density, PiV];
     return {
         min: mins,
         max: max,
