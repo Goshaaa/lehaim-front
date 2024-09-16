@@ -55,7 +55,8 @@ interface OncoTestData {
 
 interface AnalyzeBriefInfo {
     id?: string,
-    testDate?: string
+    testDate?: string,
+    possibleCharts?: string[] | undefined,
 }
 
 interface AnalyzeDetailedInfo {
