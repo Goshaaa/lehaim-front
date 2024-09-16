@@ -99,7 +99,7 @@ export enum ChartType2 {
     T_Type = "T_CELL",
     Cytokine_Type = "CYTOKINE_PAIRS",
     Regeneration_Type = "REGENERATION",
-    Inflammation_Type = "Inflammation"
+    Inflammation_Type = "SYSTEMIC_INFLAMMATION"
 }
 
 interface ChartsDataUrl {
