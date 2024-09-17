@@ -3,7 +3,7 @@ import PatientReport from './PdfReportTemplate';
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import RadarChart from '../chart/RadarChart';
-import { ChartType, ChartsDataUrl, ChartType2, RecommendationData } from '../../types/CommonTypes';
+import { ChartType, ChartsDataUrl, RecommendationData } from '../../types/CommonTypes';
 import * as reportService from '../../services/ReportService';
 import * as diagnosisService from '../../services/DiagnosisService';
 import { ReportDTO } from '../../services/ReportService';
@@ -30,7 +30,7 @@ function PdfReportDemoPage() {
                 const diagnosis = await diagnosisService.loadAllDiagnosis();
                 setDiagnosisCatalog(diagnosis);
 
-                const recommendation = await loadRecommendations();
+                const recommendation : RecommendationData = await recommendationsServise.getRecommendationById(Number(testId));
                 setRecommendationData(recommendation);
             } catch (err) {
                 if (err instanceof Error) {
@@ -39,22 +39,6 @@ function PdfReportDemoPage() {
                     setError("Ошибка загрузки: " + err);
                 }
             }
-        }
-
-        const loadRecommendations = async (): Promise<RecommendationData> => {
-            const recommendationData: RecommendationData = {}
-            try {
-                recommendationData.regeneration = await recommendationsServise.getRecommendationById(Number(testId), ChartType2.Regeneration_Type);
-            } catch (err) {
-                recommendationData.regeneration = null;
-            }
-            try {
-                recommendationData.cytokine = await recommendationsServise.getRecommendationById(Number(testId), ChartType2.Cytokine_Type);
-            } catch (err) {
-                recommendationData.cytokine = null;
-            }
-            //TODO Load other types
-            return recommendationData;
         }
 
 

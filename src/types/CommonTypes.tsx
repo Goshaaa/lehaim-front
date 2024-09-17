@@ -116,12 +116,16 @@ interface Recommendation {
     name?: string,
     conclusion?: string,
     recommendation?: string,
-    chartType: string,
+    chartType?: string,
+    errorMessage?: string,
 }
 
 interface RecommendationData {
-    regeneration?: Recommendation | null,
-    cytokine?: Recommendation | null,
+    REGENERATION: Recommendation | null,
+    B_CELL: Recommendation | null,
+    T_CELL: Recommendation | null,
+    CYTOKINE_PAIRS: Recommendation | null,
+    SYSTEMIC_INFLAMMATION: Recommendation | null,
 }
 
 

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import * as oncoTestService from '../../../services/OncoTestSerive';
-import { AnalyzeDetailedInfo, ChartType, ChartType2 } from '../../../types/CommonTypes';
+import { AnalyzeDetailedInfo, ChartType, RecommendationData } from '../../../types/CommonTypes';
 import RadarChart from '../../chart/RadarChart';
 import RecommendationsBlock from '../../recommendations/Recommendations';
+import * as recommendationsServise from '../../../services/RecommendationService';
 
 
 interface Props {
@@ -11,15 +12,22 @@ interface Props {
 
 function GraphBlock({ selectedAnalyzeId }: Props) {
     const [analyzeResult, setAnalyzeResult] = useState<AnalyzeDetailedInfo[]>([]);
+    const [recommendationData, setRecommendationData] = useState<RecommendationData | null>(null);
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const loadAllOncoTestParams = async () => {
+        const loadAllDataGraph = async () => {
             setError("");
+            setLoading(true);
             if (selectedAnalyzeId) {
                 try {
                     const data = await oncoTestService.getAllOncoTestParams(Number(selectedAnalyzeId));
                     setAnalyzeResult(data);
+
+                    const recommendation : RecommendationData = await recommendationsServise.getRecommendationById(Number(selectedAnalyzeId));
+                    setRecommendationData(recommendation);
+
                 } catch (err) {
                     if (err instanceof Error) {
                         setError("Ошибка: " + err.message);
@@ -27,11 +35,12 @@ function GraphBlock({ selectedAnalyzeId }: Props) {
                         setError("Ошибка загрузки: " + err);
                     }
                 }
+                setLoading(false);
             } else {
                 setAnalyzeResult([]);
             }
         }
-        loadAllOncoTestParams();
+        loadAllDataGraph();
     }, [selectedAnalyzeId])
 
     return (
@@ -39,17 +48,19 @@ function GraphBlock({ selectedAnalyzeId }: Props) {
             <h3 className="text-center m-3">Графики</h3>
             {analyzeResult.length === 0
                 ? <h5 className="text-center m-3">Не выбрано обследование, по которому построить графики</h5>
-                : <div>
+                : loading ? 
+                <div className='container'>
+                    <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                </div> :
+                <div>
                     <div className='container'>
                         <RadarChart
                             chartType={ChartType.Regeneration_Type}
                             data={analyzeResult}
                         />
-                    </div>
-                    <div className='container'>
                         <RecommendationsBlock
                             selectedAnalyzeId={selectedAnalyzeId}
-                            chartType={ChartType2.Regeneration_Type}
+                            recommendations={recommendationData?.REGENERATION}
                         />
                     </div>
                     <div className='container'>
@@ -57,47 +68,41 @@ function GraphBlock({ selectedAnalyzeId }: Props) {
                             chartType={ChartType.Inflammation_Type}
                             data={analyzeResult}
                         />
-                        {/* <div className='container'>
+                        <div className='container'>
                             <RecommendationsBlock
-                                selectedAnalyzeId={selectedAnalyzeId}
-                                chartType={ChartType2.Inflammation_Type}
+                               selectedAnalyzeId={selectedAnalyzeId}
+                               recommendations={recommendationData?.SYSTEMIC_INFLAMMATION}
                             />
-                        </div> */}
+                        </div>
                     </div>
                     <div className='container'>
                         <RadarChart
                             chartType={ChartType.B_Type}
                             data={analyzeResult}
                         />
-                    </div>
-                    {/* <div className='container'>
-                        <RecommendationsBlock 
+                        <RecommendationsBlock
                             selectedAnalyzeId={selectedAnalyzeId}
-                            chartType={ChartType2.B_Type}
+                            recommendations={recommendationData?.B_CELL}
                         />
-                    </div> */}
+                    </div>
                     <div className='container'>
                         <RadarChart
                             chartType={ChartType.T_Type}
                             data={analyzeResult}
                         />
-                    </div>
-                    {/* <div className='container'>
-                        <RecommendationsBlock 
+                        <RecommendationsBlock
                             selectedAnalyzeId={selectedAnalyzeId}
-                            chartType={ChartType2.T_Type}
+                            recommendations={recommendationData?.T_CELL}
                         />
-                    </div> */}
+                    </div>
                     <div className='container'>
                         <RadarChart
                             chartType={ChartType.Cytokine_Type}
                             data={analyzeResult}
                         />
-                    </div>
-                    <div className='container'>
                         <RecommendationsBlock
                             selectedAnalyzeId={selectedAnalyzeId}
-                            chartType={ChartType2.Cytokine_Type}
+                            recommendations={recommendationData?.CYTOKINE_PAIRS}
                         />
                     </div>
 
