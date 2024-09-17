@@ -1,55 +1,24 @@
-import { useState, FormEvent, useEffect } from "react";
+import { useState, FormEvent } from "react";
 import * as recommendationsServise from '../../services/RecommendationService';
-import { ChartType2, Recommendation } from "../../types/CommonTypes";
+import { Recommendation } from "../../types/CommonTypes";
 
 interface Props {
   selectedAnalyzeId?: string;
-  chartType: ChartType2;
+  recommendations?: Recommendation | null;
 }
 
 export default function RecommendationsBlock({
   selectedAnalyzeId,
-  chartType} : Props) {
+  recommendations} : Props) {
     const [editMode, setEditMode] = useState(false);
-    const [conclusion, setConclusion] = useState("");
-    const [recommendation, setRecommendation] = useState("");
+    const [conclusion, setConclusion] = useState(recommendations?.conclusion ?? "");
+    const [recommendation, setRecommendation] = useState(recommendations?.recommendation ?? "");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [dataLoad, setDataLoad] = useState(false);
     
     const toggleEditMode = () => {
       setEditMode(!editMode);
     }
-
-    useEffect(() => {
-      const loadRecommendation = async () => {
-      setError("");
-      setLoading(true);
-
-      if (selectedAnalyzeId) {
-        try {
-          const data = await recommendationsServise.getRecommendationById(Number(selectedAnalyzeId), chartType);
-          setConclusion(data.conclusion ?? "");
-          setRecommendation(data.recommendation ?? "");
-          setDataLoad(true);
-        } catch (err) {
-          if (err instanceof Error) {
-            setConclusion("");
-            setRecommendation("");
-            // setError("Ошибка: " + err.message);
-            setDataLoad(false);
-          } else {
-            setConclusion("");
-            setRecommendation("");
-            // setError("Ошибка загрузки: " + err);
-            setDataLoad(false);
-          }
-        }
-        setLoading(false);
-      }
-    }
-      loadRecommendation() 
-    }, [selectedAnalyzeId, chartType]);
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement>) => {
       const { name, value } = e.target;
@@ -67,19 +36,15 @@ export default function RecommendationsBlock({
 
       try {
         const recommendationData: Recommendation = {
-          conclusion,
-          recommendation,
-          chartType: chartType.toString(),
+          conclusion: conclusion,
+          recommendation: recommendation,
         }
         let data;
-        if (selectedAnalyzeId) {
-          const existRecommendation = await recommendationsServise.getRecommendationById(Number(selectedAnalyzeId), chartType);
-          const recommendationId = existRecommendation.id;
-          if (recommendationId) {
-            data = await recommendationsServise.updateRecommendation(recommendationData, recommendationId);
-          } else {
-            data = await recommendationsServise.saveNewRecommendation(recommendationData, Number(selectedAnalyzeId));
-          }
+        const recommendationId = recommendations?.id;
+        if (recommendationId) {
+          data = await recommendationsServise.updateRecommendation(recommendationData, recommendationId);
+        } else {
+          data = await recommendationsServise.saveNewRecommendation(recommendationData, Number(selectedAnalyzeId));
         }
         if (data) {
           setConclusion(data.conclusion ?? conclusion);
@@ -106,7 +71,7 @@ export default function RecommendationsBlock({
 
     return (
       <>
-        {dataLoad &&
+        {recommendations?.errorMessage === null &&
           <form onSubmit={handleSubmit} className="container-fluid">
             <div>
               <label htmlFor="conclusionArea" className="fw-bold">Заключение:</label>
