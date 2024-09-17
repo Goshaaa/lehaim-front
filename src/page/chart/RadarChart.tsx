@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import ReactECharts, { EChartsInstance } from 'echarts-for-react';
 
 import { AnalyzeDetailedInfo, ChartType } from "../../types/CommonTypes";
-import getOptions from './ChartUtil'
+import getOptions, { isGraphFilled } from './ChartUtil'
 
 
 interface Props {
@@ -18,13 +18,18 @@ function RadarChat({ chartType, data, dataUrlHandler, printMode = false }: Props
 
 
     useEffect(() => {
-        setOptions(getOptions(data, chartType, printMode));
+        const opt = getOptions(data, chartType, printMode)
+        if (isGraphFilled(opt)) {
+            setOptions(opt);
+        } else {
+            setOptions("");
+        }
     }, [data, chartType]);
 
 
     useEffect(() => {
         const dataUrl = chartRef?.current?.getEchartsInstance()?.getConnectedDataURL({ type: "png" });
-        if (dataUrlHandler && dataUrl && dataUrl.length > 0) {
+        if (dataUrlHandler) {
             setTimeout(() => {
                 dataUrlHandler(chartType, dataUrl);
             }, 1000);

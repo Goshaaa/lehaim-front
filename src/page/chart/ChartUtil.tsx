@@ -119,6 +119,7 @@ function getBaseOption(chartTitle: string, indicator: Indicator[], params: Chart
         },
         legend: {
             top: 0,
+            padding: 0,
             data: printMode
                 ? ['Референтные значения', 'Результат', 'true']
                 : ['Нижние референтные значения', 'Результат', 'Верхние референтные значения']
@@ -127,21 +128,22 @@ function getBaseOption(chartTitle: string, indicator: Indicator[], params: Chart
             indicator: indicator,
             scale: false,
             silent: true,
+            center: ['50%', '60%'],
             axisName: {
                 fontWeight: 'bold',
                 color: 'black',
-                width: 20,
-                margin: 7,
-                padding: 7
+                width: 200,
+                height: 15,
+                margin: 17,
+                padding: [10, 0, 10, 0]
             }
         },
         series: [
             {
                 tooltip: {
                     trigger: 'item',
-                    // formatter: '{a0} -  {b0}: {c0}, {d0}, {e0}'
+                    valueFormatter: (value: any) => value.toFixed(2)
                 },
-                
                 type: 'radar',
                 data: [
                     {

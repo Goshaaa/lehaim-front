@@ -112,6 +112,8 @@ function AdditionaInfolBlock({ patient }: Props) {
                         <label htmlFor="birthDateArea" className="col fw-bold">Дата рождения</label>
                         <input className="col"
                             type="date"
+                            min='1900-01-01'
+                            max='2199-12-12'
                             id="birthDateArea"
                             name="birthdate"
                             value={changePatient.birthdate}
@@ -208,6 +210,8 @@ function AdditionaInfolBlock({ patient }: Props) {
                         <div className="mt-2">
                             <input className="w-100"
                                 type="date"
+                                min='1900-01-01'
+                                max='2199-12-12'
                                 id="operationDateArea"
                                 name="operationDate"
                                 autoComplete="off"

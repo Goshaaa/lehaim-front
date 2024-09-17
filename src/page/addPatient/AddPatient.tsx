@@ -127,6 +127,8 @@ function AddPatient() {
                                     <input type="date"
                                         id="patientBithDate"
                                         required
+                                        min='1900-01-01'
+                                        max='2199-12-12'
                                         autoComplete="off"
                                         maxLength={40}
                                         name="birthdate"
