@@ -40,9 +40,6 @@ function PdfReportDemoPage() {
                 }
             }
         }
-
-
-        console.log("Before loadind report data");
         setChartData(null);
         setReportData(null);
         setReadyForBuildPdf(false);
@@ -60,18 +57,16 @@ function PdfReportDemoPage() {
 
 
     const chartDataUrlHandler = (chartType: ChartType, chartDataUrl: string) => {
-        if (chartDataUrl) {
-            if (chartType === ChartType.Regeneration_Type) {
-                setChartData(prevData => ({ ...prevData, ['regenerationChartData']: chartDataUrl }))
-            } else if (chartType === ChartType.B_Type) {
-                setChartData(prevData => ({ ...prevData, ['bTypeData']: chartDataUrl }))
-            } else if (chartType === ChartType.T_Type) {
-                setChartData(prevData => ({ ...prevData, ['tTypeData']: chartDataUrl }))
-            } else if (chartType === ChartType.Cytokine_Type) {
-                setChartData(prevData => ({ ...prevData, ['cytokineTypeData']: chartDataUrl }))
-            } else if (chartType === ChartType.Inflammation_Type) {
-                setChartData(prevData => ({ ...prevData, ['inflammationTypeData']: chartDataUrl }))
-            }
+        if (chartType === ChartType.Regeneration_Type) {
+            setChartData(prevData => ({ ...prevData, ['regenerationChartData']: chartDataUrl }))
+        } else if (chartType === ChartType.B_Type) {
+            setChartData(prevData => ({ ...prevData, ['bTypeData']: chartDataUrl }))
+        } else if (chartType === ChartType.T_Type) {
+            setChartData(prevData => ({ ...prevData, ['tTypeData']: chartDataUrl }))
+        } else if (chartType === ChartType.Cytokine_Type) {
+            setChartData(prevData => ({ ...prevData, ['cytokineTypeData']: chartDataUrl }))
+        } else if (chartType === ChartType.Inflammation_Type) {
+            setChartData(prevData => ({ ...prevData, ['inflammationTypeData']: chartDataUrl }))
         }
     }
 

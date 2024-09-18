@@ -144,6 +144,8 @@ function EditAnalyzes() {
                             <input
                                 type="date"
                                 required
+                                min='1900-01-01'
+                                max='2199-12-12'
                                 name="testDate"
                                 autoComplete="off"
                                 id="testDate"

@@ -90,6 +90,8 @@ function SearchPatient() {
                                     <label htmlFor="patientBithDate" className="form-label fw-bold">Дата рождения</label>
                                     <input
                                         type="date"
+                                        min='1900-01-01'
+                                        max='2199-12-12'
                                         required
                                         id="patientBithDate"
                                         name="birthDate"
