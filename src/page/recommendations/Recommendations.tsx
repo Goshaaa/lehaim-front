@@ -41,10 +41,12 @@ export default function RecommendationsBlock({
         }
         let data;
         const recommendationId = recommendations?.id;
+        const chartType = recommendations?.chartType;
         if (recommendationId) {
           data = await recommendationsServise.updateRecommendation(recommendationData, recommendationId);
-        } else {
-          data = await recommendationsServise.saveNewRecommendation(recommendationData, Number(selectedAnalyzeId));
+        } 
+        if (chartType) {
+          data = await recommendationsServise.saveNewRecommendation(recommendationData, Number(selectedAnalyzeId), chartType);
         }
         if (data) {
           setConclusion(data.conclusion ?? conclusion);

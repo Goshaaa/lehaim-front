@@ -7,8 +7,8 @@ export async function getRecommendationById(testId: number): Promise<Recommendat
   return await handleResponse<RecommendationData>(response, "Ошибка загрузки сведений о рекомендациях");
 }
 
-export async function saveNewRecommendation(recommendation: Recommendation, testId: number): Promise<Recommendation> {
-  const response = await fetch(ApiHost + "/recommendations/" + testId,
+export async function saveNewRecommendation(recommendation: Recommendation, testId: number, chartType: string): Promise<Recommendation> {
+  const response = await fetch(ApiHost + "/recommendations/" + testId + "/" + chartType,
       {
           method: "POST",
           headers: { "Content-Type": "application/json" },
