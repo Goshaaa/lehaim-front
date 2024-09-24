@@ -211,7 +211,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
           </View>
           <View style={styles.section}>
             <Text style={styles.propertyComment}>
-              <Text style={styles.propertyLabel}>Комментарий о курсах химеотерапии: </Text>
+              <Text style={styles.propertyLabel}>Комментарий о курсах химиотерапии: </Text>
               {reportData.patient.chemotherapyComments}
             </Text>
           </View>

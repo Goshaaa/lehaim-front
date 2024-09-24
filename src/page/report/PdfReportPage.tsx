@@ -3,7 +3,7 @@ import PatientReport from './PdfReportTemplate';
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import RadarChart from '../chart/RadarChart';
-import { ChartType, ChartsDataUrl, RecommendationData } from '../../types/CommonTypes';
+import { ChartType, ChartsDataUrl, RecommendationData, ChartPage } from '../../types/CommonTypes';
 import * as reportService from '../../services/ReportService';
 import * as diagnosisService from '../../services/DiagnosisService';
 import { ReportDTO } from '../../services/ReportService';
@@ -102,27 +102,27 @@ function PdfReportDemoPage() {
                                 chartType={ChartType.Regeneration_Type}
                                 data={reportData.currentResults}
                                 dataUrlHandler={chartDataUrlHandler}
-                                printMode={true} />
+                                chartPage={ChartPage.Report} />
                             <RadarChart
                                 chartType={ChartType.Inflammation_Type}
                                 data={reportData.currentResults}
                                 dataUrlHandler={chartDataUrlHandler}
-                                printMode={true} />
+                                chartPage={ChartPage.Report} />
                             <RadarChart
                                 chartType={ChartType.B_Type}
                                 data={reportData.currentResults}
                                 dataUrlHandler={chartDataUrlHandler}
-                                printMode={true} />
+                                chartPage={ChartPage.Report} />
                             <RadarChart
                                 chartType={ChartType.T_Type}
                                 data={reportData.currentResults}
                                 dataUrlHandler={chartDataUrlHandler}
-                                printMode={true} />
+                                chartPage={ChartPage.Report} />
                             <RadarChart
                                 chartType={ChartType.Cytokine_Type}
                                 data={reportData.currentResults}
                                 dataUrlHandler={chartDataUrlHandler}
-                                printMode={true} />
+                                chartPage={ChartPage.Report} />
                         </div>
                     </div>
                 )

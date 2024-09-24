@@ -128,6 +128,11 @@ interface RecommendationData {
     SYSTEMIC_INFLAMMATION: Recommendation | null,
 }
 
+export enum ChartPage {
+    Common,
+    Analyze,
+    Report
+}
 
 export type { Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter,
     CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO, ChartsDataUrl, Recommendation, RecommendationData };

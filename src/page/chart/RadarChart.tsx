@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import ReactECharts, { EChartsInstance } from 'echarts-for-react';
 
-import { AnalyzeDetailedInfo, ChartType } from "../../types/CommonTypes";
+import { AnalyzeDetailedInfo, ChartPage, ChartType } from "../../types/CommonTypes";
 import getOptions, { isGraphFilled } from './ChartUtil'
 
 
@@ -9,21 +9,26 @@ interface Props {
     chartType: ChartType;
     data: AnalyzeDetailedInfo[],
     dataUrlHandler?: Function,
-    printMode?: boolean
+    chartPage: ChartPage
 }
 
-function RadarChat({ chartType, data, dataUrlHandler, printMode = false }: Props) {
+function RadarChat({ chartType, data, dataUrlHandler, chartPage }: Props) {
     const [options, setOptions] = useState<any>(null);
     const chartRef = useRef<ReactECharts>(null);
 
 
     useEffect(() => {
-        const opt = getOptions(data, chartType, printMode)
-        if (isGraphFilled(opt)) {
+        const opt = getOptions(data, chartType, chartPage);
+        if (chartPage == ChartPage.Analyze) {
             setOptions(opt);
         } else {
-            setOptions("");
+            if (isGraphFilled(opt)) {
+                setOptions(opt);
+            } else {
+                setOptions("");
+            }
         }
+
     }, [data, chartType]);
 
 
@@ -47,7 +52,7 @@ function RadarChat({ chartType, data, dataUrlHandler, printMode = false }: Props
                         option={options}
                         notMerge={true}
                         lazyUpdate={false}
-                        style={printMode ? { height: '700px', width: '700px' } : { height: '500px', width: '100%' }}
+                        style={ChartPage.Report === chartPage ? { height: '700px', width: '700px' } : { height: '500px', width: '100%' }}
                         ref={chartRef}
                     />
                 </div>

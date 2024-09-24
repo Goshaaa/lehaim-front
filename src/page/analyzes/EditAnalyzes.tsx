@@ -2,7 +2,7 @@ import { useState, useEffect, FormEvent, ChangeEvent } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../header/Header";
 import CatalogParamItem from './CatalogParamItem';
-import { CatalogItem, AnalyzeDetailedInfo, OncoTestData, ChartType } from '../../types/CommonTypes';
+import { CatalogItem, AnalyzeDetailedInfo, OncoTestData, ChartType, ChartPage } from '../../types/CommonTypes';
 import * as oncoTestService from '../../services/OncoTestSerive';
 import * as patientService from '../../services/PatientService';
 import RadarChat from '../chart/RadarChart';
@@ -193,10 +193,12 @@ function EditAnalyzes() {
                                                     <RadarChat
                                                         chartType={ChartType.Regeneration_Type}
                                                         data={analyzeResult}
+                                                        chartPage={ChartPage.Analyze}
                                                     />
                                                     <RadarChat
                                                         chartType={ChartType.Inflammation_Type}
                                                         data={analyzeResult}
+                                                        chartPage={ChartPage.Analyze}
                                                     />
                                                 </div>
                                             </div>
@@ -237,10 +239,12 @@ function EditAnalyzes() {
                                                     <RadarChat
                                                         chartType={ChartType.B_Type}
                                                         data={analyzeResult}
+                                                        chartPage={ChartPage.Analyze}
                                                     />
                                                     <RadarChat
                                                         chartType={ChartType.T_Type}
                                                         data={analyzeResult}
+                                                        chartPage={ChartPage.Analyze}
                                                     />
                                                 </div>
                                             </div>
@@ -281,6 +285,7 @@ function EditAnalyzes() {
                                                     <RadarChat
                                                         chartType={ChartType.Cytokine_Type}
                                                         data={analyzeResult}
+                                                        chartPage={ChartPage.Analyze}
                                                     />
                                                 </div>
 

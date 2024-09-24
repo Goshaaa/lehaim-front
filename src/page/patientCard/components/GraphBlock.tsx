@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import * as oncoTestService from '../../../services/OncoTestSerive';
-import { AnalyzeDetailedInfo, ChartType, RecommendationData } from '../../../types/CommonTypes';
+import { AnalyzeDetailedInfo, ChartType, RecommendationData, ChartPage } from '../../../types/CommonTypes';
 import RadarChart from '../../chart/RadarChart';
 import RecommendationsBlock from '../../recommendations/Recommendations';
 import * as recommendationsServise from '../../../services/RecommendationService';
@@ -57,6 +57,7 @@ function GraphBlock({ selectedAnalyzeId }: Props) {
                         <RadarChart
                             chartType={ChartType.Regeneration_Type}
                             data={analyzeResult}
+                            chartPage={ChartPage.Common}
                         />
                         <RecommendationsBlock
                             selectedAnalyzeId={selectedAnalyzeId}
@@ -67,6 +68,7 @@ function GraphBlock({ selectedAnalyzeId }: Props) {
                         <RadarChart
                             chartType={ChartType.Inflammation_Type}
                             data={analyzeResult}
+                            chartPage={ChartPage.Common}
                         />
                         <div className='container'>
                             <RecommendationsBlock
@@ -79,6 +81,7 @@ function GraphBlock({ selectedAnalyzeId }: Props) {
                         <RadarChart
                             chartType={ChartType.B_Type}
                             data={analyzeResult}
+                            chartPage={ChartPage.Common}
                         />
                         <RecommendationsBlock
                             selectedAnalyzeId={selectedAnalyzeId}
@@ -89,6 +92,7 @@ function GraphBlock({ selectedAnalyzeId }: Props) {
                         <RadarChart
                             chartType={ChartType.T_Type}
                             data={analyzeResult}
+                            chartPage={ChartPage.Common}
                         />
                         <RecommendationsBlock
                             selectedAnalyzeId={selectedAnalyzeId}
@@ -99,6 +103,7 @@ function GraphBlock({ selectedAnalyzeId }: Props) {
                         <RadarChart
                             chartType={ChartType.Cytokine_Type}
                             data={analyzeResult}
+                            chartPage={ChartPage.Common}
                         />
                         <RecommendationsBlock
                             selectedAnalyzeId={selectedAnalyzeId}

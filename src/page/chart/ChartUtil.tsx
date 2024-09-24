@@ -1,4 +1,4 @@
-import { AnalyzeDetailedInfo } from "../../types/CommonTypes";
+import { AnalyzeDetailedInfo, ChartPage } from "../../types/CommonTypes";
 import { ChartType } from "../../types/CommonTypes";
 
 interface Indicator {
@@ -18,23 +18,23 @@ interface ChartDataParams {
     values: number[]
 }
 
-function getOptions(data: AnalyzeDetailedInfo[], chartType: ChartType, printMode: boolean) {
+function getOptions(data: AnalyzeDetailedInfo[], chartType: ChartType, chartPagePlace: ChartPage) {
     if (ChartType.B_Type === chartType) {
-        return getBOption(filterForBChart(data), printMode);
+        return getBOption(filterForBChart(data), chartPagePlace);
     } else if (ChartType.T_Type === chartType) {
-        return getTOption(filterForTChart(data), printMode);
+        return getTOption(filterForTChart(data), chartPagePlace);
     } else if (ChartType.Cytokine_Type === chartType) {
-        return getCytokineOption(filterForCytokineChart(data), printMode);
+        return getCytokineOption(filterForCytokineChart(data), chartPagePlace);
     } else if (ChartType.Regeneration_Type === chartType) {
-        return getRegenerationOption(filterForRegenerationChart(data), printMode);
+        return getRegenerationOption(filterForRegenerationChart(data), chartPagePlace);
     } else if (ChartType.Inflammation_Type === chartType) {
-        return getInflammationOption(filterForInflamiationChart(data), printMode);
+        return getInflammationOption(filterForInflamiationChart(data), chartPagePlace);
     }
     return null;
 }
 
 
-function getBOption(data: ChartDataParams, printMode: boolean) {
+function getBOption(data: ChartDataParams, chartPage: ChartPage) {
     let chartTitle = 'Относительные параметры B - клеточного звена иммунитета'
     let radarIndicator: Indicator[] = [
         { name: 'NEU/CD19' },
@@ -43,11 +43,11 @@ function getBOption(data: ChartDataParams, printMode: boolean) {
         { name: 'CD19/CD4' },
     ]
 
-    let option = getBaseOption(chartTitle, radarIndicator, data, printMode)
+    let option = getBaseOption(chartTitle, radarIndicator, data, chartPage)
     return option
 }
 
-function getTOption(data: ChartDataParams, printMode: boolean) {
+function getTOption(data: ChartDataParams, chartPage: ChartPage) {
     let chartTitle = 'Относительные параметры T - клеточного звена иммунитета'
     let radarIndicator: Indicator[] = [
         { name: 'NEU/CD3' },
@@ -56,11 +56,11 @@ function getTOption(data: ChartDataParams, printMode: boolean) {
         { name: 'NEU/CD4' }
     ]
 
-    let option = getBaseOption(chartTitle, radarIndicator, data, printMode)
+    let option = getBaseOption(chartTitle, radarIndicator, data, chartPage)
     return option
 }
 
-function getCytokineOption(data: ChartDataParams, printMode: boolean) {
+function getCytokineOption(data: ChartDataParams, chartPage: ChartPage) {
     let scale = 1.2;
     let maxValue = Math.max(...data.min, ...data.values, ...data.max);
     let chartTitle = 'Цитокиновые пары';
@@ -70,11 +70,11 @@ function getCytokineOption(data: ChartDataParams, printMode: boolean) {
         { name: 'IL2', max: maxValue * scale },
     ];
 
-    let option = getBaseOption(chartTitle, radarIndicator, data, printMode);
+    let option = getBaseOption(chartTitle, radarIndicator, data, chartPage);
     return option;
 }
 
-function getRegenerationOption(data: ChartDataParams, printMode: boolean) {
+function getRegenerationOption(data: ChartDataParams, chartPage: ChartPage) {
     let upAxisMaxValue = Math.max(data.min[0], data.values[0], data.max[0]);
     let rightAxisMaxValue = Math.max(data.min[1], data.values[1], data.max[1]);
     let leftAxisMaxValue = Math.max(data.min[2], data.values[2], data.max[2]);
@@ -86,41 +86,41 @@ function getRegenerationOption(data: ChartDataParams, printMode: boolean) {
         { name: 'LYMF/MON', max: leftAxisMaxValue },
     ];
 
-    let option = getBaseOption(chartTitle, radarIndicator, data, printMode);
+    let option = getBaseOption(chartTitle, radarIndicator, data, chartPage);
     return option
 }
 
-function getInflammationOption(data: ChartDataParams, printMode: boolean) {
+function getInflammationOption(data: ChartDataParams, chartPage: ChartPage) {
     let upAxisMaxValue = Math.max(data.min[0], data.values[0], data.max[0]);
     let leftAxisMaxValue = Math.max(data.min[1], data.values[1], data.max[1]);
     let rightAxisMaxValue = Math.max(data.min[2], data.values[2], data.max[2]);
-    
+
 
     let chartTitle = 'Индексы системного воспаления';
     let radarIndicator: Indicator[] = [
         { name: 'SiRi', max: upAxisMaxValue },
-        { name: 'Плотность\n нейтрофилов', max:  leftAxisMaxValue},
+        { name: 'Плотность\n нейтрофилов', max: leftAxisMaxValue },
         { name: 'PiV', max: rightAxisMaxValue }
     ];
 
-    let option = getBaseOption(chartTitle, radarIndicator, data, printMode);
+    let option = getBaseOption(chartTitle, radarIndicator, data, chartPage);
     return option
 }
 
-function getBaseOption(chartTitle: string, indicator: Indicator[], params: ChartDataParams, printMode: boolean) {
+function getBaseOption(chartTitle: string, indicator: Indicator[], params: ChartDataParams, chartPage: ChartPage) {
     return {
         title: {
             show: false,
             text: chartTitle
         },
-        animation: printMode ? false : true,
+        animation: ChartPage.Report === chartPage ? false : true,
         tooltip: {
             trigger: 'axis'
         },
         legend: {
             top: 0,
             padding: 0,
-            data: printMode
+            data: ChartPage.Report === chartPage
                 ? ['Референтные значения', 'Результат', 'true']
                 : ['Нижние референтные значения', 'Результат', 'Верхние референтные значения']
         },
@@ -149,7 +149,7 @@ function getBaseOption(chartTitle: string, indicator: Indicator[], params: Chart
                     {
                         label: { show: true, },
                         value: params.min,
-                        name: printMode ? 'Референтные значения' : 'Нижние референтные значения',
+                        name: ChartPage.Report === chartPage ? 'Референтные значения' : 'Нижние референтные значения',
                         itemStyle: {
                             color: '#228B22'
                         },
@@ -160,7 +160,7 @@ function getBaseOption(chartTitle: string, indicator: Indicator[], params: Chart
                     {
                         label: { show: true, },
                         value: params.max,
-                        name: printMode ? 'Референтные значения' : 'Верхние референтные значения',
+                        name: ChartPage.Report === chartPage ? 'Референтные значения' : 'Верхние референтные значения',
                         itemStyle: {
                             color: '#228B22'
                         },
@@ -343,8 +343,8 @@ function roundResult(val: number) {
 }
 
 export function isGraphFilled(options: any): boolean {
-    const isAllGraphEmpty = options?.series[0]?.data[2]?.value?.every((value: number) => value === 0);
-    return isAllGraphEmpty ? false : true;;
+    const nonEmptyItems = options?.series[0]?.data[2]?.value?.filter((value: number) => value > 0);
+    return nonEmptyItems.length >= 3;
 }
 
 export default getOptions;
