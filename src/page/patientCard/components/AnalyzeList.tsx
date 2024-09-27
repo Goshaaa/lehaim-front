@@ -95,15 +95,15 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                         className={"list-group-item list-group-item-action " + (test.id === activeId ? "active" : "")}
                         onClick={() => handleClick(test.id!!)}>
                         <div className='d-flex justify-content-between'>
-                            <div>
-                                Обследование от {test.testDate}
-                            </div>
-                            <div className="d-flex ">
-                                <div style={{ backgroundColor: isChartIncluded(ChartType2.Regeneration_Type, test.possibleCharts) ? 'green' : 'transparent' }} className="border border-secondary rounded-1 ps-2 pe-2 ms-1 me-1">О</div>
-                                <div style={{ backgroundColor: isChartIncluded(ChartType2.Inflammation_Type, test.possibleCharts) ? 'green' : 'transparent' }} className="border border-secondary rounded-1 ps-2 pe-2 ms-1 me-1">СВ</div>
-                                <div style={{ backgroundColor: isChartIncluded(ChartType2.B_Type, test.possibleCharts) ? 'green' : 'transparent' }} className="border border-secondary rounded-1 ps-2 pe-2 ms-1 me-1">В</div>
-                                <div style={{ backgroundColor: isChartIncluded(ChartType2.T_Type, test.possibleCharts) ? 'green' : 'transparent' }} className="border border-secondary rounded-1 ps-2 pe-2 ms-1 me-1">Т</div>
-                                <div style={{ backgroundColor: isChartIncluded(ChartType2.Cytokine_Type, test.possibleCharts) ? 'green' : 'transparent' }} className="border border-secondary rounded-1 ps-2 pe-2 ms-1 me-1">Ц</div>
+                            <div className="d-flex">
+                                <div>
+                                    Обследование от {test.testDate}
+                                </div>
+                                <div className="d-flex ms-4 me-4">
+                                    <div style={{ backgroundColor: (isChartIncluded(ChartType2.Regeneration_Type, test.possibleCharts) && isChartIncluded(ChartType2.Inflammation_Type, test.possibleCharts)) ? 'green' : 'transparent' }} className="border border-secondary rounded-1 ps-3 pe-3 ms-1 me-1"></div>
+                                    <div style={{ backgroundColor: (isChartIncluded(ChartType2.B_Type, test.possibleCharts) && isChartIncluded(ChartType2.T_Type, test.possibleCharts)) ? 'green' : 'transparent' }} className="border border-secondary rounded-1 ps-3 pe-3 ms-1 me-1"></div>
+                                    <div style={{ backgroundColor: isChartIncluded(ChartType2.Cytokine_Type, test.possibleCharts) ? 'green' : 'transparent' }} className="border border-secondary rounded-1 ps-3 pe-3 ms-1 me-1"></div>
+                                </div>
                             </div>
                             <div>
                                 <FontAwesomeIcon
