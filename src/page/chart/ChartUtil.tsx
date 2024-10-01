@@ -128,7 +128,7 @@ function getBaseOption(chartTitle: string, indicator: Indicator[], params: Chart
             indicator: indicator,
             scale: false,
             silent: true,
-            center: ['50%', '60%'],
+            center: ['50%', '55%'],
             axisName: {
                 fontWeight: 'bold',
                 color: 'black',

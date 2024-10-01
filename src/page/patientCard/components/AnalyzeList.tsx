@@ -100,9 +100,33 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                                     Обследование от {test.testDate}
                                 </div>
                                 <div className="d-flex ms-4 me-4">
-                                    <div style={{ backgroundColor: (isChartIncluded(ChartType2.Regeneration_Type, test.possibleCharts) && isChartIncluded(ChartType2.Inflammation_Type, test.possibleCharts)) ? 'green' : 'transparent' }} className="border border-secondary rounded-1 ps-3 pe-3 ms-1 me-1"></div>
-                                    <div style={{ backgroundColor: (isChartIncluded(ChartType2.B_Type, test.possibleCharts) && isChartIncluded(ChartType2.T_Type, test.possibleCharts)) ? 'green' : 'transparent' }} className="border border-secondary rounded-1 ps-3 pe-3 ms-1 me-1"></div>
-                                    <div style={{ backgroundColor: isChartIncluded(ChartType2.Cytokine_Type, test.possibleCharts) ? 'green' : 'transparent' }} className="border border-secondary rounded-1 ps-3 pe-3 ms-1 me-1"></div>
+                                    <div
+                                        style={{
+                                            width: "25px",
+                                            margin: "0 5px",
+                                            backgroundColor:
+                                                (isChartIncluded(ChartType2.Regeneration_Type, test.possibleCharts) &&
+                                                    isChartIncluded(ChartType2.Inflammation_Type, test.possibleCharts)) ? '#228B22' : 'white'
+                                        }}
+                                        className="border border-dark rounded-1">
+                                    </div>
+                                    <div
+                                        style={{
+                                            width: "25px",
+                                            margin: "0 5px",
+                                            backgroundColor: (isChartIncluded(ChartType2.B_Type, test.possibleCharts) &&
+                                                isChartIncluded(ChartType2.T_Type, test.possibleCharts)) ? '#228B22' : 'white'
+                                        }}
+                                        className="border border-dark rounded-1">
+                                    </div>
+                                    <div
+                                        style={{
+                                            width: "25px",
+                                            margin: "0 5px",
+                                            backgroundColor: isChartIncluded(ChartType2.Cytokine_Type, test.possibleCharts) ? '#228B22' : 'white'
+                                        }}
+                                        className="border border-dark rounded-1">
+                                    </div>
                                 </div>
                             </div>
                             <div>
