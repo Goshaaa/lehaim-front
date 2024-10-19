@@ -46,6 +46,7 @@ function EditAnalyzes() {
             const data = await patientService.getPatientOncoTest(patientId!!, Number(testId));
             oncoTestData.id = Number(data.id);
             oncoTestData.testDate = data.testDate;
+            oncoTestData.testNote = data.testNote;
             data.results?.forEach((result) => {
                 oncoTestData.params[result.catalogId] = result.value;
             });
@@ -69,6 +70,11 @@ function EditAnalyzes() {
     }
 
     const handleTestDateChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setOncoTestData(prevData => ({ ...prevData, [name]: value }))
+    }
+
+    const handleTestNoteChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setOncoTestData(prevData => ({ ...prevData, [name]: value }))
     }
@@ -152,6 +158,19 @@ function EditAnalyzes() {
                                 value={oncoTestData.testDate ?? ""}
                                 onChange={handleTestDateChange}
                                 className="form-control" />
+                        </div>
+
+                        <div className="col-sm-12 col-md-6 col-lg-4 mb-3 ">
+                            <label htmlFor="testDate" className="form-label fw-bold">Комментарий к обследованию</label>
+                            <textarea
+                                id="testNote"
+                                name="testNote"
+                                autoComplete="off"
+                                value={oncoTestData.testNote ?? ""}
+                                onChange={handleTestNoteChange}
+                                className="form-control"
+                            >
+                            </textarea>
                         </div>
 
                         <div className='mb-3'>

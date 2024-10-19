@@ -40,6 +40,7 @@ interface ParameterResultRestDTO {
 interface OncologicalTestRestDTO {
     id? : number,
     testDate?: string,
+    testNote?: string
     results?: ParameterResultRestDTO[]
 }
 
@@ -50,12 +51,14 @@ interface TestParamType {
 interface OncoTestData {
     id?: number | undefined,
     testDate?: string | undefined,
+    testNote?: string | undefined,
     params: TestParamType
 }
 
 interface AnalyzeBriefInfo {
     id?: string,
     testDate?: string,
+    testNote?: string,
     possibleCharts?: string[] | undefined,
 }
 

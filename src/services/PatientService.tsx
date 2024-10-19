@@ -62,6 +62,7 @@ export async function getPatientOncoTest(patientId: string, testId: number): Pro
 export async function addNewPatientOncoTestData(patientId: string, oncoTestData: OncoTestData) {
     const payload = {
         testDate: oncoTestData.testDate,
+        testNode: oncoTestData.testNote,
         results: Object.entries(oncoTestData.params)
             .map(entry => {
                 return {
@@ -84,6 +85,7 @@ export async function addNewPatientOncoTestData(patientId: string, oncoTestData:
 export async function editPatientOncoTestData(patientId: string, oncoTestData: OncoTestData) {
     const payload = {
         testDate: oncoTestData.testDate,
+        testNote: oncoTestData.testNote,
         results: Object.entries(oncoTestData.params)
             .map(entry => {
                 return {

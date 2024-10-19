@@ -4,8 +4,9 @@ import { AnalyzeBriefInfo, SelectAnalyzeCallback, ChartType2 } from '../../../ty
 import * as patientService from '../../../services/PatientService';
 import * as oncoTestService from '../../../services/OncoTestSerive';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPrint, faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faPrint, faTrash, faEdit, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import ConfirmationModal from '../../../components/ConfirmationModal';
+import ChartIndicator from './ChartIndicator';
 
 interface Props {
     patientId: string,
@@ -100,36 +101,26 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                                     Обследование от {test.testDate}
                                 </div>
                                 <div className="d-flex ms-4 me-4">
-                                    <div
-                                        style={{
-                                            width: "25px",
-                                            margin: "0 5px",
-                                            backgroundColor:
-                                                (isChartIncluded(ChartType2.Regeneration_Type, test.possibleCharts) &&
-                                                    isChartIncluded(ChartType2.Inflammation_Type, test.possibleCharts)) ? '#228B22' : 'white'
-                                        }}
-                                        className="border border-dark rounded-1">
-                                    </div>
-                                    <div
-                                        style={{
-                                            width: "25px",
-                                            margin: "0 5px",
-                                            backgroundColor: (isChartIncluded(ChartType2.B_Type, test.possibleCharts) &&
-                                                isChartIncluded(ChartType2.T_Type, test.possibleCharts)) ? '#228B22' : 'white'
-                                        }}
-                                        className="border border-dark rounded-1">
-                                    </div>
-                                    <div
-                                        style={{
-                                            width: "25px",
-                                            margin: "0 5px",
-                                            backgroundColor: isChartIncluded(ChartType2.Cytokine_Type, test.possibleCharts) ? '#228B22' : 'white'
-                                        }}
-                                        className="border border-dark rounded-1">
-                                    </div>
+                                    <ChartIndicator
+                                        isActive={(isChartIncluded(ChartType2.Regeneration_Type, test.possibleCharts) && isChartIncluded(ChartType2.Inflammation_Type, test.possibleCharts))}
+                                    />
+                                    <ChartIndicator
+                                        isActive={(isChartIncluded(ChartType2.B_Type, test.possibleCharts) && isChartIncluded(ChartType2.T_Type, test.possibleCharts))}
+                                    />
+                                    <ChartIndicator
+                                        isActive={isChartIncluded(ChartType2.Cytokine_Type, test.possibleCharts)}
+                                    />
                                 </div>
                             </div>
                             <div>
+                                {test.testNote &&
+                                    <FontAwesomeIcon
+                                        className="ps-1 me-3"
+                                        icon={faInfoCircle}
+                                        role="button"
+                                        title={test.testNote ?? "Нет данных"} />
+                                }
+
                                 <FontAwesomeIcon
                                     className="ps-1 me-3"
                                     icon={faPrint}
