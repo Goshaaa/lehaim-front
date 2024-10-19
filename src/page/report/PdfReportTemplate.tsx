@@ -216,6 +216,13 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
             </Text>
           </View>
 
+          <View style={styles.section}>
+            <Text style={styles.propertyComment}>
+              <Text style={styles.propertyLabel}>Комментарий к обследованию: </Text>
+              {reportData.currentTestNote}
+            </Text>
+          </View>
+
           {chartData?.regenerationChartData ?
             <View style={styles.chartSection}>
               <Text style={styles.chartTitle}>Расчет вида регенерации</Text>

@@ -6,6 +6,7 @@ import { Patient, AnalyzeDetailedInfo } from "../types/CommonTypes";
 interface ReportDTO {
     patient: Patient,
     currentTestDate: string,
+    currentTestNote?: string
     currentResults: AnalyzeDetailedInfo[],
     previousResults: AnalyzeDetailedInfo[],
     season: string
