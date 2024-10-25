@@ -38,7 +38,7 @@ interface ParameterResultRestDTO {
 }
 
 interface OncologicalTestRestDTO {
-    id? : number,
+    id?: number,
     testDate?: string,
     testNote?: string
     results?: ParameterResultRestDTO[]
@@ -137,5 +137,27 @@ export enum ChartPage {
     Report
 }
 
-export type { Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter,
-    CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO, ChartsDataUrl, Recommendation, RecommendationData };
+//DTO объекта генов пацинета
+// key - diagnosisId
+// value - PatientGeneDto
+interface PatientAllGenesDto {
+    [key: string]: PatientGeneDto[];
+}
+
+interface GeneDto {
+    id: string,
+    geneName: string,
+    possibleValues: string[]
+}
+
+interface PatientGeneDto {
+    geneId: string,
+    diagnosisId: number,
+    geneValue: string
+}
+
+export type {
+    Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter,
+    CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO, ChartsDataUrl, Recommendation, RecommendationData, 
+    PatientAllGenesDto, GeneDto, PatientGeneDto, 
+};

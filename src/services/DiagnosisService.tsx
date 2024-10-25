@@ -1,10 +1,12 @@
 import { ApiHost } from "../config";
+import { GeneDto } from "../types/CommonTypes";
 import { handleResponse } from "./ResponseHandler"
 
 interface DiagnosisDTO {
     id: number,
     code: string,
-    description: string
+    description: string,
+    genes: GeneDto[]
 }
 
 export async function loadAllDiagnosis(): Promise<DiagnosisDTO[]> {

@@ -1,9 +1,10 @@
 import { FormEvent, useState, useEffect } from "react";
-import { Patient } from "../../../types/CommonTypes";
+import { GeneDto, Patient, PatientAllGenesDto, PatientGeneDto } from "../../../types/CommonTypes";
 import * as patientService from '../../../services/PatientService';
 import * as diagnosisService from '../../../services/DiagnosisService';
+import * as geneticService from '../../../services/GeneticService';
 import { DiagnosisDTO } from "../../../services/DiagnosisService";
-// import GeneticsInfoBlock from "./GeneticsInfoBlock";
+import GeneticsInfoBlock from "./GeneticsInfoBlock";
 
 interface Props {
     patient: Patient;
@@ -15,9 +16,16 @@ function AdditionaInfolBlock({ patient }: Props) {
     const [changePatient, setChangePatient] = useState<Patient>(patient);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    // const [diagnosisCode, setDiagnosisCode] = useState("");
+    const [diagnosisId, setDiagnosisId] = useState<number | undefined>(patient.diagnosisId);
+
 
     const [diagnosisCatalog, setDiagnosisCatalog] = useState<DiagnosisDTO[]>([]);
+    const [patientAllGenes, setPatientAllGenes] = useState<PatientAllGenesDto>();
+    const [origPatientDiagnosisGenes, setOrigPatientDiagnosisGenes] = useState<PatientGeneDto[]>([]);
+    const [patientDiagnosisGenes, setPatientDiagnosisGenes] = useState<PatientGeneDto[]>([]);
+    const [diagnosisGenes, setDiagnosisGenes] = useState<GeneDto[] | undefined>([]);
+
+
     useEffect(() => {
         const loadDiagnosisCatalog = async () => {
             setError("");
@@ -35,12 +43,45 @@ function AdditionaInfolBlock({ patient }: Props) {
             setLoading(false);
         }
 
-        loadDiagnosisCatalog()
+        const loadAllPatientGenes = async () => {
+            setError("");
+            setLoading(true);
+            try {
+                const data = await geneticService.loadGenesByPatient(patient.id!!)
+                setPatientAllGenes(data);
+            } catch (err) {
+                if (err instanceof Error) {
+                    setError("Ошибка: " + err.message);
+                } else {
+                    setError("Ошибка загрузки: " + err);
+                }
+            }
+            setLoading(false);
+        }
+
+        loadDiagnosisCatalog();
+        loadAllPatientGenes();
     }, []);
+
+    useEffect(() => {
+        const selectedDiagnosis = diagnosisCatalog.find(diag => diag.id === Number(changePatient.diagnosisId));
+        setDiagnosisId(selectedDiagnosis?.id);
+        setDiagnosisGenes(selectedDiagnosis?.genes);
+    }, [diagnosisCatalog, changePatient]);
+
+    useEffect(() => {
+        let genesByDiagnosis: PatientGeneDto[] = [];
+        if (patientAllGenes && diagnosisId) {
+            genesByDiagnosis = patientAllGenes[diagnosisId]
+        }
+        setPatientDiagnosisGenes(genesByDiagnosis ? genesByDiagnosis : []);
+        setOrigPatientDiagnosisGenes(genesByDiagnosis ? genesByDiagnosis : []);
+    }, [diagnosisId, patientAllGenes]);
 
     const toggleEditMode = () => {
         if (editMode) {
             setChangePatient(sourcePatient);
+            setPatientDiagnosisGenes(origPatientDiagnosisGenes);
         }
         setEditMode(!editMode);
     }
@@ -48,10 +89,22 @@ function AdditionaInfolBlock({ patient }: Props) {
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement | HTMLInputElement>) => {
         const { name, value } = e.target;
         setChangePatient(prevData => ({ ...prevData, [name]: value }));
-        // if (name === "diagnosisId") {
-        //     const selectedDiagnosis = diagnosisCatalog.find(diag => diag.id === Number(value))
-        //     setDiagnosisCode(selectedDiagnosis ? selectedDiagnosis.code : "")
-        // }
+    }
+
+    const handleGeneChange = (changedGene: PatientGeneDto) => {
+        const copyGenes = [...patientDiagnosisGenes];
+
+        const updGene = copyGenes.find(gen => gen.geneId == changedGene.geneId);
+        if (updGene) {
+            updGene.geneValue = changedGene.geneValue;
+        } else {
+            copyGenes.push({
+                geneId: changedGene.geneId,
+                geneValue: changedGene.geneValue,
+                diagnosisId: diagnosisId!!
+            });
+        }
+        setPatientDiagnosisGenes(copyGenes);
     }
 
     const handleSubmit = async (event: FormEvent) => {
@@ -61,8 +114,10 @@ function AdditionaInfolBlock({ patient }: Props) {
 
         try {
             const data = await patientService.updatePatient(changePatient);
+            const geneData = await geneticService.updatePatientGenes(patient.id!!, patientDiagnosisGenes);
             setSourcePatient(data);
             setChangePatient(data);
+            setOrigPatientDiagnosisGenes(patientDiagnosisGenes);
             setEditMode(false);
         } catch (err) {
             if (err instanceof Error) {
@@ -202,8 +257,12 @@ function AdditionaInfolBlock({ patient }: Props) {
                         </div>
                     </div>
 
-                    {/* <GeneticsInfoBlock
-                        diagnosisCode={diagnosisCode} /> */}
+                    <GeneticsInfoBlock
+                        genesList={diagnosisGenes}
+                        patientGenes={patientDiagnosisGenes}
+                        isEditMode={editMode}
+
+                        onChange={handleGeneChange} />
 
                     <div className="mb-3">
                         <label htmlFor="operationDate" className="fw-bold">Дата операции:</label>
@@ -281,7 +340,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                             className="btn btn-outline-secondary ms-3 float-end"
                             disabled={loading}
                             title={editMode ? "Отмена изменений" : "Редактировать сведения"}
-                            >
+                        >
                             {editMode ? "Отмена" : "Редактировать"}
                         </button>
                     </div>
