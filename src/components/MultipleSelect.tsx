@@ -67,7 +67,7 @@ function MultipleSelect({ label, options, value, onChange, disabled }: Props) {
           style={{
             position: 'absolute',
             right: '10px',
-            top: '50%', // Центрируем по вертикали
+            top: '50%',
             transform: 'translateY(-50%)',
             pointerEvents: 'none', 
             fontSize: '16px',
