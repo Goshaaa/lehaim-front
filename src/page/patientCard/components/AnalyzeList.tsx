@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { AnalyzeBriefInfo, SelectAnalyzeCallback, ChartType2 } from '../../../types/CommonTypes';
 import * as patientService from '../../../services/PatientService';
 import * as oncoTestService from '../../../services/OncoTestSerive';
+import * as dateUtils from '../../../components/DateUtils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPrint, faTrash, faEdit, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import ConfirmationModal from '../../../components/ConfirmationModal';
@@ -85,7 +86,7 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
         <>
             <ConfirmationModal
                 title="Подтвердите действие"
-                body={"Вы точно хотите удалить \"Обследование от " + testToDelete.testDate + "\""}
+                body={"Вы точно хотите удалить \"Обследование от " + dateUtils.formatDate(testToDelete.testDate) + "\""}
                 yesCallback={() => { handleDeleteConfirmationCallback(testToDelete.id!!) }} />
 
             {!oncoTests && <h5 className="text-center m-3">Нет данных</h5>}
@@ -98,7 +99,7 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                         <div className='d-flex justify-content-between'>
                             <div className="d-flex">
                                 <div>
-                                    Обследование от {test.testDate}
+                                    Обследование от {dateUtils.formatDate(test.testDate)}
                                 </div>
                                 <div className="d-flex ms-4 me-4">
                                     <ChartIndicator

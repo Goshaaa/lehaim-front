@@ -4,6 +4,7 @@ import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/render
 import { ChartsDataUrl, AnalyzeDetailedInfo, RecommendationData } from '../../types/CommonTypes';
 import { ReportDTO } from '../../services/ReportService';
 import { DiagnosisDTO } from '../../services/DiagnosisService';
+import * as dateUtils from '../../components/DateUtils';
 
 Font.register({
   family: "Roboto",
@@ -176,7 +177,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
         <Page size="A4" style={styles.page}>
 
           <View style={styles.header}>
-            <Text>Отчет об обследовании за {reportData.currentTestDate}</Text>
+            <Text>Отчет об обследовании за {dateUtils.formatDate(reportData.currentTestDate)}</Text>
           </View>
 
           <View style={styles.section}>
@@ -188,7 +189,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
           <View style={styles.section}>
             <Text style={styles.propertyComment}>
               <Text style={styles.propertyLabel}>Дата рождения: </Text>
-              {reportData.patient.birthdate}
+              {dateUtils.formatDate(reportData.patient.birthdate)}
             </Text>
           </View>
           <View style={styles.section}>
