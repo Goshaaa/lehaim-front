@@ -5,6 +5,7 @@ import * as diagnosisService from '../../../services/DiagnosisService';
 import * as geneticService from '../../../services/GeneticService';
 import { DiagnosisDTO } from "../../../services/DiagnosisService";
 import GeneticsInfoBlock from "./GeneticsInfoBlock";
+import MultiSelectList from "../../../components/MultipleSelect"
 
 interface Props {
     patient: Patient;
@@ -201,8 +202,8 @@ function AdditionaInfolBlock({ patient }: Props) {
 
                     </div>
 
-                    <div className="mb-3 d-flex justify-content-between">
-                        <div>
+                    <div className="mb-3 d-flex">
+                        <div  className="me-3">
                             <label htmlFor="TArea"
                                 className="fw-bold me-3">T:</label>
                             <select
@@ -221,7 +222,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                             </select>
                         </div>
 
-                        <div>
+                        <div className="me-3">
                             <label htmlFor="NArea"
                                 className="fw-bold me-3">N:</label>
                             <select
@@ -238,24 +239,15 @@ function AdditionaInfolBlock({ patient }: Props) {
                                 <option value="3">3</option>
                             </select>
                         </div>
-
-                        <div>
-                            <label htmlFor="MArea"
-                                className="fw-bold  me-3">M:</label>
-                            <select
-                                id="MArea"
-                                disabled={!editMode}
-                                name="m"
-                                value={changePatient.m ?? ""}
-                                onChange={handleChange}
-                            >
-                                <option value="">-</option>
-                                <option value="0">0</option>
-                                <option value="X">Х</option>
-                                <option value="1">1</option>
-                            </select>
-                        </div>
                     </div>
+
+                    <div className="mb-3 d-flex"><MultiSelectList
+                        label="M:"
+                        options={["0", "X", "1", "1 Hep", "1 Pul", "1 OSS"]}
+                        value={changePatient.m ?? ""}
+                        onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, m: newValue }))}
+                        disabled={!editMode}
+                    /></div>
 
                     <GeneticsInfoBlock
                         genesList={diagnosisGenes}
