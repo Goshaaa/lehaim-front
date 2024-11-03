@@ -16,7 +16,6 @@ export default function GeneticsInfoBlock({ genesList, patientGenes, isEditMode,
       geneValue: value
     };
     gene.geneValue = value;
-    console.log("HandleChange " + JSON.stringify(gene));
     if (onChange) {
       onChange(gene);
     }

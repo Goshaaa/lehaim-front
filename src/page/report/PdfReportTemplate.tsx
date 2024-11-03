@@ -1,7 +1,7 @@
 import { Font } from "@react-pdf/renderer";
 import { useEffect, useState } from 'react';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
-import { ChartsDataUrl, AnalyzeDetailedInfo, RecommendationData } from '../../types/CommonTypes';
+import { ChartsDataUrl, AnalyzeDetailedInfo, RecommendationData, PatientAllGenesDto } from '../../types/CommonTypes';
 import { ReportDTO } from '../../services/ReportService';
 import { DiagnosisDTO } from '../../services/DiagnosisService';
 import * as dateUtils from '../../components/DateUtils';
@@ -110,6 +110,7 @@ interface Props {
   chartData?: ChartsDataUrl | null,
   diagnosisCatalog?: DiagnosisDTO[] | null,
   recommendationData?: RecommendationData | null
+  patientGenes?: PatientAllGenesDto | null
 }
 
 interface ResultDataHolder {
@@ -121,7 +122,7 @@ interface ResultData {
   prev?: AnalyzeDetailedInfo | null
 }
 
-function PatientReport({ reportData, chartData, diagnosisCatalog, recommendationData }: Props) {
+function PatientReport({ reportData, chartData, diagnosisCatalog, recommendationData, patientGenes }: Props) {
   const [resultMap, setResultMap] = useState<ResultData | null>(null);
 
   useEffect(() => {
@@ -161,6 +162,27 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
     }
   }
 
+  const getGenes = (diagnosisId?: number): string => {
+    if (diagnosisCatalog && patientGenes && diagnosisId) {
+      const diagnosisGene = diagnosisCatalog?.find((catalogItem) => {
+        return catalogItem.id === diagnosisId
+      })?.genes;
+      if (diagnosisGene && diagnosisGene.length > 0) {
+        console.log("found diagnosisGene");
+        return diagnosisGene.map(genItem => {
+          const gene = patientGenes[diagnosisId].find(gen => gen.geneId === genItem.id);
+          return {
+            name: genItem.geneName,
+            value: gene?.geneValue ? gene?.geneValue : "N/A"
+          }
+        })
+        .map(item => item.name + ": " + item.value )
+        .join("; ");
+      }
+    }
+    return "-";
+  }
+
   const getParamName = (result: ResultData): string => {
     const actualData = result.current ?? result.prev;
 
@@ -196,6 +218,12 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
             <Text style={styles.propertyComment}>
               <Text style={styles.propertyLabel}>Диагноз: </Text>
               {getDiagnosisName(reportData.patient.diagnosisId)}, T-{reportData.patient.t}, N-{reportData.patient.n}, M-{reportData.patient.m}
+            </Text>
+          </View>
+          <View style={styles.section}>
+            <Text style={styles.propertyComment}>
+              <Text style={styles.propertyLabel}>Гены: </Text>
+              {getGenes(reportData.patient.diagnosisId)}
             </Text>
           </View>
           <View style={styles.section}>

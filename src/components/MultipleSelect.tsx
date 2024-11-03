@@ -32,19 +32,24 @@ function MultipleSelect({ label, options, value, onChange, disabled }: Props) {
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false); 
+        setIsOpen(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside); 
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside); 
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [dropdownRef]);
 
   return (
     <div className="d-flex" ref={dropdownRef} style={{ position: 'relative', width: '100%' }}>
-      <label className="fw-bold me-3">{label}</label>
+      <label
+        style={{ width: '20px' }}
+        className="fw-bold me-3"
+      >
+        {label}
+      </label>
       <div style={{ flex: 1, position: 'relative' }}>
         <input
           type="text"
@@ -69,10 +74,10 @@ function MultipleSelect({ label, options, value, onChange, disabled }: Props) {
             right: '10px',
             top: '50%',
             transform: 'translateY(-50%)',
-            pointerEvents: 'none', 
+            pointerEvents: 'none',
             fontSize: '16px',
             color: disabled ? 'grey' : 'black',
-            fontWeight: 'bold' 
+            fontWeight: 'bold'
           }}
         >
           ⌵

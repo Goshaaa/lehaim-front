@@ -203,8 +203,9 @@ function AdditionaInfolBlock({ patient }: Props) {
                     </div>
 
                     <div className="mb-3 d-flex">
-                        <div  className="me-3">
+                        <div>
                             <label htmlFor="TArea"
+                                style={{width: '20px'}}
                                 className="fw-bold me-3">T:</label>
                             <select
                                 id="TArea"
@@ -222,9 +223,10 @@ function AdditionaInfolBlock({ patient }: Props) {
                             </select>
                         </div>
 
-                        <div className="me-3">
+                        <div>
                             <label htmlFor="NArea"
-                                className="fw-bold me-3">N:</label>
+                                style={{width: '20px'}}
+                                className="fw-bold mx-3">N:</label>
                             <select
                                 id="NArea"
                                 disabled={!editMode}

@@ -3,11 +3,12 @@ import PatientReport from './PdfReportTemplate';
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import RadarChart from '../chart/RadarChart';
-import { ChartType, ChartsDataUrl, RecommendationData, ChartPage } from '../../types/CommonTypes';
+import { ChartType, ChartsDataUrl, RecommendationData, ChartPage, PatientAllGenesDto } from '../../types/CommonTypes';
 import * as reportService from '../../services/ReportService';
 import * as diagnosisService from '../../services/DiagnosisService';
 import { ReportDTO } from '../../services/ReportService';
 import { DiagnosisDTO } from '../../services/DiagnosisService';
+import * as geneticService from '../../services/GeneticService';
 import * as recommendationsServise from '../../services/RecommendationService';
 
 function PdfReportDemoPage() {
@@ -16,6 +17,7 @@ function PdfReportDemoPage() {
     const [recommendationData, setRecommendationData] = useState<RecommendationData | null>(null);
     const [readyForBuildPdf, setReadyForBuildPdf] = useState<boolean>(false);
     const [diagnosisCatalog, setDiagnosisCatalog] = useState<DiagnosisDTO[] | null>(null);
+    const [patientAllGenes, setPatientAllGenes] = useState<PatientAllGenesDto>();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
@@ -32,6 +34,9 @@ function PdfReportDemoPage() {
 
                 const recommendation : RecommendationData = await recommendationsServise.getRecommendationById(Number(testId));
                 setRecommendationData(recommendation);
+
+                const geneData = await geneticService.loadGenesByPatient(patientId!!);
+                setPatientAllGenes(geneData);
             } catch (err) {
                 if (err instanceof Error) {
                     setError("Ошибка: " + err.message);
@@ -93,6 +98,7 @@ function PdfReportDemoPage() {
                                         chartData={chartData}
                                         diagnosisCatalog={diagnosisCatalog}
                                         recommendationData={recommendationData}
+                                        patientGenes={patientAllGenes}
                                     />
                                 </PDFViewer>
                             )
