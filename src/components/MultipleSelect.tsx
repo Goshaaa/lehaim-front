@@ -107,6 +107,18 @@ function MultipleSelect({ label, options, value, onChange, disabled }: Props) {
                   backgroundColor: selectedNames.includes(option) ? '#0a58ca' : 'transparent',
                   color: selectedNames.includes(option) ? 'white' : 'black'
                 }}
+                onMouseEnter={(e) => {
+                  if (!selectedNames.includes(option)) {
+                    e.currentTarget.style.backgroundColor = '#0a58ca';
+                    e.currentTarget.style.color = 'white';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!selectedNames.includes(option)) {
+                    e.currentTarget.style.backgroundColor = 'transparent';
+                    e.currentTarget.style.color = 'black';
+                  }
+                }}
               >
                 {option}
               </li>
