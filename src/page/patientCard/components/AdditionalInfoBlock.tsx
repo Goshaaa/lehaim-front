@@ -223,7 +223,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                             </select>
                         </div>
 
-                        {/* <div>
+                        <div>
                             <label htmlFor="GArea"
                                 style={{width: '20px'}}
                                 className="fw-bold mx-3">G:</label>
@@ -239,7 +239,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                             </select>
-                        </div> */}
+                        </div>
 
                     </div>
 
