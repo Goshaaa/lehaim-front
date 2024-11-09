@@ -203,30 +203,11 @@ function AdditionaInfolBlock({ patient }: Props) {
                     </div>
 
                     <div className="mb-3 d-flex">
-                        <div>
-                            <label htmlFor="TArea"
-                                style={{width: '20px'}}
-                                className="fw-bold me-3">T:</label>
-                            <select
-                                id="TArea"
-                                disabled={!editMode}
-                                name="t"
-                                value={changePatient.t ?? ""}
-                                onChange={handleChange}>
-                                <option value="">-</option>
-                                <option value="0">0</option>
-                                <option value="X">Х</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                            </select>
-                        </div>
 
                         <div>
                             <label htmlFor="NArea"
                                 style={{width: '20px'}}
-                                className="fw-bold mx-3">N:</label>
+                                className="fw-bold me-3">N:</label>
                             <select
                                 id="NArea"
                                 disabled={!editMode}
@@ -241,15 +222,46 @@ function AdditionaInfolBlock({ patient }: Props) {
                                 <option value="3">3</option>
                             </select>
                         </div>
+
+                        <div>
+                            <label htmlFor="GArea"
+                                style={{width: '20px'}}
+                                className="fw-bold mx-3">G:</label>
+                            <select
+                                id="GArea"
+                                disabled={!editMode}
+                                name="g"
+                                value={changePatient.g ?? ""}
+                                onChange={handleChange}>
+                                <option value="">-</option>
+                                <option value="X">Х</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+
                     </div>
 
-                    <div className="mb-3 d-flex"><MultiSelectList
-                        label="M:"
-                        options={["0", "X", "1", "1 Hep", "1 Pul", "1 OSS"]}
-                        value={changePatient.m ?? ""}
-                        onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, m: newValue }))}
-                        disabled={!editMode}
-                    /></div>
+                    <div className="mb-3">
+                        <MultiSelectList
+                            label="T:"
+                            options={["0", "X", "1", "2", "3", "4", "a", "b", "c", "d"]}
+                            value={changePatient.t ?? ""}
+                            onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, t: newValue }))}
+                            disabled={!editMode}
+                        />
+                    </div>
+
+                    <div className="mb-3">
+                        <MultiSelectList
+                            label="M:"
+                            options={["0", "X", "1", "Hep", "Pul", "OSS", "CNS"]}
+                            value={changePatient.m ?? ""}
+                            onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, m: newValue }))}
+                            disabled={!editMode}
+                        />
+                    </div>
 
                     <GeneticsInfoBlock
                         genesList={diagnosisGenes}

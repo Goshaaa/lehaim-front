@@ -13,7 +13,8 @@ interface Patient {
     operationDate?: string,
     m?: string,
     n?: string,
-    t?: string
+    t?: string,
+    g?: string
 }
 
 export function getEmptyPatient(): Patient {
