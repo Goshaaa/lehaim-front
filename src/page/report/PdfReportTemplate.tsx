@@ -168,9 +168,8 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
         return catalogItem.id === diagnosisId
       })?.genes;
       if (diagnosisGene && diagnosisGene.length > 0) {
-        console.log("found diagnosisGene");
         return diagnosisGene.map(genItem => {
-          const gene = patientGenes[diagnosisId].find(gen => gen.geneId === genItem.id);
+          const gene = patientGenes[diagnosisId]?.find(gen => gen.geneId === genItem.id);
           return {
             name: genItem.geneName,
             value: gene?.geneValue ? gene?.geneValue : "N/A"
