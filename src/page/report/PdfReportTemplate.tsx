@@ -24,9 +24,14 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingBottom: 20
   },
+  colontitul: {
+    position: "absolute",
+    left: '48%',
+    bottom: 10
+  },
   pagination: {
     position: "absolute",
-    left: '45%',
+    left: '85%',
     bottom: 10
   },
   header: {
@@ -175,8 +180,8 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
             value: gene?.geneValue ? gene?.geneValue : "N/A"
           }
         })
-        .map(item => item.name + ": " + item.value )
-        .join("; ");
+          .map(item => item.name + ": " + item.value)
+          .join("; ");
       }
     }
     return "-";
@@ -216,7 +221,11 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
           <View style={styles.section}>
             <Text style={styles.propertyComment}>
               <Text style={styles.propertyLabel}>Диагноз: </Text>
-              {getDiagnosisName(reportData.patient.diagnosisId)}, T-{reportData.patient.t}, N-{reportData.patient.n}, M-{reportData.patient.m}
+              {getDiagnosisName(reportData.patient.diagnosisId)};
+              N: {reportData.patient.n};
+              G: {reportData.patient.g};
+              T: {reportData.patient.t};
+              M: {reportData.patient.m};
             </Text>
           </View>
           <View style={styles.section}>
@@ -376,7 +385,11 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
 
           <Text style={styles.pagination} render={({ pageNumber, totalPages }) => (
             `Страница ${pageNumber} из ${totalPages}`
+
           )} fixed />
+          <Text style={styles.colontitul} fixed>
+            Le Ha Im
+          </Text>
 
         </Page>
       </Document >
