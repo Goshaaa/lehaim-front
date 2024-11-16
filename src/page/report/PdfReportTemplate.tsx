@@ -55,6 +55,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 600
   },
+  paramSection: {
+    flexDirection: 'row',
+    padding: 5,
+    marginLeft: 10
+  },
   chartSection: {
     marginBottom: 15
   },
@@ -222,12 +227,34 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
             <Text style={styles.propertyComment}>
               <Text style={styles.propertyLabel}>Диагноз: </Text>
               {getDiagnosisName(reportData.patient.diagnosisId)};
-              T: {reportData.patient.t};
-              N: {reportData.patient.n};
-              G: {reportData.patient.g};
-              M: {reportData.patient.m};
             </Text>
           </View>
+
+          <View style={styles.paramSection}>
+            <Text style={styles.propertyComment}>
+              <Text style={styles.propertyLabel}>T: </Text>
+              {reportData.patient.t};
+            </Text>
+          </View>
+          <View style={styles.paramSection}>
+            <Text style={styles.propertyComment}>
+              <Text style={styles.propertyLabel}>N: </Text>
+              {reportData.patient.n};
+            </Text>
+          </View>
+          <View style={styles.paramSection}>
+            <Text style={styles.propertyComment}>
+              <Text style={styles.propertyLabel}>G: </Text>
+              {reportData.patient.g};
+            </Text>
+          </View>
+          <View style={styles.paramSection}>
+            <Text style={styles.propertyComment}>
+              <Text style={styles.propertyLabel}>M: </Text>
+              {reportData.patient.m};
+            </Text>
+          </View>
+
           <View style={styles.section}>
             <Text style={styles.propertyComment}>
               <Text style={styles.propertyLabel}>Гены: </Text>

@@ -99,7 +99,7 @@ function getInflammationOption(data: ChartDataParams, chartPage: ChartPage) {
     let chartTitle = 'Индексы системного воспаления';
     let radarIndicator: Indicator[] = [
         { name: 'SiRi', max: upAxisMaxValue },
-        { name: 'Density\n Ne ', max: leftAxisMaxValue },
+        { name: 'DensNe', max: leftAxisMaxValue },
         { name: 'PiV', max: rightAxisMaxValue }
     ];
 
