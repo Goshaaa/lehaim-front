@@ -208,7 +208,16 @@ function AdditionaInfolBlock({ patient }: Props) {
                                 )}
                             </select>
                         </div>
+                    </div>
 
+                    <div className="mb-3">
+                        <MultiSelectList
+                            label="T:"
+                            options={["0", "X", "1", "2", "3", "4", "a", "b", "c", "d"]}
+                            value={changePatient.t ?? ""}
+                            onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, t: newValue }))}
+                            disabled={!editMode}
+                        />
                     </div>
 
                     <div className="mb-3 d-flex">
@@ -251,15 +260,7 @@ function AdditionaInfolBlock({ patient }: Props) {
 
                     </div>
 
-                    <div className="mb-3">
-                        <MultiSelectList
-                            label="T:"
-                            options={["0", "X", "1", "2", "3", "4", "a", "b", "c", "d"]}
-                            value={changePatient.t ?? ""}
-                            onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, t: newValue }))}
-                            disabled={!editMode}
-                        />
-                    </div>
+
 
                     <div className="mb-3">
                         <MultiSelectList

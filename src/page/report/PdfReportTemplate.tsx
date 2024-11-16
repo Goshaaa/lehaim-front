@@ -222,9 +222,9 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
             <Text style={styles.propertyComment}>
               <Text style={styles.propertyLabel}>Диагноз: </Text>
               {getDiagnosisName(reportData.patient.diagnosisId)};
+              T: {reportData.patient.t};
               N: {reportData.patient.n};
               G: {reportData.patient.g};
-              T: {reportData.patient.t};
               M: {reportData.patient.m};
             </Text>
           </View>
