@@ -244,14 +244,14 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
           </View>
           <View style={styles.paramSection}>
             <Text style={styles.propertyComment}>
-              <Text style={styles.propertyLabel}>G: </Text>
-              {reportData.patient.g};
+              <Text style={styles.propertyLabel}>M: </Text>
+              {reportData.patient.m};
             </Text>
           </View>
           <View style={styles.paramSection}>
             <Text style={styles.propertyComment}>
-              <Text style={styles.propertyLabel}>M: </Text>
-              {reportData.patient.m};
+              <Text style={styles.propertyLabel}>G: </Text>
+              {reportData.patient.g};
             </Text>
           </View>
 

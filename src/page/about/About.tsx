@@ -143,6 +143,99 @@ function About() {
                             </div>
                         </div>
                     </div>
+
+                    <div className="accordion-item">
+                        <h2 className="accordion-header" id="headingAbbreviation">
+                            <button className="accordion-button collapsed"
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#collapseAbbreviation"
+                                aria-expanded="false"
+                                aria-controls="collapseAbbreviation">
+                                Список сокращений
+                            </button>
+                        </h2>
+                        <div id="collapseAbbreviation"
+                            className="accordion-collapse collapse"
+                            aria-labelledby="headingAbbreviation">
+                            <div className="accordion-body">
+                                <ul>
+                                    <li>
+                                        <span className='fw-bold'>ЗНО</span> - злокачественное образование
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>G</span> - степень дифференцировки опухоли
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>TNM</span> - критерии классификации - тумор, нодуль, метастаз
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>Neu</span> - нейтрофильные лейкоциты
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>Mon</span> - моноциты
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>Lymf</span> - лимфоциты
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>Pl</span> - тромбоциты
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>Neu/Lymf</span> - индекс абс. числа нейтрофилов/лимфоцитов
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>Neu/Mon</span> - индекс абс. числа нейтрофилов/моноцитов
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>Lymf/Mon</span> - индекс абс. числа лимфоциов/моноцитов
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>SiRi</span> - индекс системного воспалительного ответа = Neu x Mon/Lym
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>PiV</span> - общий иммуно-воспалительный индекс=Neu x Pl x Mon/Lym
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>DensNe</span> - плотность нейтрофильв= Ne/(Lym+Mon)
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>CD19+</span> - количество В-лимфоцитов
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>CD4+</span> - количество субпопуляции Т-лимфоцитов-хелперов
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>CD8+</span> - количество субпопуляции Т-лимфоцитов-киллеры
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>CD3</span> - общие Т-клеточные лимфоциты
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>Neu/CD19; CD19/СD+; CD19/СD8+</span> - интегральные критерии визуализации В-клеточного звена иммунитета
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>Neu/СD3; Neu/CD4+; Neu/CD8+</span> - интегральные критерии визуализации Т-коеточного звена иммунитета
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>IL-2</span> - интерлейкин-2
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>IFNy</span> - интерферон гамма
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>TNFa</span> - фактор некроза опухоли альфа
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>ОВИД</span> - общевариабельный иммунодефицит (В-клеточный)
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>ТКИД</span> - тяжелый комбинированный иммунодефицит (Т-клеточный)
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

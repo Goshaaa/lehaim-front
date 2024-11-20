@@ -232,22 +232,20 @@ function AdditionaInfolBlock({ patient }: Props) {
 
                     <div className="mb-3">
                         <MultiSelectList
-                            label="G:"
-                            options={["X", "1", "2", "3", "Adc", "Squam CC", "Small CC"]}
-                            value={changePatient.g ?? ""}
-                            onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, g: newValue }))}
-                            disabled={!editMode}
-                        />
-                    </div>
-
-
-
-                    <div className="mb-3">
-                        <MultiSelectList
                             label="M:"
                             options={["0", "X", "1", "Hep", "Pul", "OSS", "CNS"]}
                             value={changePatient.m ?? ""}
                             onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, m: newValue }))}
+                            disabled={!editMode}
+                        />
+                    </div>
+
+                    <div className="mb-3">
+                        <MultiSelectList
+                            label="G:"
+                            options={["X", "1", "2", "3", "Adc", "Squam CC", "Small CC"]}
+                            value={changePatient.g ?? ""}
+                            onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, g: newValue }))}
                             disabled={!editMode}
                         />
                     </div>
