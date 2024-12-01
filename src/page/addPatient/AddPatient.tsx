@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import Header from "../header/Header";
 import { Patient } from "../../types/CommonTypes";
 import * as patientService from '../../services/PatientService';
-
+import { useTranslation } from "react-i18next";
 
 function AddPatient() {
     let [searchParams] = useSearchParams();
@@ -17,7 +17,7 @@ function AddPatient() {
 
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
-
+    const { t } = useTranslation();
 
     const validateBeforeSubmit = (): string | null => {
         const errMsgs: string[] = [];
@@ -33,7 +33,7 @@ function AddPatient() {
         if (!patient.gender || patient.gender === '-') {
             errMsgs.push("Не указан пол пациента");
         }
-        
+
         if (!patient.birthdate) {
             errMsgs.push("Не указан дата рождения пациента");
         } else {
@@ -44,7 +44,7 @@ function AddPatient() {
                 errMsgs.push("Неверная дата рождения");
             }
         }
-        
+
         return errMsgs.length > 0 ? "Ошибка заполнения формы: " + errMsgs.join('; ') : null;
     }
 
@@ -77,15 +77,15 @@ function AddPatient() {
 
     return (
         <>
-            <Header title="Создать карточку пациента" />
+            <Header title={t('patientAddForm.pageTitle')} />
             <div className="container-lg">
                 <div className="row justify-content-center">
                     <div className="col-sm-10 col-md-8 col-lg-6">
                         <div className="border border-secondary rounded-3 text-secondary p-3 mb-3">
-                            <h4 className="mb-3">Создать карточку пациента</h4>
+                            <h4 className="mb-3">{t('patientAddForm.modalTitle')}</h4>
                             <form onSubmit={handleSubmit} className="container-fluid">
                                 <div className="mb-3">
-                                    <label htmlFor="patientLastName" className="form-label fw-bold">Фамилия</label>
+                                    <label htmlFor="patientLastName" className="form-label fw-bold">{t('patientAddForm.lastName')}</label>
                                     <input type="text"
                                         id="patientLastName"
                                         required
@@ -98,7 +98,7 @@ function AddPatient() {
                                 </div>
 
                                 <div className="mb-3">
-                                    <label htmlFor="patientFirstName" className="form-label fw-bold">Имя</label>
+                                    <label htmlFor="patientFirstName" className="form-label fw-bold">{t('patientAddForm.firstName')}</label>
                                     <input type="text"
                                         id="patientFirstName"
                                         required
@@ -111,7 +111,7 @@ function AddPatient() {
                                 </div>
 
                                 <div className="mb-3">
-                                    <label htmlFor="patientMiddleName" className="form-label fw-bold">Отчество</label>
+                                    <label htmlFor="patientMiddleName" className="form-label fw-bold">{t('patientAddForm.middleName')}</label>
                                     <input type="text"
                                         id="patientMiddleName"
                                         maxLength={40}
@@ -123,7 +123,7 @@ function AddPatient() {
                                 </div>
 
                                 <div className="mb-3">
-                                    <label htmlFor="patientBithDate" className="form-label fw-bold">Дата рождения</label>
+                                    <label htmlFor="patientBithDate" className="form-label fw-bold">{t('patientAddForm.birthDate')}</label>
                                     <input type="date"
                                         id="patientBithDate"
                                         required
@@ -138,16 +138,16 @@ function AddPatient() {
                                 </div>
 
                                 <div className="mb-3">
-                                    <label htmlFor="patientGender" className="form-label fw-bold">Пол</label>
+                                    <label htmlFor="patientGender" className="form-label fw-bold">{t('patientAddForm.gender')}</label>
                                     <select
                                         id="patientGender"
                                         name="gender"
                                         onChange={handleChange}
                                         required
                                         className="form-select">
-                                        <option value="-">Выберите пол</option>
-                                        <option value="Male">Мужской</option>
-                                        <option value="Female">Женский</option>
+                                        <option value="-">{t('patientAddForm.chooseGenderDefaultOption')}</option>
+                                        <option value="Male">{t('patientAddForm.maleGenderOption')}</option>
+                                        <option value="Female">{t('patientAddForm.femaleGenderOption')}</option>
                                     </select>
                                 </div>
                                 {error &&
@@ -164,14 +164,14 @@ function AddPatient() {
                                         {loading &&
                                             <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                                         }
-                                        Сохранить
+                                        {t('patientAddForm.savePatient')}
                                     </button>
                                     <button
                                         type="button"
                                         className="btn btn-outline-secondary"
                                         onClick={() => navigate("/searhPatient/")}
                                         disabled={loading}>
-                                        Отмена
+                                        {t('patientAddForm.cancel')}
                                     </button>
                                 </div>
                             </form>

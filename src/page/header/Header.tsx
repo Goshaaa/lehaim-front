@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import './Header.css';
+import LanguageSwitcher from "../../components/LanguageSwitcher";
 
 interface Props {
     title: string;
@@ -13,6 +14,7 @@ function Header({ title }: Props) {
                     Le Ha Im
                 </Link>
                 <div className="navbar-collapse me-auto navbar-text">{title}</div>
+                <LanguageSwitcher/>
             </div>
         </nav>
     );

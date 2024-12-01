@@ -1,0 +1,31 @@
+{
+    "home": {
+        "about": "About",
+        "headTitle": "Immunodeficiency and regeneration calculator",
+        "start": "Start"
+    },
+    "patientSearch": {
+        "pageTitle": "Patient Search Form",
+        "modalTitle": "Patient Search Form",
+        "lastName": "Surname",
+        "firstName": "Name",
+        "middleName": "Patronymic",
+        "birthDate": "Birth date",
+        "addPatientBtn": "Add patient",
+        "searchPatientBtn": "Search"
+    },
+    "patientAddForm": {
+        "pageTitle": "Add patient",
+        "modalTitle": "Add patient",
+        "lastName": "Surname",
+        "firstName": "Name",
+        "middleName": "Patronymic",
+        "birthDate": "Birth date",
+        "gender": "Gender",
+        "chooseGenderDefaultOption": "Choose gender",
+        "maleGenderOption": "Male",
+        "femaleGenderOption": "Female",
+        "savePatient": "Save",
+        "cancel": "Cancel"
+    }
+}

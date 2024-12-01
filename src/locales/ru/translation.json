@@ -1,0 +1,31 @@
+{
+    "home": {
+        "about": "О программе",
+        "headTitle": "Калькулятор иммунодефицита и регенерации",
+        "start": "Начать"
+    },
+    "patientSearch": {
+        "pageTitle": "Поиск пациента",
+        "modalTitle": "Поиск пациента",
+        "lastName": "Фамилия",
+        "firstName": "Имя",
+        "middleName": "Отчество",
+        "birthDate": "Дата рождения",
+        "addPatientBtn": "Добавить пациента",
+        "searchPatientBtn": "Поиск"
+    },
+    "patientAddForm": {
+        "pageTitle": "Создать карточку пациента",
+        "modalTitle": "Создать карточку пациента",
+        "lastName": "Фамилия",
+        "firstName": "Имя",
+        "middleName": "Отчество",
+        "birthDate": "Дата рождения",
+        "gender": "Пол",
+        "chooseGenderDefaultOption": "Выберите пол",
+        "maleGenderOption": "Мужской",
+        "femaleGenderOption": "Женский",
+        "savePatient": "Сохранить",
+        "cancel": "Отмена"
+    }
+}

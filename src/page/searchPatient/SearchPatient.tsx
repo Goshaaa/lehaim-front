@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import Header from "../header/Header";
 import * as patientService from '../../services/PatientService';
 import { PatientSearchParam } from "../../types/CommonTypes";
+import { useTranslation } from "react-i18next";
 
 
 function SearchPatient() {
+    const { t } = useTranslation();
 
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
@@ -37,23 +39,27 @@ function SearchPatient() {
 
     const handleClickAddNew = () => {
         navigate("/addPatient?firstName=" + (searchData.firstName ?? "") +
-         "&lastName=" + (searchData.lastName?.trim() ?? "") + 
-         "&middleName=" + (searchData.patronymic?.trim() ?? "") + 
-         "&birthDate=" + (searchData.birthDate?.trim() ?? "")
+            "&lastName=" + (searchData.lastName?.trim() ?? "") +
+            "&middleName=" + (searchData.patronymic?.trim() ?? "") +
+            "&birthDate=" + (searchData.birthDate?.trim() ?? "")
         );
     }
 
     return (
         <>
-            <Header title="Поиск пациента"></Header>
+            <Header title= {t('patientSearch.pageTitle')}></Header>
             <div className="container-lg">
                 <div className="row justify-content-center">
                     <div className="col-sm-10 col-md-8 col-lg-6">
                         <div className="border border-secondary rounded-3 text-secondary p-3 mb-3">
-                            <h4 className="mb-3">Поиск пациента</h4>
+                            <h4 className="mb-3">
+                                {t('patientSearch.modalTitle')}
+                            </h4>
                             <form onSubmit={handleSubmit} className="container-fluid">
                                 <div className="mb-3">
-                                    <label htmlFor="patientLastName" className="form-label fw-bold">Фамилия</label>
+                                    <label htmlFor="patientLastName" className="form-label fw-bold">
+                                        {t('patientSearch.lastName')}
+                                    </label>
                                     <input
                                         type="text"
                                         required
@@ -64,7 +70,9 @@ function SearchPatient() {
                                         className="form-control" />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="patientFirstName" className="form-label fw-bold">Имя</label>
+                                    <label htmlFor="patientFirstName" className="form-label fw-bold">
+                                        {t('patientSearch.firstName')}
+                                    </label>
                                     <input
                                         type="text"
                                         required
@@ -76,7 +84,9 @@ function SearchPatient() {
 
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="patientMiddleName" className="form-label fw-bold">Отчество</label>
+                                    <label htmlFor="patientMiddleName" className="form-label fw-bold">
+                                        {t('patientSearch.middleName')}
+                                    </label>
                                     <input
                                         type="text"
                                         id="patientMiddleName"
@@ -87,7 +97,9 @@ function SearchPatient() {
 
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="patientBithDate" className="form-label fw-bold">Дата рождения</label>
+                                    <label htmlFor="patientBithDate" className="form-label fw-bold">
+                                        {t('patientSearch.birthDate')}
+                                    </label>
                                     <input
                                         type="date"
                                         min='1900-01-01'
@@ -110,7 +122,7 @@ function SearchPatient() {
                                         type="button"
                                         className="btn btn-outline-success me-3"
                                         onClick={handleClickAddNew}>
-                                        Добавить пациента
+                                        {t('patientSearch.addPatientBtn')}
                                     </button>
                                     <button
                                         type="submit"
@@ -119,7 +131,7 @@ function SearchPatient() {
                                         {loading &&
                                             <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                                         }
-                                        Поиск
+                                        {t('patientSearch.searchPatientBtn')}
                                     </button>
                                 </div>
                             </form>
