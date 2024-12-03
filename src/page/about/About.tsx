@@ -1,6 +1,9 @@
 import Header from '../header/Header';
+import { useTranslation } from "react-i18next";
 
 function About() {
+    const { t } = useTranslation();
+
     return (
         <>
             <Header title='О программе'></Header>
@@ -130,16 +133,16 @@ function About() {
                                 data-bs-target="#collapseRights"
                                 aria-expanded="false"
                                 aria-controls="collapseRights">
-                                Авторские права
+                                {t('about.copyright.title')}
                             </button>
                         </h2>
                         <div id="collapseRights"
                             className="accordion-collapse collapse"
                             aria-labelledby="headingRights">
                             <div className="accordion-body">
-                                <h3>Внимание</h3>
-                                <p>Данный сервис является объектом интеллектуальной собственности и охраняется законом.</p>
-                                <p>Любое использование содержимого третьими лицами возможно только с письменного разрешения владельца</p>
+                                <h3>{t('about.copyright.attention')}</h3>
+                                <p>{t('about.copyright.text1')}</p>
+                                <p>{t('about.copyright.text2')}</p>
                             </div>
                         </div>
                     </div>
@@ -152,7 +155,7 @@ function About() {
                                 data-bs-target="#collapseAbbreviation"
                                 aria-expanded="false"
                                 aria-controls="collapseAbbreviation">
-                                Список сокращений
+                                {t('about.abbreviation.title')}
                             </button>
                         </h2>
                         <div id="collapseAbbreviation"
@@ -161,76 +164,148 @@ function About() {
                             <div className="accordion-body">
                                 <ul>
                                     <li>
-                                        <span className='fw-bold'>ЗНО</span> - злокачественное образование
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.mot')}
+                                        </span>
+                                        - {t('about.abbreviation.motDefinition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>G</span> - степень дифференцировки опухоли
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.g')}
+                                        </span>
+                                        - {t('about.abbreviation.gDefinition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>TNM</span> - критерии классификации - тумор, нодуль, метастаз
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.tnm')}
+                                        </span>
+                                        - {t('about.abbreviation.tnmDefinition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>Neu</span> - нейтрофильные лейкоциты
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.neu')}
+                                        </span>
+                                        - {t('about.abbreviation.neuDefinition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>Mon</span> - моноциты
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.mon')}
+                                        </span>
+                                        - {t('about.abbreviation.monDefinition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>Lymf</span> - лимфоциты
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.lymf')}
+                                        </span>
+                                        - {t('about.abbreviation.lymfDefinition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>Pl</span> - тромбоциты
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.pl')}
+                                        </span>
+                                        - {t('about.abbreviation.plDefinition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>Neu/Lymf</span> - индекс абс. числа нейтрофилов/лимфоцитов
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.neulymf')}
+                                        </span>
+                                        - {t('about.abbreviation.neulymfDefinition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>Neu/Mon</span> - индекс абс. числа нейтрофилов/моноцитов
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.neumon')}
+                                        </span>
+                                        - {t('about.abbreviation.neumonDefinition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>Lymf/Mon</span> - индекс абс. числа лимфоциов/моноцитов
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.lymfmon')}
+                                        </span>
+                                        - {t('about.abbreviation.lymfmonDefinition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>SiRi</span> - индекс системного воспалительного ответа = Neu x Mon/Lym
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.siri')}
+                                        </span>
+                                        - {t('about.abbreviation.siriDefinition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>PiV</span> - общий иммуно-воспалительный индекс=Neu x Pl x Mon/Lym
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.piv')}
+                                        </span>
+                                        - {t('about.abbreviation.pivDefinition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>DensNe</span> - плотность нейтрофильв= Ne/(Lym+Mon)
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.densne')}
+                                        </span>
+                                        - {t('about.abbreviation.densneDefinition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>CD19+</span> - количество В-лимфоцитов
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.cd19')}
+                                        </span>
+                                        - {t('about.abbreviation.cd19Definition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>CD4+</span> - количество субпопуляции Т-лимфоцитов-хелперов
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.cd4')}
+                                        </span>
+                                        - {t('about.abbreviation.cd4Definition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>CD8+</span> - количество субпопуляции Т-лимфоцитов-киллеры
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.cd8')}
+                                        </span>
+                                        - {t('about.abbreviation.cd8Definition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>CD3</span> - общие Т-клеточные лимфоциты
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.cd3')}
+                                        </span>
+                                        - {t('about.abbreviation.cd3Definition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>Neu/CD19; CD19/СD+; CD19/СD8+</span> - интегральные критерии визуализации В-клеточного звена иммунитета
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.neucd19cd19cdcd19cd8')}
+                                        </span>
+                                        - {t('about.abbreviation.neucd19cd19cdcd19cd8Definition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>Neu/СD3; Neu/CD4+; Neu/CD8+</span> - интегральные критерии визуализации Т-коеточного звена иммунитета
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.neucd3neucd4neucd8')}
+                                        </span>
+                                        - {t('about.abbreviation.neucd3neucd4neucd8Definition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>IL-2</span> - интерлейкин-2
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.il2')}
+                                        </span>
+                                        - {t('about.abbreviation.il2Definition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>IFNy</span> - интерферон гамма
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.ifny')}
+                                        </span>
+                                        - {t('about.abbreviation.ifnyDefinition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>TNFa</span> - фактор некроза опухоли альфа
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.tnfa')}
+                                        </span>
+                                        - {t('about.abbreviation.tnfaDefinition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>ОВИД</span> - общевариабельный иммунодефицит (В-клеточный)
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.cvid')}
+                                        </span>
+                                        - {t('about.abbreviation.cvidDefinition')}
                                     </li>
                                     <li>
-                                        <span className='fw-bold'>ТКИД</span> - тяжелый комбинированный иммунодефицит (Т-клеточный)
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.scid')}
+                                        </span>
+                                        - {t('about.abbreviation.scidDefinition')}
                                     </li>
                                 </ul>
                             </div>
