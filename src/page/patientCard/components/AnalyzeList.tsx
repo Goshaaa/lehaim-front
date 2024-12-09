@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPrint, faTrash, faEdit, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import ConfirmationModal from '../../../components/ConfirmationModal';
 import ChartIndicator from './ChartIndicator';
+import { useTranslation } from "react-i18next";
 
 interface Props {
     patientId: string,
@@ -21,6 +22,8 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
     const [testToDelete, setTestToDelete] = useState<AnalyzeBriefInfo>({});
     const navigate = useNavigate();
 
+    const { t } = useTranslation();
+
 
     const loadPatientOncoTests = async () => {
         setError("");
@@ -31,9 +34,9 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                 setOncoTests(data);
             } catch (err) {
                 if (err instanceof Error) {
-                    setError("Ошибка: " + err.message);
+                    setError(t('common.error') + err.message);
                 } else {
-                    setError("Ошибка загрузки: " + err);
+                    setError(t('common.loadingError') + err);
                 }
             }
         }
@@ -81,15 +84,16 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
         return charts ? charts.includes(chartName) : false;
     };
 
-
     return (
         <>
             <ConfirmationModal
-                title="Подтвердите действие"
-                body={"Вы точно хотите удалить \"Обследование от " + dateUtils.formatDate(testToDelete.testDate) + "\""}
+                title={t('analyzeList.confirmDelTitle')}
+                body={t('analyzeList.confirmDelBody') + dateUtils.formatDate(testToDelete.testDate) + "\""}
                 yesCallback={() => { handleDeleteConfirmationCallback(testToDelete.id!!) }} />
 
-            {!oncoTests && <h5 className="text-center m-3">Нет данных</h5>}
+            {!oncoTests && <h5 className="text-center m-3">
+                {t('analyzeList.noData')}
+            </h5>}
             <ul className="list-group overflow-auto" style={{ "maxHeight": "412px", "scrollbarWidth": "thin" }}>
                 {oncoTests?.map((test) =>
                     <li key={test.id}
@@ -99,7 +103,7 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                         <div className='d-flex justify-content-between'>
                             <div className="d-flex">
                                 <div>
-                                    Обследование от {dateUtils.formatDate(test.testDate)}
+                                    {t('analyzeList.analize') + dateUtils.formatDate(test.testDate)}
                                 </div>
                                 <div className="d-flex ms-4 me-4">
                                     <ChartIndicator
@@ -119,7 +123,7 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                                         className="ps-1 me-3"
                                         icon={faInfoCircle}
                                         role="button"
-                                        title={test.testNote ?? "Нет данных"} />
+                                        title={test.testNote ?? t('analyzeList.noData')} />
                                 }
 
                                 <FontAwesomeIcon
@@ -127,14 +131,14 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                                     icon={faPrint}
                                     onClick={(event) => buildPdfReport(event, test.id!!)}
                                     role="button"
-                                    title="Сформировать отчет" />
+                                    title={t('analyzeList.buildRebotnBtn')}/>
 
                                 <FontAwesomeIcon
                                     className="ps-1 me-3"
                                     onClick={(event) => handleEdit(event, test.id!!)}
                                     icon={faEdit}
                                     role="button"
-                                    title="Редактировать обследование" />
+                                    title={t('analyzeList.editAnalyzeBtn')}/>
 
                                 <FontAwesomeIcon
                                     className="ps-1"
@@ -142,7 +146,7 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                                     icon={faTrash}
                                     onClick={() => onClickDelete(test)}
                                     role="button"
-                                    title="Удалить обследование" />
+                                    title={t('analyzeList.deleteAnalyzeBtn')}/>
                             </div>
                         </div>
                     </li>

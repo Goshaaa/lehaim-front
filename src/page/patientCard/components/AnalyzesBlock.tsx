@@ -1,6 +1,7 @@
 import { Link, useParams } from 'react-router-dom';
 import AnalyzeList from "./AnalyzeList";
 import { SelectAnalyzeCallback } from '../../../types/CommonTypes';
+import { useTranslation } from "react-i18next";
 
 
 interface Props {
@@ -9,6 +10,7 @@ interface Props {
 
 function AnalyzesBlock({ selectAnalyzeCallback }: Props) {
     const { patientId } = useParams();
+    const { t } = useTranslation();
 
     return (
         <div className="container-lg border border-secondary rounded-3 text-secondary p-3 mb-3 clearfix">
@@ -21,7 +23,9 @@ function AnalyzesBlock({ selectAnalyzeCallback }: Props) {
 
                     <div className='mt-3'>
                         <Link to={"/patient/" + patientId + "/analyzes/"}>
-                            <button type="button" className="btn btn-outline-secondary float-end" title="Добавить обследование">Добавить</button>
+                            <button type="button" className="btn btn-outline-secondary float-end" title="Добавить обследование">
+                                {t('analyzeList.addAnalyzeBtn')}
+                            </button>
                         </Link>
                     </div>
                 </>

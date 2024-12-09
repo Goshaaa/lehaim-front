@@ -1,4 +1,9 @@
 {
+    "common": {
+        "error": "Ошибка: ",
+        "loadingError": "Ошибка загрузки: ",
+        "saveError": "Ошибка сохранения: "
+    },
     "home": {
         "about": "О программе",
         "headTitle": "Калькулятор иммунодефицита и регенерации",
@@ -86,5 +91,33 @@
             "scid": "ТКИД ",
             "scidDefinition": "тяжелый комбинированный иммунодефицит (Т-клеточный)"
         }
+    },
+    "patientAdditionalBlock": {
+        "lastName": "Фамилия",
+        "firstName": "Имя",
+        "middleName": "Отчество",
+        "birthDate": "Дата рождения",
+        "diagnosis": "Диагноз",
+        "extraDiagnosis": "Доп диагноз",
+        "surgeryDate": "Дата операции",
+        "diagnosisComment": "Комментарий о диагнозе",
+        "surgeryComment": "Комментарий об операции",
+        "therapyComment": "Комментарий о курсах химиотерапии",
+        "saveBtn": "Сохранить",
+        "saveBtnTooltip": "Сохранить изменения",
+        "editBtn": "Редактировать",
+        "editBtnTooltip": "Редактировать сведения",
+        "cancelBtn": "Отмена",
+        "cancelBtnTooltip": "Отмена изменений"
+    },
+    "analyzeList": {
+        "confirmDelTitle" : "Подтвердите действие",
+        "confirmDelBody" : "Вы точно хотите удалить \"Обследование от",
+        "noData" : "Нет данных",
+        "analize" : "Обследование ",
+        "buildRebotnBtn": "Сформировать отчет",
+        "editAnalyzeBtn": "Редактировать обследование",
+        "deleteAnalyzeBtn": "Удалить обследование",
+        "addAnalyzeBtn": "Добавить"
     }
 }

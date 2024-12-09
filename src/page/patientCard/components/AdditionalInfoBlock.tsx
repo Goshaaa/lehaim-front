@@ -6,6 +6,7 @@ import * as geneticService from '../../../services/GeneticService';
 import { DiagnosisDTO } from "../../../services/DiagnosisService";
 import GeneticsInfoBlock from "./GeneticsInfoBlock";
 import MultiSelectList from "../../../components/MultipleSelect"
+import { useTranslation } from "react-i18next";
 
 interface Props {
     patient: Patient;
@@ -19,13 +20,13 @@ function AdditionaInfolBlock({ patient }: Props) {
     const [error, setError] = useState("");
     const [diagnosisId, setDiagnosisId] = useState<number | undefined>(patient.diagnosisId);
 
-
     const [diagnosisCatalog, setDiagnosisCatalog] = useState<DiagnosisDTO[]>([]);
     const [patientAllGenes, setPatientAllGenes] = useState<PatientAllGenesDto>();
     const [origPatientDiagnosisGenes, setOrigPatientDiagnosisGenes] = useState<PatientGeneDto[]>([]);
     const [patientDiagnosisGenes, setPatientDiagnosisGenes] = useState<PatientGeneDto[]>([]);
     const [diagnosisGenes, setDiagnosisGenes] = useState<GeneDto[] | undefined>([]);
 
+    const { t } = useTranslation();
 
     useEffect(() => {
         const loadDiagnosisCatalog = async () => {
@@ -36,9 +37,9 @@ function AdditionaInfolBlock({ patient }: Props) {
                 setDiagnosisCatalog(data);
             } catch (err) {
                 if (err instanceof Error) {
-                    setError("Ошибка: " + err.message);
+                    setError(t('common.error') + err.message);
                 } else {
-                    setError("Ошибка загрузки: " + err);
+                    setError(t('common.loadingError') + err);
                 }
             }
             setLoading(false);
@@ -52,9 +53,9 @@ function AdditionaInfolBlock({ patient }: Props) {
                 setPatientAllGenes(data);
             } catch (err) {
                 if (err instanceof Error) {
-                    setError("Ошибка: " + err.message);
+                    setError(t('common.error') + err.message);
                 } else {
-                    setError("Ошибка загрузки: " + err);
+                    setError(t('common.loadingError') + err);
                 }
             }
             setLoading(false);
@@ -131,9 +132,9 @@ function AdditionaInfolBlock({ patient }: Props) {
             setEditMode(false);
         } catch (err) {
             if (err instanceof Error) {
-                setError("Ошибка: " + err.message);
+                setError(t('common.error') + err.message);
             } else {
-                setError("Ошибка сохранения: " + err);
+                setError(t('common.saveError') + err);
             }
         }
         setLoading(false);
@@ -144,7 +145,9 @@ function AdditionaInfolBlock({ patient }: Props) {
             <div className="border border-secondary rounded-3 text-secondary p-3 clearfix">
                 <form onSubmit={handleSubmit} className="container-fluid">
                     <div className="mb-2 d-flex justify-content-between">
-                        <label htmlFor="lastNameArea" className="fw-bold">Фамилия:</label>
+                        <label htmlFor="lastNameArea" className="fw-bold">
+                            {t('patientAdditionalBlock.lastName')}:
+                        </label>
                         <input className="w-50"
                             id="lastNameArea"
                             name="lastname"
@@ -154,7 +157,9 @@ function AdditionaInfolBlock({ patient }: Props) {
                         />
                     </div>
                     <div className="mb-2 d-flex justify-content-between">
-                        <label htmlFor="nameArea" className="fw-bold">Имя:</label>
+                        <label htmlFor="nameArea" className="fw-bold">
+                            {t('patientAdditionalBlock.firstName')}:
+                        </label>
                         <input className="w-50"
                             id="nameArea"
                             name="name"
@@ -164,7 +169,9 @@ function AdditionaInfolBlock({ patient }: Props) {
                         />
                     </div>
                     <div className="mb-2 d-flex justify-content-between">
-                        <label htmlFor="patronymicArea" className="fw-bold">Отчество:</label>
+                        <label htmlFor="patronymicArea" className="fw-bold">
+                            {t('patientAdditionalBlock.middleName')}:
+                        </label>
                         <input className="w-50"
                             id="patronymicArea"
                             name="patronymic"
@@ -174,7 +181,9 @@ function AdditionaInfolBlock({ patient }: Props) {
                         />
                     </div>
                     <div className="mb-2 d-flex justify-content-between">
-                        <label htmlFor="birthDateArea" className="fw-bold">Дата рождения:</label>
+                        <label htmlFor="birthDateArea" className="fw-bold">
+                            {t('patientAdditionalBlock.birthDate')}:
+                        </label>
                         <input className="w-50"
                             type="date"
                             min='1900-01-01'
@@ -189,7 +198,9 @@ function AdditionaInfolBlock({ patient }: Props) {
 
                     <div className="mb-3 mt-2">
                         <label htmlFor="mainDiagnosisArea"
-                            className="fw-bold">Диагноз:</label>
+                            className="fw-bold">
+                            {t('patientAdditionalBlock.diagnosis')}:
+                        </label>
                         <div className="mt-2">
                             <select
                                 id="mainDiagnosisArea"
@@ -259,7 +270,9 @@ function AdditionaInfolBlock({ patient }: Props) {
                     {/* Applied only for C-50 */}
                     {diagnosisId === 45 &&
                         <div className="mb-2 d-flex justify-content-between">
-                            <label htmlFor="additionalDiagArea" className="fw-bold">Доп диагноз:</label>
+                            <label htmlFor="additionalDiagArea" className="fw-bold">
+                                {t('patientAdditionalBlock.extraDiagnosis')}:
+                            </label>
                             <input className="w-50"
                                 id="additionalDiagArea"
                                 name="additionalDiagnosis"
@@ -271,7 +284,9 @@ function AdditionaInfolBlock({ patient }: Props) {
                     }
 
                     <div className="mb-3">
-                        <label htmlFor="operationDateArea" className="fw-bold">Дата операции:</label>
+                        <label htmlFor="operationDateArea" className="fw-bold">
+                            {t('patientAdditionalBlock.surgeryDate')}:
+                        </label>
                         <div className="mt-2">
                             <input className="w-100"
                                 type="date"
@@ -288,7 +303,9 @@ function AdditionaInfolBlock({ patient }: Props) {
 
                     <div>
                         <label htmlFor="diagnosisArea"
-                            className="fw-bold">Комментарий о диагнозе:</label>
+                            className="fw-bold">
+                            {t('patientAdditionalBlock.diagnosisComment')}:
+                        </label>
                         <div className="mt-2">
                             <textarea className="w-100"
                                 id="diagnosisArea"
@@ -299,7 +316,9 @@ function AdditionaInfolBlock({ patient }: Props) {
                         </div>
                     </div>
                     <div>
-                        <label htmlFor="surgeryArea" className="fw-bold">Комментарий об операции:</label>
+                        <label htmlFor="surgeryArea" className="fw-bold">
+                            {t('patientAdditionalBlock.surgeryComment')}:
+                        </label>
                         <div className="mt-2">
                             <textarea
                                 className="w-100"
@@ -312,7 +331,9 @@ function AdditionaInfolBlock({ patient }: Props) {
                     </div>
 
                     <div>
-                        <label htmlFor="therapyArea" className="fw-bold">Комментарий о курсах химиотерапии:</label>
+                        <label htmlFor="therapyArea" className="fw-bold">
+                            {t('patientAdditionalBlock.therapyComment')}:
+                        </label>
                         <div className="mt-2">
                             <textarea
                                 className="w-100"
@@ -333,11 +354,11 @@ function AdditionaInfolBlock({ patient }: Props) {
                             <button type="submit"
                                 className="btn btn-outline-success float-end"
                                 disabled={loading}
-                                title="Сохранить изменения">
+                                title={t('patientAdditionalBlock.saveBtnTooltip')}>
                                 {loading &&
                                     <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                                 }
-                                Сохранить
+                                {t('patientAdditionalBlock.saveBtn')}
                             </button>
                         }
                         <button
@@ -345,9 +366,9 @@ function AdditionaInfolBlock({ patient }: Props) {
                             onClick={toggleEditMode}
                             className="btn btn-outline-secondary ms-3 float-end"
                             disabled={loading}
-                            title={editMode ? "Отмена изменений" : "Редактировать сведения"}
+                            title={editMode ? t('patientAdditionalBlock.cancelBtnTooltip') : t('patientAdditionalBlock.editBtnTooltip')}
                         >
-                            {editMode ? "Отмена" : "Редактировать"}
+                            {editMode ? t('patientAdditionalBlock.cancelBtn') : t('patientAdditionalBlock.editBtn')}
                         </button>
                     </div>
                 </form>

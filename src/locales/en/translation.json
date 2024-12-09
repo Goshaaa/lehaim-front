@@ -1,4 +1,9 @@
 {
+    "common": {
+        "error": "Error: ",
+        "loadingError": "Loading error: ",
+        "saveError": "Error on save: "
+    },
     "home": {
         "about": "About",
         "headTitle": "Immunodeficiency and regeneration calculator",
@@ -58,7 +63,7 @@
             "lymfmon": "Lymf/Mon ",
             "lymfmonDefinition": "Lymphocyte-to-Monocyte Ratio (LMR)",
             "siri": "SiRi ",
-            "siriDefinition": "индекс системного воспалительного ответа = Neu x Mon/Lym",
+            "siriDefinition": "systemic inflammation response index = Neu x Mon/Lym",
             "piv": "PiV ",
             "pivDefinition": "Pan-Immune-Inflammatory Value = Neu x Pl x Mon / Lym",
             "densne": "DensNe ",
@@ -86,5 +91,33 @@
             "scid": "SCID ",
             "scidDefinition": "Severe Combined Immunodeficiency (T-Cell)"
         }
+    },
+    "patientAdditionalBlock": {
+        "lastName": "Surname",
+        "firstName": "Name",
+        "middleName": "Patronymic",
+        "birthDate": "Birth date",
+        "diagnosis": "Diagnosis",
+        "extraDiagnosis": "Extra diagnosis",
+        "surgeryDate": "Surgery date",
+        "diagnosisComment": "Diagnosis comment",
+        "surgeryComment": "Surgery comment",
+        "therapyComment": "Chemotherapy comment",
+        "saveBtn": "Save",
+        "saveBtnTooltip": "Save patient data",
+        "editBtn": "Edit",
+        "editBtnTooltip": "Edit patient data",
+        "cancelBtn": "Cancel",
+        "cancelBtnTooltip": "Cancel"
+    },
+    "analyzeList": {
+        "confirmDelTitle" : "Confirm action",
+        "confirmDelBody" : "Are you sure to delete \"Analyze ",
+        "noData" : "No Data",
+        "analize" : "Analyze ",
+        "buildRebotnBtn": "Build report",
+        "editAnalyzeBtn": "Edit analyze",
+        "deleteAnalyzeBtn": "Delete analyze",
+        "addAnalyzeBtn": "Add analyze"
     }
 }
