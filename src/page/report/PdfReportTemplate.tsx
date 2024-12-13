@@ -330,6 +330,30 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
             </View>
             : null
           }
+          {recommendationData?.SYSTEMIC_INFLAMMATION ?
+            < View >
+              {recommendationData.SYSTEMIC_INFLAMMATION.conclusion ?
+                <View style={styles.section}>
+                  <Text style={styles.propertyComment}>
+                    <Text style={styles.propertyLabel}>Заключение: </Text>
+                    {recommendationData.SYSTEMIC_INFLAMMATION.conclusion}
+                  </Text>
+                </View>
+                : null
+              }
+              {recommendationData.SYSTEMIC_INFLAMMATION.recommendation ?
+                <View style={styles.section}>
+                  <Text style={styles.propertyComment}>
+                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                    {recommendationData.SYSTEMIC_INFLAMMATION.recommendation}
+                  </Text>
+                </View>
+                : null
+              }
+
+            </View>
+            : null
+          }
 
           {chartData?.bTypeData ?
             <View style={styles.chartSection} wrap={false}>
