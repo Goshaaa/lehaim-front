@@ -307,6 +307,12 @@ function About() {
                                         </span>
                                         - {t('about.abbreviation.scidDefinition')}
                                     </li>
+                                    <li>
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.si')}
+                                        </span>
+                                        - {t('about.abbreviation.siDefinition')}
+                                    </li>
                                 </ul>
                             </div>
                         </div>

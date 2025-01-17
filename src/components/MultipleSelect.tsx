@@ -20,7 +20,7 @@ function MultipleSelect({ label, options, value, onChange, disabled }: Props) {
       : [...selectedNames, name];
 
     setSelectedNames(newSelectedNames);
-    onChange(newSelectedNames.join(", "));
+    onChange(newSelectedNames.join(" "));
   };
 
   const handleToggleDropdown = () => {
@@ -53,7 +53,7 @@ function MultipleSelect({ label, options, value, onChange, disabled }: Props) {
       <div style={{ flex: 1, position: 'relative' }}>
         <input
           type="text"
-          value={selectedNames.length > 0 ? selectedNames.join(', ') : '-'}
+          value={selectedNames.length > 0 ? selectedNames.join(' ') : '-'}
           readOnly
           onClick={handleToggleDropdown}
           disabled={disabled}

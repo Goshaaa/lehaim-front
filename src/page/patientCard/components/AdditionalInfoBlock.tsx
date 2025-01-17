@@ -196,6 +196,26 @@ function AdditionaInfolBlock({ patient }: Props) {
                         />
                     </div>
 
+
+                    <div className="mb-2 d-flex justify-content-between">
+                        <label htmlFor="birthDateArea" className="fw-bold">
+                            {t('patientAdditionalBlock.gender')}:
+                        </label>
+
+                        <select
+                            id="patientGender"
+                            name="gender"
+                            value={changePatient.gender}
+                            onChange={handleChange}
+                            disabled={!editMode}
+                            className=" w-50"
+                        >
+                            <option value="Male">{t('patientAdditionalBlock.maleGenderOption')}</option>
+                            <option value="Female">{t('patientAdditionalBlock.femaleGenderOption')}</option>
+                        </select>
+                    </div>
+
+
                     <div className="mb-3 mt-2">
                         <label htmlFor="mainDiagnosisArea"
                             className="fw-bold">
@@ -244,7 +264,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                     <div className="mb-3">
                         <MultiSelectList
                             label="M:"
-                            options={["0", "X", "1", "Hep", "Pul", "OSS", "CNS"]}
+                            options={["0", "X", "1", "Hep", "Pul", "OSS", "CNS", "PL", "PER"]}
                             value={changePatient.m ?? ""}
                             onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, m: newValue }))}
                             disabled={!editMode}
@@ -254,7 +274,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                     <div className="mb-3">
                         <MultiSelectList
                             label="G:"
-                            options={["X", "1", "2", "3", "Adc", "Squam CC", "Small CC"]}
+                            options={["X", "1", "2", "3", "Adc", "Squam CC", "Small CC", "Muc"]}
                             value={changePatient.g ?? ""}
                             onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, g: newValue }))}
                             disabled={!editMode}

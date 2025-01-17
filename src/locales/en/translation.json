@@ -42,8 +42,8 @@
         },
         "abbreviation": {
             "title": "Abbreviations",
-            "mot": "MOT ",
-            "motDefinition": "Malignant Neoplasm",
+            "mot": "MND ",
+            "motDefinition": "Malignant neoplasm diseases",
             "g": "G ",
             "gDefinition": "Tumor Grade (degree of differentiation)",
             "tnm": "TNM ",
@@ -63,7 +63,7 @@
             "lymfmon": "Lymf/Mon ",
             "lymfmonDefinition": "Lymphocyte-to-Monocyte Ratio (LMR)",
             "siri": "SiRi ",
-            "siriDefinition": "systemic inflammation response index = Neu x Mon/Lym",
+            "siriDefinition": "Systemic inflammation response index = Neu x Mon/Lym",
             "piv": "PiV ",
             "pivDefinition": "Pan-Immune-Inflammatory Value = Neu x Pl x Mon / Lym",
             "densne": "DensNe ",
@@ -76,7 +76,7 @@
             "cd8Definition": "Number of T-Cytotoxic Lymphocytes (CD8+ T Cells)",
             "cd3": "CD3 ",
             "cd3Definition": "Total T-Cell Lymphocytes",
-            "neucd19cd19cdcd19cd8": "Neu/CD19; CD19/СD+; CD19/СD8+ ",
+            "neucd19cd19cdcd19cd8": "Neu/CD19; CD19/СD4+; CD19/СD8+ ",
             "neucd19cd19cdcd19cd8Definition": "Integral Indicators of B-Cell Immunity Visualization",
             "neucd3neucd4neucd8": "Neu/СD3; Neu/CD4+; Neu/CD8+ ",
             "neucd3neucd4neucd8Definition": "Integral Indicators of T-Cell Immunity Visualization",
@@ -89,7 +89,9 @@
             "cvid": "CVID ",
             "cvidDefinition": "Common Variable Immunodeficiency (B-Cell)",
             "scid": "SCID ",
-            "scidDefinition": "Severe Combined Immunodeficiency (T-Cell)"
+            "scidDefinition": "Severe Combined Immunodeficiency (T-Cell)",
+            "si": "SI ",
+            "siDefinition": "System inflammation"
         }
     },
     "patientAdditionalBlock": {
@@ -97,6 +99,10 @@
         "firstName": "Name",
         "middleName": "Patronymic",
         "birthDate": "Birth date",
+        "gender": "Gender",
+        "chooseGenderDefaultOption": "Choose gender",
+        "maleGenderOption": "Male",
+        "femaleGenderOption": "Female",
         "diagnosis": "Diagnosis",
         "extraDiagnosis": "Extra diagnosis",
         "surgeryDate": "Surgery date",
