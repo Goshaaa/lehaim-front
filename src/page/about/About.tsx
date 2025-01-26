@@ -3,6 +3,14 @@ import { useTranslation } from "react-i18next";
 
 function About() {
     const { t } = useTranslation();
+    const { i18n } = useTranslation();
+
+    const getDemoVideoSrc = (): string => {
+        if (i18n.language == "en") {
+            return "https://rutube.ru/play/embed/8a29632215bed6c51e1e35a3ad45e044?skinColor=9e9e9e"
+        }
+        return "https://rutube.ru/play/embed/1aabf7861e33400c709aa2f3034de175?skinColor=9e9e9e"
+    }
 
     return (
         <>
@@ -26,11 +34,10 @@ function About() {
                             aria-labelledby="headingDemo">
                             <div className="accordion-body d-flex justify-content-center">
                                 <iframe width="720" height="405"
-                                    src="https://rutube.ru/play/embed/1aabf7861e33400c709aa2f3034de175?skinColor=9e9e9e"
+                                    src={getDemoVideoSrc()}
                                     allow="clipboard-write; autoplay"
                                     custom-attribute="webkitAllowFullScreen mozallowfullscreen allowFullScreen"
-                                >
-                                </iframe>
+                                />
                             </div>
                         </div>
                     </div>
