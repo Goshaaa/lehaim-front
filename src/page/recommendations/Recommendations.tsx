@@ -1,6 +1,7 @@
 import { useState, FormEvent } from "react";
 import * as recommendationsServise from '../../services/RecommendationService';
 import { Recommendation } from "../../types/CommonTypes";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   selectedAnalyzeId?: string;
@@ -15,6 +16,7 @@ export default function RecommendationsBlock({
     const [recommendation, setRecommendation] = useState(recommendations?.recommendation ?? "");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const { t } = useTranslation();
     
     const toggleEditMode = () => {
       setEditMode(!editMode);
@@ -76,7 +78,7 @@ export default function RecommendationsBlock({
         {recommendations?.errorMessage === null &&
           <form onSubmit={handleSubmit} className="container-fluid">
             <div>
-              <label htmlFor="conclusionArea" className="fw-bold">Заключение:</label>
+              <label htmlFor="conclusionArea" className="fw-bold">{t('recommendationBlock.conclusion')}:</label>
               <div className="mt-2">
                 <textarea
                   className="w-100"
@@ -90,7 +92,7 @@ export default function RecommendationsBlock({
             </div>
 
             <div>
-              <label htmlFor="recommendationArea" className="fw-bold">Рекомендация:</label>
+              <label htmlFor="recommendationArea" className="fw-bold">{t('recommendationBlock.recommendation')}:</label>
               <div className="mt-2">
                 <textarea
                   className="w-100"
@@ -113,11 +115,11 @@ export default function RecommendationsBlock({
                 <button type="submit"
                   className="btn btn-outline-success float-end"
                   disabled={loading}
-                  title="Сохранить изменения">
+                  title={t('recommendationBlock.saveTooltip')}>
                     {loading &&
                       <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                     }
-                  Сохранить
+                  {t('recommendationBlock.save')}
                 </button>
               }
               <button
@@ -125,9 +127,9 @@ export default function RecommendationsBlock({
                 onClick={toggleEditMode}
                 className="btn btn-outline-secondary ms-3 float-end"
                 disabled={loading}
-                title={editMode ? "Отмена изменений" : "Редактировать сведения"}
+                title={editMode ? t('recommendationBlock.cancelTooltip') : t('recommendationBlock.editTooltip')}
                 >
-                {editMode ? "Отмена" : "Редактировать"}
+                {editMode ? t('recommendationBlock.cancel') : t('recommendationBlock.edit')}
               </button>
             </div>
           </form>

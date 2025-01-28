@@ -4,6 +4,7 @@ import { AnalyzeDetailedInfo, ChartType, RecommendationData, ChartPage } from '.
 import RadarChart from '../../chart/RadarChart';
 import RecommendationsBlock from '../../recommendations/Recommendations';
 import * as recommendationsServise from '../../../services/RecommendationService';
+import { useTranslation } from "react-i18next";
 
 
 interface Props {
@@ -15,6 +16,7 @@ function GraphBlock({ selectedAnalyzeId }: Props) {
     const [recommendationData, setRecommendationData] = useState<RecommendationData | null>(null);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const { t } = useTranslation();
 
     useEffect(() => {
         const loadAllDataGraph = async () => {
@@ -45,9 +47,9 @@ function GraphBlock({ selectedAnalyzeId }: Props) {
 
     return (
         <div className="container-lg border border-secondary rounded-3 text-secondary p-3 mb-3 clearfix">
-            <h3 className="text-center m-3">Графики</h3>
+            <h3 className="text-center m-3">{t('graphBlock.title')}</h3>
             {analyzeResult.length === 0
-                ? <h5 className="text-center m-3">Не выбрано обследование, по которому построить графики</h5>
+                ? <h5 className="text-center m-3">{t('graphBlock.noSelected')}</h5>
                 : loading ?
                     <div className='container'>
                         <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>

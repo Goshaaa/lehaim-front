@@ -14,7 +14,7 @@ function About() {
 
     return (
         <>
-            <Header title='О программе'></Header>
+            <Header title={t('about.pageTitle')}></Header>
             <div className="container-lg">
                 <div className="accordion">
 

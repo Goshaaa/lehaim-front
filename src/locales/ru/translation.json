@@ -33,7 +33,11 @@
         "savePatient": "Сохранить",
         "cancel": "Отмена"
     },
+    "patientCard": {
+        "pageTitle": "Карточка пациента"
+    },
     "about": {
+        "pageTitle": "О программе",
         "projectDemo": {
             "title": "Демо проекта"
         },
@@ -148,13 +152,35 @@
         "cancelBtnTooltip": "Отмена изменений"
     },
     "analyzeList": {
-        "confirmDelTitle" : "Подтвердите действие",
-        "confirmDelBody" : "Вы точно хотите удалить \"Обследование от",
-        "noData" : "Нет данных",
-        "analize" : "Обследование ",
+        "title": "Список обследований",
+        "confirmDelTitle": "Подтвердите действие",
+        "confirmDelBody": "Вы точно хотите удалить \"Обследование от",
+        "noData": "Нет данных",
+        "analize": "Обследование ",
         "buildRebotnBtn": "Сформировать отчет",
         "editAnalyzeBtn": "Редактировать обследование",
         "deleteAnalyzeBtn": "Удалить обследование",
         "addAnalyzeBtn": "Добавить"
+    },
+    "graphBlock": {
+        "title": "Графики",
+        "noSelected": "Не выбрано обследование, по которому построить графики"
+    },
+    "recommendationBlock": {
+        "conclusion": "Заключение",
+        "recommendation": "Рекомендация",
+        "edit": "Редактировать",
+        "editTooltip": "Редактировать сведения",
+        "save": "Сохранить",
+        "saveTooltip": "Сохранить изменения",
+        "cancel": "Отмена",
+        "cancelTooltip": "Отмена изменений"
+    },
+    "chart": {
+        "regenerationChartTitle": "Расчет вида регенерации",
+        "inflammationChartTitle": "Индексы системного воспаления",
+        "bTypeChartTitle": "Относительные параметры B - клеточного звена иммунитета",
+        "tTypeChartTitle": "Относительные параметры T - клеточного звена иммунитета",
+        "cytokineChartTitle": "Цитокиновые пары"
     }
 }

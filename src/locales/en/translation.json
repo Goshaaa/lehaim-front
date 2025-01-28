@@ -33,7 +33,11 @@
         "savePatient": "Save",
         "cancel": "Cancel"
     },
+    "patientCard": {
+        "pageTitle": "Patient Card"
+    },
     "about": {
+        "pageTitle": "About",
         "projectDemo": {
             "title": "Project demo"
         },
@@ -148,13 +152,35 @@
         "cancelBtnTooltip": "Cancel"
     },
     "analyzeList": {
-        "confirmDelTitle" : "Confirm action",
-        "confirmDelBody" : "Are you sure to delete \"Analyze ",
-        "noData" : "No Data",
-        "analize" : "Analyze ",
+        "title": "Analyze list",
+        "confirmDelTitle": "Confirm action",
+        "confirmDelBody": "Are you sure to delete \"Analyze ",
+        "noData": "No Data",
+        "analize": "Analyze ",
         "buildRebotnBtn": "Build report",
         "editAnalyzeBtn": "Edit analyze",
         "deleteAnalyzeBtn": "Delete analyze",
         "addAnalyzeBtn": "Add analyze"
+    },
+    "graphBlock": {
+        "title": "Graphs",
+        "noSelected": "Select analysis firstly"
+    },
+    "recommendationBlock": {
+        "conclusion": "Conclusion",
+        "recommendation": "Recommendation",
+        "edit": "Edit",
+        "editTooltip": "Edit data",
+        "save": "Save",
+        "saveTooltip": "Save changes",
+        "cancel": "Cancel",
+        "cancelTooltip": "Cancel editing"
+    },
+    "chart": {
+        "regenerationChartTitle": "Calculation of the type of regeneration",
+        "inflammationChartTitle": "Systemic inflammation indices",
+        "bTypeChartTitle": "Relative parameters of B - cellular immunity",
+        "tTypeChartTitle": "Relative parameters of T-cell immunity",
+        "cytokineChartTitle": "Cytokine pairs"
     }
 }

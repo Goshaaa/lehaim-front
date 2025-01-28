@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom";
 import Header from "../header/Header";
-// import PatientInfo from "./components/PatientInfo";
 import AdditionaInfolBlock from './components/AdditionalInfoBlock';
 import AnalyzesBlock from "./components/AnalyzesBlock";
 import GraphBlock from "./components/GraphBlock";
 import { Patient, SelectAnalyzeCallback } from '../../types/CommonTypes';
 import * as patientService from '../../services/PatientService';
+import { useTranslation } from "react-i18next";
 
 function PatientCard() {
     const [patient, setPatient] = useState<Patient | null>(null);
@@ -14,6 +14,8 @@ function PatientCard() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const { patientId } = useParams();
+
+    const { t } = useTranslation();
 
     const loadPatient = async () => {
         setError("");
@@ -44,7 +46,7 @@ function PatientCard() {
 
     return (
         <>
-            <Header title="Карточка пациента"></Header>
+            <Header title={t('patientCard.pageTitle')}></Header>
             {loading &&
                 <div className='container'>
                     <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
@@ -54,7 +56,6 @@ function PatientCard() {
                 <div className="container-lg">
                     <div className="row">
                         <div className="col-md-4 col-sm-12 mb-3">
-                            {/* <PatientInfo patient={patient}></PatientInfo> */}
                             <AdditionaInfolBlock patient={patient}></AdditionaInfolBlock>
                         </div>
                         <div className="col-md-8 col-sm-12">
