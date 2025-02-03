@@ -149,7 +149,8 @@ interface PatientAllGenesDto {
 interface GeneDto {
     id: string,
     geneName: string,
-    possibleValues: string[]
+    possibleValues: string[],
+    defaultValue?: string
 }
 
 interface PatientGeneDto {

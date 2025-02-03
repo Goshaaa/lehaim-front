@@ -72,13 +72,30 @@ function AdditionaInfolBlock({ patient }: Props) {
     }, [diagnosisCatalog, changePatient]);
 
     useEffect(() => {
-        let genesByDiagnosis: PatientGeneDto[] = [];
+        let patientGenesByDiagnosis: PatientGeneDto[] = [];
         if (patientAllGenes && diagnosisId) {
-            genesByDiagnosis = patientAllGenes[diagnosisId]
+            patientGenesByDiagnosis = patientAllGenes[diagnosisId] ?? [];
+
+            //Установить для всех возможных генов данного диагноза дефолтное значение, если имеется дефолтное значение и не установлено свое
+            diagnosisGenes
+                ?.filter(gene => gene.defaultValue)
+                .forEach(gene => {
+                    if (!patientGenesByDiagnosis.find(patientGene => patientGene.geneId == gene.id)) {
+                        patientGenesByDiagnosis.push({
+                            geneId: gene.id,
+                            geneValue: gene.defaultValue!!,
+                            diagnosisId: diagnosisId!!
+                        });
+                    }
+                });
         }
-        setPatientDiagnosisGenes(genesByDiagnosis ? genesByDiagnosis : []);
-        setOrigPatientDiagnosisGenes(genesByDiagnosis ? genesByDiagnosis : []);
+        setPatientDiagnosisGenes(patientGenesByDiagnosis ? patientGenesByDiagnosis : []);
+        setOrigPatientDiagnosisGenes(patientGenesByDiagnosis ? patientGenesByDiagnosis : []);
     }, [diagnosisId, patientAllGenes]);
+
+    useEffect(() => {
+        calcAdditionalDiagnosis();
+    }, [patientDiagnosisGenes])
 
     const toggleEditMode = () => {
         if (editMode) {
@@ -107,15 +124,31 @@ function AdditionaInfolBlock({ patient }: Props) {
             });
         }
         setPatientDiagnosisGenes(copyGenes);
-        calcAdditionalDiagnosis();
     }
 
     const calcAdditionalDiagnosis = () => {
-        // if (diagnosisId === 45) {
-        //     console.log("Calculating...");
-        //     let calcValue = 'None';
-        //     setChangePatient(prevData => ({ ...prevData, ['additionalDiagnosis']: calcValue }));
-        // }
+        if (diagnosisId === 45 && patientDiagnosisGenes) {//С50
+            let ER = patientDiagnosisGenes?.find(gene => gene.geneId == "18")?.geneValue; //"id":18,"geneName":"ER"
+            let PR = patientDiagnosisGenes?.find(gene => gene.geneId == "19")?.geneValue; //"id":19,"geneName":"PR"
+            let Ki67 = patientDiagnosisGenes?.find(gene => gene.geneId == "20")?.geneValue; //"id":20,"geneName":"Ki67"
+            let HER2neu = patientDiagnosisGenes?.find(gene => gene.geneId == "21")?.geneValue; //"id":21,"geneName":"HER2neu"
+
+            let calcValue = 'N/A';
+            if (ER === "5-8" && PR === "5-8" && (Ki67 === "<1" || Ki67 === "1-14") && HER2neu === "0") {
+                calcValue = "ЛА";
+            } else if ((ER === "1-2" || ER === "3-4") && (PR === "1-2" || PR === "3-4") && (Ki67 === "15-30" || Ki67 === "31-70" || Ki67 === "71-100")
+                && (HER2neu === "0" || HER2neu === "1+")) {
+                calcValue = "ЛБ Her-";
+            } else if (ER === "<1" && PR === "<1" && (Ki67 === "<1" || Ki67 === "1-14" || Ki67 === "15-30" || Ki67 === "31-70" || Ki67 === "71-100")  && (HER2neu === "2+" || HER2neu === "3+")) {
+                calcValue = "Her3+";
+            } else if (ER === "<1" && PR === "<1" && (Ki67 === "<1" || Ki67 === "1-14" || Ki67 === "15-30" || Ki67 === "31-70" || Ki67 === "71-100") && HER2neu === "0") {
+                calcValue = "ТН";
+            } else if ((ER === "1-2" || ER === "3-4") && (PR === "1-2" || PR === "3-4")
+                && (Ki67 === "<1" || Ki67 === "1-14" || Ki67 === "15-30" || Ki67 === "31-70" || Ki67 === "71-100") && (HER2neu === "2+" || HER2neu === "3+")) {
+                calcValue = "ЛБ Her+";
+            }
+            setChangePatient(prevData => ({ ...prevData, ['additionalDiagnosis']: calcValue }));
+        }
     }
 
     const handleSubmit = async (event: FormEvent) => {
@@ -298,7 +331,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                                 name="additionalDiagnosis"
                                 value={changePatient.additionalDiagnosis ?? ""}
                                 onChange={handleChange}
-                                disabled={!editMode}
+                                disabled
                             />
                         </div>
                     }

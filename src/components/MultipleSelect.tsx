@@ -9,7 +9,7 @@ interface Props {
 }
 
 function MultipleSelect({ label, options, value, onChange, disabled }: Props) {
-  const initialSelectedNames = value ? value.split(", ").filter(name => name) : [];
+  const initialSelectedNames = value ? value.split(" ").filter(name => name) : [];
   const [selectedNames, setSelectedNames] = useState<string[]>(initialSelectedNames);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
