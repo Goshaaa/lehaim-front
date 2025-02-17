@@ -7,7 +7,7 @@ function About() {
 
     const getDemoVideoSrc = (): string => {
         if (i18n.language == "en") {
-            return "https://rutube.ru/play/embed/8a29632215bed6c51e1e35a3ad45e044?skinColor=9e9e9e"
+            return "https://rutube.ru/play/embed/bcc2999c2706b63a1fa615db22002b03?skinColor=9e9e9e"
         }
         return "https://rutube.ru/play/embed/1aabf7861e33400c709aa2f3034de175?skinColor=9e9e9e"
     }
