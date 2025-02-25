@@ -1,130 +1,84 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 
-interface Props {
+interface MultipleSelectProps {
   label: string;
-  options: string[];
   value: string;
-  onChange: (selected: string) => void;
+  onChange: (newValue: string) => void;
   disabled: boolean;
+  numberOptions: string[];
+  letterOptions: string[];
 }
 
-function MultipleSelect({ label, options, value, onChange, disabled }: Props) {
-  const initialSelectedNames = value ? value.split(" ").filter(name => name) : [];
-  const [selectedNames, setSelectedNames] = useState<string[]>(initialSelectedNames);
-  const [isOpen, setIsOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const toggleName = (name: string) => {
-    const newSelectedNames = selectedNames.includes(name)
-      ? selectedNames.filter(n => n !== name)
-      : [...selectedNames, name];
-
-    setSelectedNames(newSelectedNames);
-    onChange(newSelectedNames.join(" "));
-  };
-
-  const handleToggleDropdown = () => {
-    if (!disabled) {
-      setIsOpen(prev => !prev);
-    }
-  };
+function MultipleSelect({
+  label,
+  value,
+  onChange,
+  disabled,
+  numberOptions,
+  letterOptions
+}: MultipleSelectProps) {
+  const [numberValue, setNumberValue] = useState<string>("");
+  const [letterValue, setLetterValue] = useState<string>("");
 
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
+    const values = value.split(" ");
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [dropdownRef]);
+    const numberPart = values.find((part) => numberOptions.includes(part)) || "";
+    const letterPart = letterOptions.find(option => values.join(" ").includes(option)) || "";
+
+    setNumberValue(numberPart);
+    setLetterValue(letterPart);
+  }, [value, numberOptions, letterOptions]);
+
+  const handleNumberChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedNumber = e.target.value;
+    setNumberValue(selectedNumber);
+    onChange([letterValue, selectedNumber].filter(Boolean).join(" "));
+  };
+
+  const handleLetterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedLetter = e.target.value;
+    setLetterValue(selectedLetter);
+    onChange([selectedLetter, numberValue].filter(Boolean).join(" "));
+  };
 
   return (
-    <div className="d-flex" ref={dropdownRef} style={{ position: 'relative', width: '100%' }}>
-      <label
-        style={{ width: '20px' }}
-        className="fw-bold me-3"
-      >
+    <div className="mb-3 d-flex">
+      <label style={{ width: '20px', flexShrink: 0 }} className="fw-bold me-3">
         {label}
       </label>
-      <div style={{ flex: 1, position: 'relative' }}>
-        <input
-          type="text"
-          value={selectedNames.length > 0 ? selectedNames.join(' ') : '-'}
-          readOnly
-          onClick={handleToggleDropdown}
+
+      <div className="d-flex gap-2 w-100">
+        <select
+          id="TNumber"
           disabled={disabled}
-          style={{
-            width: '100%',
-            border: disabled ? '1px solid rgba(118, 118, 118, 0.3)' : '1px solid rgb(118, 118, 118)',
-            cursor: 'default',
-            paddingRight: '30px',
-            paddingTop: '0px',
-            paddingBottom: '0px',
-            boxSizing: 'border-box',
-          }}
-        />
-        <span
-          onClick={handleToggleDropdown}
-          style={{
-            position: 'absolute',
-            right: '10px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            pointerEvents: 'none',
-            fontSize: '16px',
-            color: disabled ? 'grey' : 'black',
-            fontWeight: 'bold'
-          }}
+          name="TNumber"
+          value={numberValue}
+          onChange={handleNumberChange}
         >
-          ⌵
-        </span>
-        {isOpen && (
-          <ul
-            style={{
-              listStyleType: 'none',
-              padding: 0,
-              borderTop: '1px solid rgb(118, 118, 118)',
-              borderLeft: '1px solid rgb(118, 118, 118)',
-              borderBottom: '1px solid rgb(118, 118, 118)',
-              boxShadow: '2px 0 5px rgba(0, 0, 0, 0.2)',
-              overflowY: 'auto',
-              backgroundColor: 'white',
-              position: 'absolute',
-              width: '100%',
-              zIndex: 1,
-            }}
-          >
-            {options.map((option) => (
-              <li
-                key={option}
-                onClick={() => toggleName(option)}
-                style={{
-                  padding: '5px',
-                  backgroundColor: selectedNames.includes(option) ? '#0a58ca' : 'transparent',
-                  color: selectedNames.includes(option) ? 'white' : 'black'
-                }}
-                onMouseEnter={(e) => {
-                  if (!selectedNames.includes(option)) {
-                    e.currentTarget.style.backgroundColor = '#0a58ca';
-                    e.currentTarget.style.color = 'white';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (!selectedNames.includes(option)) {
-                    e.currentTarget.style.backgroundColor = 'transparent';
-                    e.currentTarget.style.color = 'black';
-                  }
-                }}
-              >
-                {option}
-              </li>
-            ))}
-          </ul>
-        )}
+          <option value="">-</option>
+          {numberOptions.map(option => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+
+        <select
+          id="TLetter"
+          disabled={disabled}
+          name="TLetter"
+          value={letterValue}
+          onChange={handleLetterChange}
+          style={{ flexGrow: 1 }}  
+        >
+          <option value="">-</option>
+          {letterOptions.map(option => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
       </div>
     </div>
   );

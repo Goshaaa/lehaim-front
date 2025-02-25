@@ -5,7 +5,7 @@ import * as diagnosisService from '../../../services/DiagnosisService';
 import * as geneticService from '../../../services/GeneticService';
 import { DiagnosisDTO } from "../../../services/DiagnosisService";
 import GeneticsInfoBlock from "./GeneticsInfoBlock";
-import MultiSelectList from "../../../components/MultipleSelect"
+import MultipleSelect from "../../../components/MultipleSelect"
 import { useTranslation } from "react-i18next";
 
 interface Props {
@@ -274,45 +274,41 @@ function AdditionaInfolBlock({ patient }: Props) {
                         </div>
                     </div>
 
-                    <div className="mb-3">
-                        <MultiSelectList
-                            label="T:"
-                            options={["0", "X", "1", "2", "3", "4", "a", "b", "c", "d"]}
-                            value={changePatient.t ?? ""}
-                            onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, t: newValue }))}
-                            disabled={!editMode}
-                        />
-                    </div>
+                    <MultipleSelect
+                        label="T:"
+                        value={changePatient.t ?? ""}
+                        onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, t: newValue }))}
+                        disabled={!editMode}
+                        numberOptions={["0", "X", "1", "2", "3", "4"]}
+                        letterOptions={["a", "b", "c", "d"]}
+                    />
 
-                    <div className="mb-3">
-                        <MultiSelectList
-                            label="N:"
-                            options={["0", "X", "1", "2", "3", "a", "b"]}
-                            value={changePatient.n ?? ""}
-                            onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, n: newValue }))}
-                            disabled={!editMode}
-                        />
-                    </div>
+                    <MultipleSelect
+                        label="N:"
+                        value={changePatient.n ?? ""}
+                        onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, n: newValue }))}
+                        disabled={!editMode}
+                        numberOptions={["0", "X", "1", "2", "3"]}
+                        letterOptions={["a", "b"]}
+                    />
 
-                    <div className="mb-3">
-                        <MultiSelectList
-                            label="M:"
-                            options={["0", "X", "1", "Hep", "Pul", "OSS", "CNS", "PL", "PER"]}
-                            value={changePatient.m ?? ""}
-                            onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, m: newValue }))}
-                            disabled={!editMode}
-                        />
-                    </div>
+                    <MultipleSelect
+                        label="M:"
+                        value={changePatient.m ?? ""}
+                        onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, m: newValue }))}
+                        disabled={!editMode}
+                        numberOptions={["0", "X", "1"]}
+                        letterOptions={["Hep", "Pul", "OSS", "BRA", "PL", "PER"]}
+                    />
 
-                    <div className="mb-3">
-                        <MultiSelectList
-                            label="G:"
-                            options={["X", "1", "2", "3", "Adc", "Squam CC", "Small CC", "Muc"]}
-                            value={changePatient.g ?? ""}
-                            onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, g: newValue }))}
-                            disabled={!editMode}
-                        />
-                    </div>
+                    <MultipleSelect
+                        label="G:"
+                        value={changePatient.g ?? ""}
+                        onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, g: newValue }))}
+                        disabled={!editMode}
+                        numberOptions={["X", "1", "2", "3"]}
+                        letterOptions={["Adc", "Squam CC", "Small CC", "Muc"]}
+                    />
 
                     <GeneticsInfoBlock
                         genesList={diagnosisGenes}
