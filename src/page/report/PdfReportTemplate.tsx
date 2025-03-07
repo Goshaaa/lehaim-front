@@ -365,12 +365,63 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
             : null
           }
 
+          {recommendationData?.B_CELL ?
+            < View >
+              {recommendationData.B_CELL.conclusion ?
+                <View style={styles.section}>
+                  <Text style={styles.propertyComment}>
+                    <Text style={styles.propertyLabel}>Заключение: </Text>
+                    {recommendationData.B_CELL.conclusion}
+                  </Text>
+                </View>
+                : null
+              }
+              {recommendationData.B_CELL.recommendation ?
+                <View style={styles.section}>
+                  <Text style={styles.propertyComment}>
+                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                    {recommendationData.B_CELL.recommendation}
+                  </Text>
+                </View>
+                : null
+              }
+
+            </View>
+            : null
+          }
+
+
           {chartData?.tTypeData ?
             <View style={styles.chartSection} wrap={false}>
               <Text style={styles.chartTitle}>Относительные параметры T - клеточного звена иммунитета</Text>
               <Image
                 style={styles.chart}
                 source={chartData.tTypeData} />
+            </View>
+            : null
+          }
+
+          {recommendationData?.T_CELL ?
+            < View >
+              {recommendationData.T_CELL.conclusion ?
+                <View style={styles.section}>
+                  <Text style={styles.propertyComment}>
+                    <Text style={styles.propertyLabel}>Заключение: </Text>
+                    {recommendationData.T_CELL.conclusion}
+                  </Text>
+                </View>
+                : null
+              }
+              {recommendationData.T_CELL.recommendation ?
+                <View style={styles.section}>
+                  <Text style={styles.propertyComment}>
+                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                    {recommendationData.T_CELL.recommendation}
+                  </Text>
+                </View>
+                : null
+              }
+
             </View>
             : null
           }
