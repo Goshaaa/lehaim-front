@@ -346,6 +346,18 @@ function About() {
                                         </span>
                                         - {t('about.abbreviation.siDefinition')}
                                     </li>
+                                    <li>
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.iih')}
+                                        </span>
+                                        - {t('about.abbreviation.iihDefinition')}
+                                    </li>
+                                    <li>
+                                        <span className='fw-bold'>
+                                            {t('about.abbreviation.mof')}
+                                        </span>
+                                        - {t('about.abbreviation.mofDefinition')}
+                                    </li>
                                 </ul>
                             </div>
                         </div>

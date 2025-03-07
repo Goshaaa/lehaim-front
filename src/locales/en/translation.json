@@ -112,9 +112,9 @@
             "cd3": "CD3 ",
             "cd3Definition": "Total T-Cell Lymphocytes",
             "neucd19cd19cdcd19cd8": "Neu/CD19; CD19/СD4+; CD19/СD8+ ",
-            "neucd19cd19cdcd19cd8Definition": "Integral Indicators of B-Cell Immunity Visualization",
+            "neucd19cd19cdcd19cd8Definition": "Integral index’s B-cell of immunity system",
             "neucd3neucd4neucd8": "Neu/СD3; Neu/CD4+; Neu/CD8+ ",
-            "neucd3neucd4neucd8Definition": "Integral Indicators of T-Cell Immunity Visualization",
+            "neucd3neucd4neucd8Definition": "Integral index’s T-cell of immunity system",
             "il2": "IL-2 ",
             "il2Definition": "Interleukin-2",
             "ifny": "IFNy ",
@@ -125,8 +125,12 @@
             "cvidDefinition": "Common Variable Immunodeficiency (B-Cell)",
             "scid": "SCID ",
             "scidDefinition": "Severe Combined Immunodeficiency (T-Cell)",
-            "si": "SI ",
-            "siDefinition": "System inflammation"
+            "si": "SIR ",
+            "siDefinition": "Systemic inflammatory response",
+            "iih": "IIH ",
+            "iihDefinition": "Integral index of hemogramms",
+            "mof": "MOF ",
+            "mofDefinition": "Multiple organ failure"
         }
     },
     "patientAdditionalBlock": {
