@@ -148,6 +148,8 @@
         "diagnosisComment": "Diagnosis comment",
         "surgeryComment": "Surgery comment",
         "therapyComment": "Chemotherapy comment",
+        "xrayPeriod": "X-Ray period",
+        "xrayTherapyComment": "X-Ray therapy comment",
         "saveBtn": "Save",
         "saveBtnTooltip": "Save patient data",
         "editBtn": "Edit",

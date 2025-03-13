@@ -148,6 +148,8 @@
         "diagnosisComment": "Комментарий о диагнозе",
         "surgeryComment": "Комментарий об операции",
         "therapyComment": "Комментарий о курсах химиотерапии",
+        "xrayPeriod": "Период лучевой терапии",
+        "xrayTherapyComment": "Комментарий к лучевой терапии",
         "saveBtn": "Сохранить",
         "saveBtnTooltip": "Сохранить изменения",
         "editBtn": "Редактировать",

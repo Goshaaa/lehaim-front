@@ -287,6 +287,20 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
             </Text>
           </View>
 
+          <View style={styles.section}>
+            <Text style={styles.propertyComment}>
+              <Text style={styles.propertyLabel}>Период лучевой терапии: </Text>
+              {dateUtils.formatDate(reportData.patient.radiationTherapy?.startTherapy)} - {dateUtils.formatDate(reportData.patient.radiationTherapy?.endTherapy)}
+            </Text>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={styles.propertyComment}>
+              <Text style={styles.propertyLabel}>Комментарий к лучевой терапии: </Text>
+              {reportData.patient.radiationTherapy?.comment}
+            </Text>
+          </View>
+
           {chartData?.regenerationChartData ?
             <View style={styles.chartSection}>
               <Text style={styles.chartTitle}>Расчет вида регенерации</Text>

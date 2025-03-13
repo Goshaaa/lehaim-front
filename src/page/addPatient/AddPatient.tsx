@@ -19,7 +19,6 @@ function AddPatient() {
     const [loading, setLoading] = useState(false);
     const { t } = useTranslation();
 
-    const fioRegexCommon = /^[A-Za-z-][А-Яа-я-]+$/
     const fioRegexEn = /^[A-Za-z-]+$/
     const fioRegexRu = /^[А-Яа-я-]+$/
 
@@ -31,9 +30,9 @@ function AddPatient() {
         if (patient.lastname.trim().length === 0) {
             errMsgs.push("Не заполнена фамилия пациента");
         }
-        if (patient.patronymic.trim().length === 0) {
-            errMsgs.push("Не заполнено отчество пациента");
-        }
+        // if (patient.patronymic.trim().length === 0) {
+        //     errMsgs.push("Не заполнено отчество пациента");
+        // }
         if (!patient.gender || patient.gender === '-') {
             errMsgs.push("Не указан пол пациента");
         }
@@ -43,15 +42,6 @@ function AddPatient() {
             (!fioRegexEn.test(fio) && fioRegexRu.test(fio)))) {
                 errMsgs.push("ФИО может быть указано либо только на кирилице либо только на латинице");
         }
-
-        // if (!fioRegexCommon.test(fio)) {
-        //     errMsgs.push("ФИО может быть указано либо только на кирилице либо только на латинице");
-        // }
-
-        // if (fioRegexEn.test(fio) ||
-        //     fioRegexRu.test(fio)) {
-            
-        // }
 
         if (!patient.birthdate) {
             errMsgs.push("Не указан дата рождения пациента");

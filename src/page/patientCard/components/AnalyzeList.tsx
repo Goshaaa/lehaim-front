@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPrint, faTrash, faEdit, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import ConfirmationModal from '../../../components/ConfirmationModal';
 import ChartIndicator from './ChartIndicator';
+import XrayIndicatorIndicator from './XrayIndicator';
 import { useTranslation } from "react-i18next";
 
 interface Props {
@@ -115,6 +116,9 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                                     <ChartIndicator
                                         isActive={isChartIncluded(ChartType2.Cytokine_Type, test.possibleCharts)}
                                     />
+                                    <XrayIndicatorIndicator
+                                        isActive={test.isDuringRadiationTherapy ?? false}
+                                    />
                                 </div>
                             </div>
                             <div>
@@ -131,14 +135,14 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                                     icon={faPrint}
                                     onClick={(event) => buildPdfReport(event, test.id!!)}
                                     role="button"
-                                    title={t('analyzeList.buildRebotnBtn')}/>
+                                    title={t('analyzeList.buildRebotnBtn')} />
 
                                 <FontAwesomeIcon
                                     className="ps-1 me-3"
                                     onClick={(event) => handleEdit(event, test.id!!)}
                                     icon={faEdit}
                                     role="button"
-                                    title={t('analyzeList.editAnalyzeBtn')}/>
+                                    title={t('analyzeList.editAnalyzeBtn')} />
 
                                 <FontAwesomeIcon
                                     className="ps-1"
@@ -146,7 +150,7 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                                     icon={faTrash}
                                     onClick={() => onClickDelete(test)}
                                     role="button"
-                                    title={t('analyzeList.deleteAnalyzeBtn')}/>
+                                    title={t('analyzeList.deleteAnalyzeBtn')} />
                             </div>
                         </div>
                     </li>

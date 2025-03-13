@@ -12,10 +12,17 @@ interface Patient {
     chemotherapyComments?: string,
     operationDate?: string,
     additionalDiagnosis?: string,
+    radiationTherapy?: XrayTherapyDto,
     m?: string,
     n?: string,
     t?: string,
     g?: string
+}
+
+interface XrayTherapyDto {
+    startTherapy?: string,
+    endTherapy?: string,
+    comment?: string
 }
 
 export function getEmptyPatient(): Patient {
@@ -62,6 +69,7 @@ interface AnalyzeBriefInfo {
     testDate?: string,
     testNote?: string,
     possibleCharts?: string[] | undefined,
+    isDuringRadiationTherapy?: boolean
 }
 
 interface AnalyzeDetailedInfo {
@@ -162,5 +170,5 @@ interface PatientGeneDto {
 export type {
     Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter,
     CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO, ChartsDataUrl, Recommendation, RecommendationData, 
-    PatientAllGenesDto, GeneDto, PatientGeneDto, 
+    PatientAllGenesDto, GeneDto, PatientGeneDto, XrayTherapyDto
 };

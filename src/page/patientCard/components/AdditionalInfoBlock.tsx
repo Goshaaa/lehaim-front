@@ -1,5 +1,5 @@
 import { FormEvent, useState, useEffect } from "react";
-import { GeneDto, Patient, PatientAllGenesDto, PatientGeneDto } from "../../../types/CommonTypes";
+import { GeneDto, Patient, PatientAllGenesDto, PatientGeneDto, XrayTherapyDto } from "../../../types/CommonTypes";
 import * as patientService from '../../../services/PatientService';
 import * as diagnosisService from '../../../services/DiagnosisService';
 import * as geneticService from '../../../services/GeneticService';
@@ -16,6 +16,7 @@ function AdditionaInfolBlock({ patient }: Props) {
     const [editMode, setEditMode] = useState(false);
     const [sourcePatient, setSourcePatient] = useState<Patient>(patient);
     const [changePatient, setChangePatient] = useState<Patient>(patient);
+    const [xrayTherapy, setXrayTherapy] = useState<XrayTherapyDto | undefined>(patient.radiationTherapy);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
     const [diagnosisId, setDiagnosisId] = useState<number | undefined>(patient.diagnosisId);
@@ -97,6 +98,10 @@ function AdditionaInfolBlock({ patient }: Props) {
         calcAdditionalDiagnosis();
     }, [patientDiagnosisGenes])
 
+    useEffect(() => {
+        setChangePatient(prevData => ({ ...prevData, 'radiationTherapy': xrayTherapy }));
+    }, [xrayTherapy])
+
     const toggleEditMode = () => {
         if (editMode) {
             setChangePatient(sourcePatient);
@@ -108,6 +113,11 @@ function AdditionaInfolBlock({ patient }: Props) {
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement | HTMLInputElement>) => {
         const { name, value } = e.target;
         setChangePatient(prevData => ({ ...prevData, [name]: value }));
+    }
+
+    const handleXrayChange = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLSelectElement | HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setXrayTherapy(prevData => ({ ...prevData, [name]: value }));
     }
 
     const handleGeneChange = (changedGene: PatientGeneDto) => {
@@ -140,7 +150,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                 calcValue = "ЛБ Her-";
             } else if ((ER === "<1" || ER === "1-2" || ER === "3-4" || ER === "5-8") && (PR === "1-2" || PR === "3-4" || PR === "5-8") && (Ki67 === "15-30" || Ki67 === "31-70" || Ki67 === "71-100") && (HER2neu === "0" || HER2neu === "1+")) {
                 calcValue = "ЛБ Her-";
-            } else if (ER === "<1" && PR === "<1" && (Ki67 === "<1" || Ki67 === "1-14" || Ki67 === "15-30" || Ki67 === "31-70" || Ki67 === "71-100")  && (HER2neu === "2+" || HER2neu === "3+")) {
+            } else if (ER === "<1" && PR === "<1" && (Ki67 === "<1" || Ki67 === "1-14" || Ki67 === "15-30" || Ki67 === "31-70" || Ki67 === "71-100") && (HER2neu === "2+" || HER2neu === "3+")) {
                 calcValue = "Her3+";
             } else if (ER === "<1" && PR === "<1" && (Ki67 === "<1" || Ki67 === "1-14" || Ki67 === "15-30" || Ki67 === "31-70" || Ki67 === "71-100") && HER2neu === "0") {
                 calcValue = "ТН";
@@ -276,6 +286,8 @@ function AdditionaInfolBlock({ patient }: Props) {
                         </div>
                     </div>
 
+
+
                     <MultipleSelect
                         label="T:"
                         value={changePatient.t ?? ""}
@@ -393,6 +405,48 @@ function AdditionaInfolBlock({ patient }: Props) {
                                 value={changePatient.chemotherapyComments ?? ""}
                                 onChange={handleChange}
                                 disabled={!editMode} />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label htmlFor="therapyArea" className="fw-bold">
+                            {t('patientAdditionalBlock.xrayPeriod')}:
+                        </label>
+                        <div className="mt-2 mb-3">
+                            <div className="d-flex">
+                                <input className="w-50"
+                                    type="date"
+                                    min='2000-01-01'
+                                    max='2199-12-12'
+                                    id="xrayterapyfrom"
+                                    name="startTherapy"
+                                    value={xrayTherapy?.startTherapy ?? ""}
+                                    onChange={handleXrayChange}
+                                    disabled={!editMode} />
+                                <input className="w-50"
+                                    type="date"
+                                    min='2000-01-01'
+                                    max='2199-12-12'
+                                    id="xrayterapyfrom"
+                                    name="endTherapy"
+                                    value={xrayTherapy?.endTherapy ?? ""}
+                                    onChange={handleXrayChange}
+                                    disabled={!editMode} />
+                            </div>
+                        </div>
+                        <div>
+                            <label htmlFor="xrayTherapyArea" className="fw-bold">
+                            {t('patientAdditionalBlock.xrayTherapyComment')}:
+                            </label>
+                            <div className="mt-2">
+                                <textarea
+                                    className="w-100"
+                                    id="xrayTherapyArea"
+                                    name="comment"
+                                    value={xrayTherapy?.comment ?? ""}
+                                    onChange={handleXrayChange}
+                                    disabled={!editMode} />
+                            </div>
                         </div>
                     </div>
                     {error &&
