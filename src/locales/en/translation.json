@@ -149,6 +149,8 @@
         "surgeryComment": "Surgery comment",
         "therapyComment": "Chemotherapy comment",
         "xrayPeriod": "X-Ray period",
+        "xrayPeriodBegan": "from",
+        "xrayPeriodEnd": "to",
         "xrayTherapyComment": "X-Ray therapy comment",
         "saveBtn": "Save",
         "saveBtnTooltip": "Save patient data",
@@ -188,5 +190,9 @@
         "bTypeChartTitle": "Relative parameters of B - cellular immunity",
         "tTypeChartTitle": "Relative parameters of T-cell immunity",
         "cytokineChartTitle": "Cytokine pairs"
+    },
+    "editAnalyzes": {
+        "save": "Save",
+        "cancel": "Cancel"
     }
 }

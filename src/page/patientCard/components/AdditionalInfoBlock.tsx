@@ -106,6 +106,7 @@ function AdditionaInfolBlock({ patient }: Props) {
         if (editMode) {
             setChangePatient(sourcePatient);
             setPatientDiagnosisGenes(origPatientDiagnosisGenes);
+            setXrayTherapy(sourcePatient.radiationTherapy);
         }
         setEditMode(!editMode);
     }
@@ -189,7 +190,7 @@ function AdditionaInfolBlock({ patient }: Props) {
         <>
             <div className="border border-secondary rounded-3 text-secondary p-3 clearfix">
                 <form onSubmit={handleSubmit} className="container-fluid">
-                    <div className="mb-2 d-flex justify-content-between">
+                    <div className="mb-2 d-flex justify-content-between gap-2">
                         <label htmlFor="lastNameArea" className="fw-bold">
                             {t('patientAdditionalBlock.lastName')}:
                         </label>
@@ -201,7 +202,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                             disabled={!editMode}
                         />
                     </div>
-                    <div className="mb-2 d-flex justify-content-between">
+                    <div className="mb-2 d-flex justify-content-between gap-2">
                         <label htmlFor="nameArea" className="fw-bold">
                             {t('patientAdditionalBlock.firstName')}:
                         </label>
@@ -213,7 +214,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                             disabled={!editMode}
                         />
                     </div>
-                    <div className="mb-2 d-flex justify-content-between">
+                    <div className="mb-2 d-flex justify-content-between gap-2">
                         <label htmlFor="patronymicArea" className="fw-bold">
                             {t('patientAdditionalBlock.middleName')}:
                         </label>
@@ -225,14 +226,14 @@ function AdditionaInfolBlock({ patient }: Props) {
                             disabled={!editMode}
                         />
                     </div>
-                    <div className="mb-2 d-flex justify-content-between">
+                    <div className="mb-2 d-flex justify-content-between gap-2">
                         <label htmlFor="birthDateArea" className="fw-bold">
                             {t('patientAdditionalBlock.birthDate')}:
                         </label>
                         <input className="w-50"
                             type="date"
                             min='1900-01-01'
-                            max='2199-12-12'
+                            max={new Date().toISOString().split('T')[0]}
                             id="birthDateArea"
                             name="birthdate"
                             value={changePatient.birthdate}
@@ -242,7 +243,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                     </div>
 
 
-                    <div className="mb-2 d-flex justify-content-between">
+                    <div className="mb-2 d-flex justify-content-between gap-2">
                         <label htmlFor="birthDateArea" className="fw-bold">
                             {t('patientAdditionalBlock.gender')}:
                         </label>
@@ -353,7 +354,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                         <div className="mt-2">
                             <input className="w-100"
                                 type="date"
-                                min='1900-01-01'
+                                min={changePatient.birthdate || '1900-01-01'}
                                 max='2199-12-12'
                                 id="operationDateArea"
                                 name="operationDate"
@@ -413,19 +414,25 @@ function AdditionaInfolBlock({ patient }: Props) {
                             {t('patientAdditionalBlock.xrayPeriod')}:
                         </label>
                         <div className="mt-2 mb-3">
-                            <div className="d-flex">
-                                <input className="w-50"
+                            <div className="d-flex gap-2">
+                                <label htmlFor="therapyArea" className="fw-bold">
+                                    {t('patientAdditionalBlock.xrayPeriodBegan')}:
+                                </label>
+                                <input className="w-100 min-w-50"
                                     type="date"
                                     min='2000-01-01'
-                                    max='2199-12-12'
+                                    max={xrayTherapy?.endTherapy || "2199-12-12"}
                                     id="xrayterapyfrom"
                                     name="startTherapy"
                                     value={xrayTherapy?.startTherapy ?? ""}
                                     onChange={handleXrayChange}
                                     disabled={!editMode} />
-                                <input className="w-50"
+                                <label htmlFor="therapyArea" className="fw-bold">
+                                    {t('patientAdditionalBlock.xrayPeriodEnd')}:
+                                </label>
+                                <input className="w-100 min-w-50"
                                     type="date"
-                                    min='2000-01-01'
+                                    min={xrayTherapy?.startTherapy || "2000-01-01"}
                                     max='2199-12-12'
                                     id="xrayterapyfrom"
                                     name="endTherapy"
