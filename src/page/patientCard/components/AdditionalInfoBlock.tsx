@@ -322,7 +322,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                         onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, g: newValue }))}
                         disabled={!editMode}
                         numberOptions={["X", "1", "2", "3"]}
-                        letterOptions={["Adc", "Squam CC", "Small CC", "Muc"]}
+                        letterOptions={["Adc", "Squam CC", "Small CC", "Muc", "Ductal", "Lobular", "Scirr"]}
                     />
 
                     <GeneticsInfoBlock
