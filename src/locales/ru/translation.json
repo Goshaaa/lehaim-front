@@ -149,6 +149,8 @@
         "surgeryComment": "Комментарий об операции",
         "therapyComment": "Комментарий о курсах химиотерапии",
         "xrayPeriod": "Период лучевой терапии",
+        "xrayPeriodBegan": "c",
+        "xrayPeriodEnd": "до",
         "xrayTherapyComment": "Комментарий к лучевой терапии",
         "saveBtn": "Сохранить",
         "saveBtnTooltip": "Сохранить изменения",
@@ -188,5 +190,9 @@
         "bTypeChartTitle": "Относительные параметры B - клеточного звена иммунитета",
         "tTypeChartTitle": "Относительные параметры T - клеточного звена иммунитета",
         "cytokineChartTitle": "Цитокиновые пары"
+    },
+    "editAnalyzes": {
+        "save": "Сохранить",
+        "cancel": "Отмена"
     }
 }

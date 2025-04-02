@@ -6,10 +6,11 @@ import { CatalogItem, AnalyzeDetailedInfo, OncoTestData, ChartType, ChartPage } 
 import * as oncoTestService from '../../services/OncoTestSerive';
 import * as patientService from '../../services/PatientService';
 import RadarChat from '../chart/RadarChart';
-
+import { useTranslation } from 'react-i18next';
 
 function EditAnalyzes() {
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const [oncoTestData, setOncoTestData] = useState<OncoTestData>({
         params: {}
@@ -151,7 +152,7 @@ function EditAnalyzes() {
                                 type="date"
                                 required
                                 min='1900-01-01'
-                                max='2199-12-12'
+                                max={new Date().toISOString().split('T')[0]}
                                 name="testDate"
                                 autoComplete="off"
                                 id="testDate"
@@ -329,14 +330,14 @@ function EditAnalyzes() {
                                 {loading &&
                                     <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                                 }
-                                Сохранить
+                                {t('editAnalyzes.save')}
                             </button>
                             <button
                                 type="button"
                                 className="btn btn-outline-secondary"
                                 onClick={() => navigate("/patient/" + patientId)}
                                 disabled={loading}>
-                                Отмена
+                                {t('editAnalyzes.cancel')}
                             </button>
                         </div>
                     </form>
