@@ -261,6 +261,14 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
               {getGenes(reportData.patient.diagnosisId)}
             </Text>
           </View>
+
+          <View style={styles.section}>
+            <Text style={styles.propertyComment}>
+              <Text style={styles.propertyLabel}>Дата операции: </Text>
+              {dateUtils.formatDate(reportData.patient.operationDate)}
+            </Text>
+          </View>
+
           <View style={styles.section}>
             <Text style={styles.propertyComment}>
               <Text style={styles.propertyLabel}>Комментарий о диагнозе: </Text>

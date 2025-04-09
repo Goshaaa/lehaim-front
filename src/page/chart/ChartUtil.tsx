@@ -120,9 +120,7 @@ function getBaseOption(chartTitle: string, indicator: Indicator[], params: Chart
         legend: {
             top: 0,
             padding: 0,
-            data: ChartPage.Report === chartPage
-                ? ['Референтные значения', 'Результат', 'true']
-                : ['Нижние референтные значения', 'Результат', 'Верхние референтные значения']
+            data: ['Интервалы референтных значений', 'Результат', 'true']
         },
         radar: {
             indicator: indicator,
@@ -149,23 +147,25 @@ function getBaseOption(chartTitle: string, indicator: Indicator[], params: Chart
                     {
                         label: { show: true, },
                         value: params.min,
-                        name: ChartPage.Report === chartPage ? 'Референтные значения' : 'Нижние референтные значения',
+                        name: 'Интервалы референтных значений',
                         itemStyle: {
                             color: '#228B22'
                         },
                         lineStyle: {
-                            type: 'dashed'
+                            type: 'dashed',
+                            width: 2
                         },
                     },
                     {
                         label: { show: true, },
                         value: params.max,
-                        name: ChartPage.Report === chartPage ? 'Референтные значения' : 'Верхние референтные значения',
+                        name: 'Интервалы референтных значений',
                         itemStyle: {
                             color: '#228B22'
                         },
                         lineStyle: {
-                            type: 'dashed'
+                            type: 'dashed',
+                            width: 2
                         },
                     },
                     {
@@ -174,6 +174,9 @@ function getBaseOption(chartTitle: string, indicator: Indicator[], params: Chart
                         name: 'Результат',
                         itemStyle: {
                             color: '#DC143C'
+                        },
+                        lineStyle: {
+                            width: 2
                         },
                     }
                 ]
