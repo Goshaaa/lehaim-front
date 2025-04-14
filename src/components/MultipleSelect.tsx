@@ -33,13 +33,13 @@ function MultipleSelect({
   const handleNumberChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedNumber = e.target.value;
     setNumberValue(selectedNumber);
-    onChange([letterValue, selectedNumber].filter(Boolean).join(" "));
+    onChange([selectedNumber, letterValue].filter(Boolean).join(" "));
   };
 
   const handleLetterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedLetter = e.target.value;
     setLetterValue(selectedLetter);
-    onChange([selectedLetter, numberValue].filter(Boolean).join(" "));
+    onChange([numberValue, selectedLetter].filter(Boolean).join(" "));
   };
 
   return (

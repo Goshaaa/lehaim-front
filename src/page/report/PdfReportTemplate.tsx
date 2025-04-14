@@ -234,22 +234,13 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
             <Text style={styles.propertyComment}>
               <Text style={styles.propertyLabel}>T: </Text>
               {reportData.patient.t?.replaceAll(", ", " ")};
-            </Text>
-          </View>
-          <View style={styles.paramSection}>
-            <Text style={styles.propertyComment}>
+              <Text> </Text>
               <Text style={styles.propertyLabel}>N: </Text>
               {reportData.patient.n?.replaceAll(", ", " ")};
-            </Text>
-          </View>
-          <View style={styles.paramSection}>
-            <Text style={styles.propertyComment}>
+              <Text> </Text>
               <Text style={styles.propertyLabel}>M: </Text>
               {reportData.patient.m?.replaceAll(", ", " ")};
-            </Text>
-          </View>
-          <View style={styles.paramSection}>
-            <Text style={styles.propertyComment}>
+              <Text> </Text>
               <Text style={styles.propertyLabel}>G: </Text>
               {reportData.patient.g?.replaceAll(", ", " ")};
             </Text>

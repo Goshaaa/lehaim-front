@@ -27,6 +27,9 @@ function AdditionaInfolBlock({ patient }: Props) {
     const [patientDiagnosisGenes, setPatientDiagnosisGenes] = useState<PatientGeneDto[]>([]);
     const [diagnosisGenes, setDiagnosisGenes] = useState<GeneDto[] | undefined>([]);
 
+    const fioRegexEn = /^[A-Za-z-]+$/
+    const fioRegexRu = /^[А-Яа-я-]+$/
+
     const { t } = useTranslation();
 
     useEffect(() => {
@@ -107,6 +110,7 @@ function AdditionaInfolBlock({ patient }: Props) {
             setChangePatient(sourcePatient);
             setPatientDiagnosisGenes(origPatientDiagnosisGenes);
             setXrayTherapy(sourcePatient.radiationTherapy);
+            setError("");
         }
         setEditMode(!editMode);
     }
@@ -166,6 +170,11 @@ function AdditionaInfolBlock({ patient }: Props) {
 
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
+        const err = validateBeforeSubmit();
+        if (err) {
+            setError(err);
+            return;
+        }
         setLoading(true);
         setError("");
 
@@ -184,6 +193,46 @@ function AdditionaInfolBlock({ patient }: Props) {
             }
         }
         setLoading(false);
+    }
+
+    const isNullOrEmpty = (input: String | undefined): boolean => {
+        if (input === null || input === "") return true;
+        return false;
+    }
+
+    const validateBeforeSubmit = (): string | null => {
+        const errMsgs: string[] = [];
+        if (changePatient.name.trim().length === 0) {
+            errMsgs.push("Не заполнено имя пациента");
+        }
+        if (changePatient.lastname.trim().length === 0) {
+            errMsgs.push("Не заполнена фамилия пациента");
+        }
+        if (!changePatient.gender || changePatient.gender === '-') {
+            errMsgs.push("Не указан пол пациента");
+        }
+
+        const fio = changePatient.name + changePatient.lastname + changePatient.patronymic;
+        if (!((fioRegexEn.test(fio) && !fioRegexRu.test(fio)) || 
+            (!fioRegexEn.test(fio) && fioRegexRu.test(fio)))) {
+                errMsgs.push("ФИО может быть указано либо только на кирилице либо только на латинице");
+        }
+
+        if (!changePatient.birthdate) {
+            errMsgs.push("Не указана дата рождения пациента");
+        } else {
+            const parsedDate = new Date(changePatient.birthdate);
+            if (parsedDate >= new Date()) {
+                errMsgs.push("Дата рождения не может быть в будущем");
+            } else if (parsedDate < new Date("1900-01-01")) {
+                errMsgs.push("Неверная дата рождения");
+            }
+        }
+        if ((isNullOrEmpty(changePatient.radiationTherapy?.startTherapy) && !isNullOrEmpty(changePatient.radiationTherapy?.endTherapy)) ||
+             (!isNullOrEmpty(changePatient.radiationTherapy?.startTherapy) && isNullOrEmpty(changePatient.radiationTherapy?.endTherapy))) {
+            errMsgs.push("У лучевой терапии должны быть заполнены обе даты");
+        }
+        return errMsgs.length > 0 ? "Ошибка заполнения формы: " + errMsgs.join('; ') : null;
     }
 
     return (
@@ -321,7 +370,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                         value={changePatient.g ?? ""}
                         onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, g: newValue }))}
                         disabled={!editMode}
-                        numberOptions={["X", "1", "2", "3"]}
+                        numberOptions={["X", "1", "2", "3", "L", "H"]}
                         letterOptions={["Adc", "Squam CC", "Small CC", "Muc", "Ductal", "Lobular", "Scirr"]}
                     />
 

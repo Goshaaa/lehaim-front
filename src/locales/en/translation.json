@@ -143,7 +143,7 @@
         "maleGenderOption": "Male",
         "femaleGenderOption": "Female",
         "diagnosis": "Diagnosis",
-        "extraDiagnosis": "Extra diagnosis",
+        "extraDiagnosis": "Biological subtype",
         "surgeryDate": "Surgery date",
         "diagnosisComment": "Diagnosis comment",
         "surgeryComment": "Surgery comment",

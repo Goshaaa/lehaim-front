@@ -165,7 +165,7 @@ function getBaseOption(chartTitle: string, indicator: Indicator[], params: Chart
                         },
                         lineStyle: {
                             type: 'dashed',
-                            width: 2
+                            width: 2.5
                         },
                     },
                     {
@@ -176,7 +176,7 @@ function getBaseOption(chartTitle: string, indicator: Indicator[], params: Chart
                             color: '#DC143C'
                         },
                         lineStyle: {
-                            width: 2
+                            width: 2.5
                         },
                     }
                 ]

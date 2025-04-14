@@ -30,9 +30,6 @@ function AddPatient() {
         if (patient.lastname.trim().length === 0) {
             errMsgs.push("Не заполнена фамилия пациента");
         }
-        // if (patient.patronymic.trim().length === 0) {
-        //     errMsgs.push("Не заполнено отчество пациента");
-        // }
         if (!patient.gender || patient.gender === '-') {
             errMsgs.push("Не указан пол пациента");
         }
@@ -44,7 +41,7 @@ function AddPatient() {
         }
 
         if (!patient.birthdate) {
-            errMsgs.push("Не указан дата рождения пациента");
+            errMsgs.push("Не указана дата рождения пациента");
         } else {
             const parsedDate = new Date(patient.birthdate);
             if (parsedDate >= new Date()) {
