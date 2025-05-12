@@ -20,13 +20,14 @@ Font.register({
 const styles = StyleSheet.create({
   page: {
     fontFamily: "Roboto",
-    fontSize: 12,
+    fontSize: 10,
     padding: 10,
-    paddingBottom: 20
+    paddingBottom: 20,
+    marginLeft: 5
   },
   colontitul: {
     position: "absolute",
-    left: '48%',
+    left: '2%',
     bottom: 10
   },
   pagination: {
@@ -36,29 +37,35 @@ const styles = StyleSheet.create({
   },
   header: {
     textAlign: "center",
-    fontSize: 20,
+    fontSize: 14,
     margin: 15
   },
   propertyLabel: {
-    color: 'black'
+    color: 'black',
+    fontWeight: 600
   },
-  propertyComment: {
-    color: '#454545'
+  propertyValue: {
+    fontWeight: 200
+  },
+  blockSection: {
+    marginBottom: 15
+  },
+  shiftSection: {
+    marginLeft: 10,
+    flexDirection: 'row',
+    fontWeight: 200
   },
   section: {
     flexDirection: 'row',
-    padding: 5
+    padding: 0,
+    margin: 0,
+    marginBottom: 3
   },
   sectionTitle: {
     textAlign: "center",
     margin: 10,
-    fontSize: 14,
-    fontWeight: 600
-  },
-  paramSection: {
-    flexDirection: 'row',
-    padding: 5,
-    marginLeft: 10
+    fontSize: 12,
+    fontWeight: 400
   },
   chartSection: {
     marginBottom: 15
@@ -74,17 +81,23 @@ const styles = StyleSheet.create({
     width: 300,
     height: 300
   },
+  remark: {
+    marginTop: 25
+  },
   table: {
     paddingLeft: 5,
     paddingRight: 5,
-    width: '100%'
+    width: '100%',
+    border: '1px solid #EEE',
+    margin: 0,
+    padding: 0
   },
   row: {
     display: 'flex',
     flexDirection: 'row',
-    borderTop: '1px solid #EEE',
-    paddingTop: 3,
-    paddingBottom: 3,
+    borderTop: '1px solid #EEE'
+    // paddingTop: 3,
+    // paddingBottom: 3,
   },
   tableHeader: {
     borderTop: 'none',
@@ -96,21 +109,29 @@ const styles = StyleSheet.create({
   col1: {
     width: '5%',
     textAlign: "center",
+    padding: 0
   },
   col2: {
     width: '50%',
+    borderLeft: '1px solid #EEE',
+    borderRight: '1px solid #EEE',
+    paddingLeft: 5
   },
   col3: {
     width: '15%',
     textAlign: "center",
+    borderLeft: '1px solid #EEE',
+    borderRight: '1px solid #EEE'
   },
   col4: {
     width: '15%',
     textAlign: "center",
+    borderLeft: '1px solid #EEE',
+    borderRight: '1px solid #EEE'
   },
   col5: {
     width: '15%',
-    textAlign: "center",
+    textAlign: "center"
   },
 
 });
@@ -164,9 +185,14 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
 
   const getDiagnosisName = (diagnosisId?: number,): string => {
     if (diagnosisCatalog && diagnosisId) {
-      return diagnosisCatalog?.find((catalogItem) => {
+      let selected = diagnosisCatalog?.find((catalogItem) => {
         return catalogItem.id === diagnosisId
-      })?.description ?? "";
+      });
+      if (selected) {
+        return selected.code + " - " + selected.description
+      } else {
+        return "-"
+      }      
     } else {
       return "-"
     }
@@ -211,93 +237,77 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
             <Text>Отчет об обследовании за {dateUtils.formatDate(reportData.currentTestDate)}</Text>
           </View>
 
-          <View style={styles.section}>
-            <Text style={styles.propertyComment}>
+          <View style={styles.blockSection}>
+            <View style={styles.section}>
               <Text style={styles.propertyLabel}>ФИО: </Text>
-              {reportData.patient.lastname} {reportData.patient.name} {reportData.patient.patronymic ?? ""}
-            </Text>
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.propertyComment}>
+              <Text style={styles.propertyValue}>{reportData.patient.lastname} {reportData.patient.name} {reportData.patient.patronymic ?? ""}</Text>
+            </View>
+            <View style={styles.section}>
               <Text style={styles.propertyLabel}>Дата рождения: </Text>
-              {dateUtils.formatDate(reportData.patient.birthdate)}
-            </Text>
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.propertyComment}>
-              <Text style={styles.propertyLabel}>Диагноз: </Text>
-              {getDiagnosisName(reportData.patient.diagnosisId)};
-            </Text>
+              <Text style={styles.propertyValue}>{dateUtils.formatDate(reportData.patient.birthdate)}</Text>
+            </View>
           </View>
 
-          <View style={styles.paramSection}>
-            <Text style={styles.propertyComment}>
-              <Text style={styles.propertyLabel}>T: </Text>
-              {reportData.patient.t?.replaceAll(", ", " ")};
-              <Text> </Text>
-              <Text style={styles.propertyLabel}>N: </Text>
-              {reportData.patient.n?.replaceAll(", ", " ")};
-              <Text> </Text>
-              <Text style={styles.propertyLabel}>M: </Text>
-              {reportData.patient.m?.replaceAll(", ", " ")};
-              <Text> </Text>
-              <Text style={styles.propertyLabel}>G: </Text>
-              {reportData.patient.g?.replaceAll(", ", " ")};
-            </Text>
+          <View style={styles.blockSection}>
+            <Text style={styles.propertyLabel}>Информация о диагнозе:</Text>
+            <View style={styles.shiftSection}>
+              <Text>Код: </Text>
+              <Text>{getDiagnosisName(reportData.patient.diagnosisId)};</Text>
+            </View>
+            <View style={styles.shiftSection}>
+              <Text>Классификация: </Text>
+              <Text>T: {reportData.patient.t?.replaceAll(", ", " ")}; </Text>
+              <Text>N: {reportData.patient.t?.replaceAll(", ", " ")}; </Text>
+              <Text>M: {reportData.patient.m?.replaceAll(", ", " ")}; </Text>
+              <Text>G: {reportData.patient.g?.replaceAll(", ", " ")}; </Text>
+            </View>
+            <View style={styles.shiftSection}>
+              <Text>Гены: </Text>
+              <Text>{getGenes(reportData.patient.diagnosisId)}</Text>
+            </View>
+            <View style={styles.shiftSection}>
+              <Text>Комментарий: </Text>
+              <Text>{reportData.patient.diagnosisComments}</Text>
+            </View>
           </View>
 
-          <View style={styles.section}>
-            <Text style={styles.propertyComment}>
-              <Text style={styles.propertyLabel}>Гены: </Text>
-              {getGenes(reportData.patient.diagnosisId)}
-            </Text>
+          <View style={styles.blockSection}>
+            <Text style={styles.propertyLabel}>Информация об операции:</Text>
+            <View style={styles.shiftSection}>
+              <Text>Дата операции: </Text>
+              <Text>{dateUtils.formatDate(reportData.patient.operationDate)};</Text>
+            </View>
+            <View style={styles.shiftSection}>
+              <Text>Комментарий: </Text>
+              <Text>{reportData.patient.operationComments}</Text>
+            </View>
           </View>
 
-          <View style={styles.section}>
-            <Text style={styles.propertyComment}>
-              <Text style={styles.propertyLabel}>Дата операции: </Text>
-              {dateUtils.formatDate(reportData.patient.operationDate)}
-            </Text>
+          <View style={styles.blockSection}>
+            <Text style={styles.propertyLabel}>Информация о химиотерапии:</Text>
+            <View style={styles.shiftSection}>
+              <Text>Комментарий: </Text>
+              <Text>{reportData.patient.chemotherapyComments}</Text>
+            </View>
           </View>
 
-          <View style={styles.section}>
-            <Text style={styles.propertyComment}>
-              <Text style={styles.propertyLabel}>Комментарий о диагнозе: </Text>
-              {reportData.patient.diagnosisComments}
-            </Text>
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.propertyComment}>
-              <Text style={styles.propertyLabel}>Комментарий об операции: </Text>
-              {reportData.patient.operationComments}
-            </Text>
-          </View>
-          <View style={styles.section}>
-            <Text style={styles.propertyComment}>
-              <Text style={styles.propertyLabel}>Комментарий о курсах химиотерапии: </Text>
-              {reportData.patient.chemotherapyComments}
-            </Text>
+          <View style={styles.blockSection}>
+            <Text style={styles.propertyLabel}>Информация о лучевой терапии:</Text>
+            <View style={styles.shiftSection}>
+              <Text>Период лучевой терапии: </Text>
+              <Text>{dateUtils.formatDate(reportData.patient.radiationTherapy?.startTherapy)} - {dateUtils.formatDate(reportData.patient.radiationTherapy?.endTherapy)}</Text>
+            </View>
+            <View style={styles.shiftSection}>
+              <Text>Комментарий: </Text>
+              <Text>{reportData.patient.radiationTherapy?.comment}</Text>
+            </View>
           </View>
 
-          <View style={styles.section}>
-            <Text style={styles.propertyComment}>
-              <Text style={styles.propertyLabel}>Комментарий к обследованию: </Text>
-              {reportData.currentTestNote}
-            </Text>
-          </View>
-
-          <View style={styles.section}>
-            <Text style={styles.propertyComment}>
-              <Text style={styles.propertyLabel}>Период лучевой терапии: </Text>
-              {dateUtils.formatDate(reportData.patient.radiationTherapy?.startTherapy)} - {dateUtils.formatDate(reportData.patient.radiationTherapy?.endTherapy)}
-            </Text>
-          </View>
-
-          <View style={styles.section}>
-            <Text style={styles.propertyComment}>
-              <Text style={styles.propertyLabel}>Комментарий к лучевой терапии: </Text>
-              {reportData.patient.radiationTherapy?.comment}
-            </Text>
+          <View style={styles.blockSection}>
+            <Text style={styles.propertyLabel}>Комментарий к обследованию:</Text>
+            <View style={styles.shiftSection}>
+              <Text>{reportData.currentTestNote}</Text>
+            </View>
           </View>
 
           {chartData?.regenerationChartData ?
@@ -310,26 +320,15 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
             : null
           }
           {recommendationData?.REGENERATION ?
-            < View >
-              {recommendationData.REGENERATION.conclusion ?
-                <View style={styles.section}>
-                  <Text style={styles.propertyComment}>
-                    <Text style={styles.propertyLabel}>Заключение: </Text>
-                    {recommendationData.REGENERATION.conclusion}
-                  </Text>
-                </View>
-                : null
-              }
-              {recommendationData.REGENERATION.recommendation ?
-                <View style={styles.section}>
-                  <Text style={styles.propertyComment}>
-                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                    {recommendationData.REGENERATION.recommendation}
-                  </Text>
-                </View>
-                : null
-              }
-
+            <View>
+              <View style={styles.section}>
+                <Text style={styles.propertyLabel}>Заключение: </Text>
+                <Text style={styles.propertyValue}>{recommendationData.REGENERATION.conclusion ?? '-'}</Text>
+              </View>
+              <View style={styles.section}>
+                <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                <Text style={styles.propertyValue}>{recommendationData.REGENERATION.recommendation ?? '-'}</Text>
+              </View>
             </View>
             : null
           }
@@ -344,26 +343,15 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
             : null
           }
           {recommendationData?.SYSTEMIC_INFLAMMATION ?
-            < View >
-              {recommendationData.SYSTEMIC_INFLAMMATION.conclusion ?
-                <View style={styles.section}>
-                  <Text style={styles.propertyComment}>
-                    <Text style={styles.propertyLabel}>Заключение: </Text>
-                    {recommendationData.SYSTEMIC_INFLAMMATION.conclusion}
-                  </Text>
-                </View>
-                : null
-              }
-              {recommendationData.SYSTEMIC_INFLAMMATION.recommendation ?
-                <View style={styles.section}>
-                  <Text style={styles.propertyComment}>
-                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                    {recommendationData.SYSTEMIC_INFLAMMATION.recommendation}
-                  </Text>
-                </View>
-                : null
-              }
-
+            <View>
+              <View style={styles.section}>
+                <Text style={styles.propertyLabel}>Заключение: </Text>
+                <Text style={styles.propertyValue}>{recommendationData.SYSTEMIC_INFLAMMATION.conclusion ?? '-'}</Text>
+              </View>
+              <View style={styles.section}>
+                <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                <Text style={styles.propertyValue}>{recommendationData.SYSTEMIC_INFLAMMATION.recommendation ?? '-'}</Text>
+              </View>
             </View>
             : null
           }
@@ -379,30 +367,18 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
           }
 
           {recommendationData?.B_CELL ?
-            < View >
-              {recommendationData.B_CELL.conclusion ?
-                <View style={styles.section}>
-                  <Text style={styles.propertyComment}>
-                    <Text style={styles.propertyLabel}>Заключение: </Text>
-                    {recommendationData.B_CELL.conclusion}
-                  </Text>
-                </View>
-                : null
-              }
-              {recommendationData.B_CELL.recommendation ?
-                <View style={styles.section}>
-                  <Text style={styles.propertyComment}>
-                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                    {recommendationData.B_CELL.recommendation}
-                  </Text>
-                </View>
-                : null
-              }
-
+            <View>
+              <View style={styles.section}>
+                <Text style={styles.propertyLabel}>Заключение: </Text>
+                <Text style={styles.propertyValue}>{recommendationData.B_CELL.conclusion ?? '-'}</Text>
+              </View>
+              <View style={styles.section}>
+                <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                <Text style={styles.propertyValue}>{recommendationData.B_CELL.recommendation ?? '-'}</Text>
+              </View>
             </View>
             : null
           }
-
 
           {chartData?.tTypeData ?
             <View style={styles.chartSection} wrap={false}>
@@ -415,26 +391,15 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
           }
 
           {recommendationData?.T_CELL ?
-            < View >
-              {recommendationData.T_CELL.conclusion ?
-                <View style={styles.section}>
-                  <Text style={styles.propertyComment}>
-                    <Text style={styles.propertyLabel}>Заключение: </Text>
-                    {recommendationData.T_CELL.conclusion}
-                  </Text>
-                </View>
-                : null
-              }
-              {recommendationData.T_CELL.recommendation ?
-                <View style={styles.section}>
-                  <Text style={styles.propertyComment}>
-                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                    {recommendationData.T_CELL.recommendation}
-                  </Text>
-                </View>
-                : null
-              }
-
+            <View>
+              <View style={styles.section}>
+                <Text style={styles.propertyLabel}>Заключение: </Text>
+                <Text style={styles.propertyValue}>{recommendationData.T_CELL.conclusion ?? '-'}</Text>
+              </View>
+              <View style={styles.section}>
+                <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                <Text style={styles.propertyValue}>{recommendationData.T_CELL.recommendation ?? '-'}</Text>
+              </View>
             </View>
             : null
           }
@@ -450,38 +415,28 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
           }
 
           {recommendationData?.CYTOKINE_PAIRS ?
-            < View >
-              {recommendationData.CYTOKINE_PAIRS.conclusion ?
-                <View style={styles.section}>
-                  <Text style={styles.propertyComment}>
-                    <Text style={styles.propertyLabel}>Заключение: </Text>
-                    {recommendationData.CYTOKINE_PAIRS.conclusion}
-                  </Text>
-                </View>
-                : null
-              }
-              {recommendationData.CYTOKINE_PAIRS.recommendation ?
-                <View style={styles.section}>
-                  <Text style={styles.propertyComment}>
-                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                    {recommendationData.CYTOKINE_PAIRS.recommendation}
-                  </Text>
-                </View>
-                : null
-              }
+            <View>
+              <View style={styles.section}>
+                <Text style={styles.propertyLabel}>Заключение: </Text>
+                <Text style={styles.propertyValue}>{recommendationData.CYTOKINE_PAIRS.conclusion ?? '-'}</Text>
+              </View>
+              <View style={styles.section}>
+                <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                <Text style={styles.propertyValue}>{recommendationData.CYTOKINE_PAIRS.recommendation ?? '-'}</Text>
+              </View>
             </View>
             : null
           }
 
           {resultMap &&
-            <View>
+            <View wrap={false}>
               <Text style={styles.sectionTitle}>Сравнение показателей</Text>
               <View style={styles.table}>
                 <View style={[styles.row, styles.bold, styles.tableHeader]}>
                   <Text style={styles.col1}>№</Text>
-                  <Text style={styles.col2}>Наименование</Text>
-                  <Text style={styles.col3}>Предыдущие (средние)</Text>
-                  <Text style={styles.col4}>Текущие</Text>
+                  <Text style={styles.col2}>Наименование показателя</Text>
+                  <Text style={styles.col3}>Среднее значение*</Text>
+                  <Text style={styles.col4}>Текущие значения</Text>
                   <Text style={styles.col5}>Изменение</Text>
                 </View>
                 {Object.entries(resultMap)
@@ -495,6 +450,8 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
                     </View>
                   )}
               </View>
+
+              <Text style={styles.remark}>*рассчитывается на основе показателей из предыдущих анализов</Text>
             </View>
           }
 
