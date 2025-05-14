@@ -232,6 +232,15 @@ function AdditionaInfolBlock({ patient }: Props) {
              (!isNullOrEmpty(changePatient.radiationTherapy?.startTherapy) && isNullOrEmpty(changePatient.radiationTherapy?.endTherapy))) {
             errMsgs.push("У лучевой терапии должны быть заполнены обе даты");
         }
+        if (changePatient.operationDate && changePatient.radiationTherapy?.startTherapy && changePatient.radiationTherapy?.endTherapy) {
+            const operationDate = new Date(changePatient.operationDate);
+            const therapyStart = new Date(changePatient.radiationTherapy.startTherapy);
+            const therapyEnd = new Date(changePatient.radiationTherapy.endTherapy);
+            
+            if (operationDate >= therapyStart && operationDate <= therapyEnd) {
+                errMsgs.push("Дата операции не может быть в период лучевой терапии");
+            }
+        }
         return errMsgs.length > 0 ? "Ошибка заполнения формы: " + errMsgs.join('; ') : null;
     }
 
