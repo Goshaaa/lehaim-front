@@ -463,31 +463,40 @@ function AdditionaInfolBlock({ patient }: Props) {
                             {t('patientAdditionalBlock.xrayPeriod')}:
                         </label>
                         <div className="mt-2 mb-3">
-                            <div className="d-flex gap-2">
-                                <label htmlFor="therapyArea" className="fw-bold">
-                                    {t('patientAdditionalBlock.xrayPeriodBegan')}:
-                                </label>
-                                <input className="w-100 min-w-50"
-                                    type="date"
-                                    min='2000-01-01'
-                                    max={xrayTherapy?.endTherapy || "2199-12-12"}
-                                    id="xrayterapyfrom"
-                                    name="startTherapy"
-                                    value={xrayTherapy?.startTherapy ?? ""}
-                                    onChange={handleXrayChange}
-                                    disabled={!editMode} />
-                                <label htmlFor="therapyArea" className="fw-bold">
-                                    {t('patientAdditionalBlock.xrayPeriodEnd')}:
-                                </label>
-                                <input className="w-100 min-w-50"
-                                    type="date"
-                                    min={xrayTherapy?.startTherapy || "2000-01-01"}
-                                    max='2199-12-12'
-                                    id="xrayterapyfrom"
-                                    name="endTherapy"
-                                    value={xrayTherapy?.endTherapy ?? ""}
-                                    onChange={handleXrayChange}
-                                    disabled={!editMode} />
+                            <div className="d-flex gap-2 flex-wrap">
+                                <div className="d-flex align-items-center gap-2 flex-grow-1">
+                                    <label htmlFor="xrayterapyfrom" className="fw-bold">
+                                        {t('patientAdditionalBlock.xrayPeriodBegan')}:
+                                    </label>
+                                    <input
+                                        className="flex-grow-1"
+                                        type="date"
+                                        min='2000-01-01'
+                                        max={xrayTherapy?.endTherapy || "2199-12-12"}
+                                        id="xrayterapyfrom"
+                                        name="startTherapy"
+                                        value={xrayTherapy?.startTherapy ?? ""}
+                                        onChange={handleXrayChange}
+                                        disabled={!editMode}
+                                    />
+                                </div>
+                                
+                                <div className="d-flex align-items-center gap-2 flex-grow-1">
+                                    <label htmlFor="xrayterapyfrom" className="fw-bold">
+                                        {t('patientAdditionalBlock.xrayPeriodEnd')}:
+                                    </label>
+                                    <input
+                                        className="flex-grow-1"
+                                        type="date"
+                                        min={xrayTherapy?.startTherapy || "2000-01-01"}
+                                        max='2199-12-12'
+                                        id="xrayterapyfrom"
+                                        name="endTherapy"
+                                        value={xrayTherapy?.endTherapy ?? ""}
+                                        onChange={handleXrayChange}
+                                        disabled={!editMode}
+                                    />
+                                </div>
                             </div>
                         </div>
                         <div>
