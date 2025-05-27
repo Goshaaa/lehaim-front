@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     padding: 10,
     paddingBottom: 20,
-    marginLeft: 5
+    marginHorizontal: 5
   },
   colontitul: {
     position: "absolute",
@@ -45,7 +45,9 @@ const styles = StyleSheet.create({
     fontWeight: 600
   },
   propertyValue: {
-    fontWeight: 200
+    fontWeight: 200,
+    maxWidth: '85%',
+    marginLeft: 5
   },
   blockSection: {
     marginBottom: 15
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
   section: {
     flexDirection: 'row',
     padding: 0,
-    margin: 0,
+    marginHorizontal: 5,
     marginBottom: 3
   },
   sectionTitle: {
@@ -192,7 +194,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
         return selected.code + " - " + selected.description
       } else {
         return "-"
-      }      
+      }
     } else {
       return "-"
     }
@@ -257,7 +259,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
             <View style={styles.shiftSection}>
               <Text>Классификация: </Text>
               <Text>T: {reportData.patient.t?.replaceAll(", ", " ")}; </Text>
-              <Text>N: {reportData.patient.t?.replaceAll(", ", " ")}; </Text>
+              <Text>N: {reportData.patient.n?.replaceAll(", ", " ")}; </Text>
               <Text>M: {reportData.patient.m?.replaceAll(", ", " ")}; </Text>
               <Text>G: {reportData.patient.g?.replaceAll(", ", " ")}; </Text>
             </View>
@@ -265,6 +267,15 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
               <Text>Гены: </Text>
               <Text>{getGenes(reportData.patient.diagnosisId)}</Text>
             </View>
+
+            {reportData.patient.diagnosisId === 45 ?
+              <View style={styles.shiftSection}>
+                <Text>Биологический подтип: </Text>
+                <Text>{reportData.patient.additionalDiagnosis}</Text>
+              </View>
+              : null
+            }
+
             <View style={styles.shiftSection}>
               <Text>Комментарий: </Text>
               <Text>{reportData.patient.diagnosisComments}</Text>
@@ -312,121 +323,139 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
 
           {chartData?.regenerationChartData ?
             <View style={styles.chartSection}>
-              <Text style={styles.chartTitle}>Расчет вида регенерации</Text>
-              <Image
-                style={styles.chart}
-                source={chartData.regenerationChartData} />
+              <View>
+                <Text style={styles.chartTitle}>Расчет вида регенерации</Text>
+                <Image
+                  style={styles.chart}
+                  source={chartData.regenerationChartData} />
+              </View>
+              {recommendationData?.REGENERATION ?
+                <View>
+                  <View style={styles.section}>
+                    <Text style={styles.propertyLabel}>Заключение: </Text>
+                    <Text style={styles.propertyValue}>
+                      {recommendationData.REGENERATION.conclusion ?? '-'}
+                    </Text>
+                  </View>
+                  <View style={styles.section}>
+                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                    <Text style={styles.propertyValue}>{recommendationData.REGENERATION.recommendation ?? '-'}</Text>
+                  </View>
+                </View>
+                : null
+              }
             </View>
             : null
           }
-          {recommendationData?.REGENERATION ?
-            <View>
-              <View style={styles.section}>
-                <Text style={styles.propertyLabel}>Заключение: </Text>
-                <Text style={styles.propertyValue}>{recommendationData.REGENERATION.conclusion ?? '-'}</Text>
-              </View>
-              <View style={styles.section}>
-                <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                <Text style={styles.propertyValue}>{recommendationData.REGENERATION.recommendation ?? '-'}</Text>
-              </View>
-            </View>
-            : null
-          }
+
 
           {chartData?.inflammationTypeData ?
             <View style={styles.chartSection} wrap={false}>
-              <Text style={styles.chartTitle}>Индексы системного воспаления</Text>
-              <Image
-                style={styles.chart}
-                source={chartData.inflammationTypeData} />
+              <View>
+                <Text style={styles.chartTitle}>Индексы системного воспаления</Text>
+                <Image
+                  style={styles.chart}
+                  source={chartData.inflammationTypeData} />
+              </View>
+              {recommendationData?.SYSTEMIC_INFLAMMATION ?
+                <View>
+                  <View style={styles.section}>
+                    <Text style={styles.propertyLabel}>Заключение: </Text>
+                    <Text style={styles.propertyValue}>{recommendationData.SYSTEMIC_INFLAMMATION.conclusion ?? '-'}</Text>
+                  </View>
+                  <View style={styles.section}>
+                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                    <Text style={styles.propertyValue}>{recommendationData.SYSTEMIC_INFLAMMATION.recommendation ?? '-'}</Text>
+                  </View>
+                </View>
+                : null
+              }
             </View>
             : null
           }
-          {recommendationData?.SYSTEMIC_INFLAMMATION ?
-            <View>
-              <View style={styles.section}>
-                <Text style={styles.propertyLabel}>Заключение: </Text>
-                <Text style={styles.propertyValue}>{recommendationData.SYSTEMIC_INFLAMMATION.conclusion ?? '-'}</Text>
-              </View>
-              <View style={styles.section}>
-                <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                <Text style={styles.propertyValue}>{recommendationData.SYSTEMIC_INFLAMMATION.recommendation ?? '-'}</Text>
-              </View>
-            </View>
-            : null
-          }
+
 
           {chartData?.bTypeData ?
             <View style={styles.chartSection} wrap={false}>
-              <Text style={styles.chartTitle}>Относительные параметры B - клеточного звена иммунитета</Text>
-              <Image
-                style={styles.chart}
-                source={chartData.bTypeData} />
+              <View>
+                <Text style={styles.chartTitle}>Относительные параметры B - клеточного звена иммунитета</Text>
+                <Image
+                  style={styles.chart}
+                  source={chartData.bTypeData} />
+              </View>
+              {recommendationData?.B_CELL ?
+                <View>
+                  <View style={styles.section}>
+                    <Text style={styles.propertyLabel}>Заключение: </Text>
+                    <Text style={styles.propertyValue}>{recommendationData.B_CELL.conclusion ?? '-'}</Text>
+                  </View>
+                  <View style={styles.section}>
+                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                    <Text style={styles.propertyValue}>{recommendationData.B_CELL.recommendation ?? '-'}</Text>
+                  </View>
+                </View>
+                : null
+              }
+
             </View>
             : null
           }
 
-          {recommendationData?.B_CELL ?
-            <View>
-              <View style={styles.section}>
-                <Text style={styles.propertyLabel}>Заключение: </Text>
-                <Text style={styles.propertyValue}>{recommendationData.B_CELL.conclusion ?? '-'}</Text>
-              </View>
-              <View style={styles.section}>
-                <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                <Text style={styles.propertyValue}>{recommendationData.B_CELL.recommendation ?? '-'}</Text>
-              </View>
-            </View>
-            : null
-          }
+
 
           {chartData?.tTypeData ?
             <View style={styles.chartSection} wrap={false}>
-              <Text style={styles.chartTitle}>Относительные параметры T - клеточного звена иммунитета</Text>
-              <Image
-                style={styles.chart}
-                source={chartData.tTypeData} />
+              <View>
+                <Text style={styles.chartTitle}>Относительные параметры T - клеточного звена иммунитета</Text>
+                <Image
+                  style={styles.chart}
+                  source={chartData.tTypeData} />
+              </View>
+              {recommendationData?.T_CELL ?
+                <View>
+                  <View style={styles.section}>
+                    <Text style={styles.propertyLabel}>Заключение: </Text>
+                    <Text style={styles.propertyValue}>{recommendationData.T_CELL.conclusion ?? '-'}</Text>
+                  </View>
+                  <View style={styles.section}>
+                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                    <Text style={styles.propertyValue}>{recommendationData.T_CELL.recommendation ?? '-'}</Text>
+                  </View>
+                </View>
+                : null
+              }
             </View>
             : null
           }
 
-          {recommendationData?.T_CELL ?
-            <View>
-              <View style={styles.section}>
-                <Text style={styles.propertyLabel}>Заключение: </Text>
-                <Text style={styles.propertyValue}>{recommendationData.T_CELL.conclusion ?? '-'}</Text>
-              </View>
-              <View style={styles.section}>
-                <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                <Text style={styles.propertyValue}>{recommendationData.T_CELL.recommendation ?? '-'}</Text>
-              </View>
-            </View>
-            : null
-          }
+
 
           {chartData?.cytokineTypeData ?
             <View style={styles.chartSection} wrap={false}>
-              <Text style={styles.chartTitle}>Цитокиновые пары</Text>
-              <Image
-                style={styles.chart}
-                source={chartData.cytokineTypeData} />
+              <View>
+                <Text style={styles.chartTitle}>Цитокиновые пары</Text>
+                <Image
+                  style={styles.chart}
+                  source={chartData.cytokineTypeData} />
+              </View>
+              {recommendationData?.CYTOKINE_PAIRS ?
+                <View>
+                  <View style={styles.section}>
+                    <Text style={styles.propertyLabel}>Заключение: </Text>
+                    <Text style={styles.propertyValue}>{recommendationData.CYTOKINE_PAIRS.conclusion ?? '-'}</Text>
+                  </View>
+                  <View style={styles.section}>
+                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
+                    <Text style={styles.propertyValue}>{recommendationData.CYTOKINE_PAIRS.recommendation ?? '-'}</Text>
+                  </View>
+                </View>
+                : null
+              }
             </View>
             : null
           }
 
-          {recommendationData?.CYTOKINE_PAIRS ?
-            <View>
-              <View style={styles.section}>
-                <Text style={styles.propertyLabel}>Заключение: </Text>
-                <Text style={styles.propertyValue}>{recommendationData.CYTOKINE_PAIRS.conclusion ?? '-'}</Text>
-              </View>
-              <View style={styles.section}>
-                <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                <Text style={styles.propertyValue}>{recommendationData.CYTOKINE_PAIRS.recommendation ?? '-'}</Text>
-              </View>
-            </View>
-            : null
-          }
+
 
           {resultMap &&
             <View wrap={false}>
