@@ -362,7 +362,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                         onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, n: newValue }))}
                         disabled={!editMode}
                         numberOptions={["0", "X", "1", "2", "3"]}
-                        letterOptions={["a", "b"]}
+                        letterOptions={["a", "b", "(s/n)"]}
                     />
 
                     <MultipleSelect

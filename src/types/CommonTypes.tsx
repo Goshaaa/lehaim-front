@@ -167,6 +167,13 @@ interface PatientGeneDto {
     geneValue: string
 }
 
+export enum ReportAverageType {
+    ALL_RESULTS = "ALL_RESULTS",
+    RADIATION_THERAPY = "RADIATION_THERAPY",
+    OPERATION = "OPERATION",
+    THERAPY_AND_OPERATION_OVERLAPS = "THERAPY_AND_OPERATION_OVERLAPS"
+}
+
 export type {
     Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter,
     CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO, ChartsDataUrl, Recommendation, RecommendationData, 

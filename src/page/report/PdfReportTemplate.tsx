@@ -1,7 +1,7 @@
 import { Font } from "@react-pdf/renderer";
 import { useEffect, useState } from 'react';
 import { Page, Text, View, Document, StyleSheet, Image } from '@react-pdf/renderer';
-import { ChartsDataUrl, AnalyzeDetailedInfo, RecommendationData, PatientAllGenesDto } from '../../types/CommonTypes';
+import { ChartsDataUrl, AnalyzeDetailedInfo, RecommendationData, PatientAllGenesDto, ReportAverageType } from '../../types/CommonTypes';
 import { ReportDTO } from '../../services/ReportService';
 import { DiagnosisDTO } from '../../services/DiagnosisService';
 import * as dateUtils from '../../components/DateUtils';
@@ -230,6 +230,12 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
     }
   }
 
+  const getAverageTypeLabel = (reportAverageType: ReportAverageType): string => {
+    if (reportAverageType === ReportAverageType.RADIATION_THERAPY) return "\n(за период ЛТ)"
+    else if (reportAverageType === ReportAverageType.OPERATION) return "\n(за операционный период)"
+    else return ""
+  }
+
   return (
     <>
       <Document title={"Отчет " + reportData.patient.lastname + " " + reportData.patient.name + " от " + reportData.currentTestDate}>
@@ -263,17 +269,17 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
               <Text>M: {reportData.patient.m?.replaceAll(", ", " ")}; </Text>
               <Text>G: {reportData.patient.g?.replaceAll(", ", " ")}; </Text>
             </View>
-            <View style={styles.shiftSection}>
-              <Text>Гены: </Text>
-              <Text>{getGenes(reportData.patient.diagnosisId)}</Text>
-            </View>
 
-            {reportData.patient.diagnosisId === 45 ?
+            {reportData.patient.diagnosisId !== 45 ?
+              <View style={styles.shiftSection}>
+                <Text>Гены: </Text>
+                <Text>{getGenes(reportData.patient.diagnosisId)}</Text>
+              </View>
+              :
               <View style={styles.shiftSection}>
                 <Text>Биологический подтип: </Text>
                 <Text>{reportData.patient.additionalDiagnosis}</Text>
               </View>
-              : null
             }
 
             <View style={styles.shiftSection}>
@@ -464,7 +470,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
                 <View style={[styles.row, styles.bold, styles.tableHeader]}>
                   <Text style={styles.col1}>№</Text>
                   <Text style={styles.col2}>Наименование показателя</Text>
-                  <Text style={styles.col3}>Среднее значение*</Text>
+                  <Text style={styles.col3}>Среднее значение* {getAverageTypeLabel(reportData.reportAverageTableType)}</Text>
                   <Text style={styles.col4}>Текущие значения</Text>
                   <Text style={styles.col5}>Изменение</Text>
                 </View>

@@ -1,6 +1,6 @@
 import { ApiHost } from "../config";
 import { handleResponse } from "./ResponseHandler"
-import { Patient, AnalyzeDetailedInfo } from "../types/CommonTypes";
+import { Patient, AnalyzeDetailedInfo, ReportAverageType } from "../types/CommonTypes";
 
 
 interface ReportDTO {
@@ -9,7 +9,8 @@ interface ReportDTO {
     currentTestNote?: string
     currentResults: AnalyzeDetailedInfo[],
     previousResults: AnalyzeDetailedInfo[],
-    season: string
+    season: string,
+    reportAverageTableType: ReportAverageType
 }
 
 export async function loadPatientReport(patientId: string, testId: number): Promise<ReportDTO> {
