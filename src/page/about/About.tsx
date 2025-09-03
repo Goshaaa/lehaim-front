@@ -79,6 +79,8 @@ function About() {
                                                     <li>{t('about.scope.oncology.onco_3')}</li>
                                                     <li>{t('about.scope.oncology.onco_4')}</li>
                                                     <li>{t('about.scope.oncology.onco_5')}</li>
+                                                    <li>{t('about.scope.oncology.onco_6')}</li>
+                                                    <li>{t('about.scope.oncology.onco_7')}</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -125,7 +127,8 @@ function About() {
                                             <div className="accordion-body">
                                                 <ul>
                                                     <li>{t('about.scope.surgery.surgery_1')}</li>
-                                                    <li>{t('about.scope.surgery.surgery_1')}</li>
+                                                    <li>{t('about.scope.surgery.surgery_2')}</li>
+                                                    <li>{t('about.scope.surgery.surgery_3')}</li>
                                                 </ul>
                                             </div>
                                         </div>
@@ -150,6 +153,8 @@ function About() {
                                                     <li>{t('about.scope.therapy.therapy_1')}</li>
                                                     <li>{t('about.scope.therapy.therapy_2')}</li>
                                                     <li>{t('about.scope.therapy.therapy_3')}</li>
+                                                    <li>{t('about.scope.therapy.therapy_4')}</li>
+                                                    <li>{t('about.scope.therapy.therapy_5')}</li>
                                                 </ul>
                                             </div>
                                         </div>

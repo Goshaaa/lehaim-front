@@ -270,16 +270,12 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
               <Text>G: {reportData.patient.g?.replaceAll(", ", " ")}; </Text>
             </View>
 
-            {reportData.patient.diagnosisId !== 45 ?
-              <View style={styles.shiftSection}>
-                <Text>Гены: </Text>
-                <Text>{getGenes(reportData.patient.diagnosisId)}</Text>
-              </View>
-              :
+            {reportData.patient.diagnosisId === 45 ?
               <View style={styles.shiftSection}>
                 <Text>Биологический подтип: </Text>
                 <Text>{reportData.patient.additionalDiagnosis}</Text>
               </View>
+              : null
             }
 
             <View style={styles.shiftSection}>
