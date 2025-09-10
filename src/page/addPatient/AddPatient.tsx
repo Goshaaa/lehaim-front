@@ -19,8 +19,8 @@ function AddPatient() {
     const [loading, setLoading] = useState(false);
     const { t } = useTranslation();
 
-    const fioRegexEn = /^[A-Za-z-]+$/
-    const fioRegexRu = /^[А-Яа-я-]+$/
+    const fioRegexEn = /^[A-Za-z- ]+$/
+    const fioRegexRu = /^[А-Яа-я- ]+$/
 
     const validateBeforeSubmit = (): string | null => {
         const errMsgs: string[] = [];

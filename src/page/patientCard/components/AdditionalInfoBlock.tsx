@@ -27,8 +27,8 @@ function AdditionaInfolBlock({ patient }: Props) {
     const [patientDiagnosisGenes, setPatientDiagnosisGenes] = useState<PatientGeneDto[]>([]);
     const [diagnosisGenes, setDiagnosisGenes] = useState<GeneDto[] | undefined>([]);
 
-    const fioRegexEn = /^[A-Za-z-]+$/
-    const fioRegexRu = /^[А-Яа-я-]+$/
+    const fioRegexEn = /^[A-Za-z- ]+$/
+    const fioRegexRu = /^[А-Яа-я- ]+$/
 
     const { t } = useTranslation();
 
@@ -379,7 +379,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                         value={changePatient.g ?? ""}
                         onChange={(newValue) => setChangePatient(prevData => ({ ...prevData, g: newValue }))}
                         disabled={!editMode}
-                        numberOptions={["X", "1", "2", "3", "L", "H"]}
+                        numberOptions={["X", "1", "2", "3", "LG", "HG"]}
                         letterOptions={["Adc", "Squam CC", "Small CC", "Muc", "Ductal", "Lobular", "Scirr"]}
                     />
 

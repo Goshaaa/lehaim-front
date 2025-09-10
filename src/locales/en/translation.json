@@ -6,7 +6,7 @@
     },
     "home": {
         "about": "About",
-        "headTitle": "Immunodeficiency and regeneration calculator",
+        "headTitle": "Identifier of Types of Inflammatory Responses",
         "start": "Start"
     },
     "patientSearch": {
@@ -45,33 +45,33 @@
             "title": "Scope of application",
             "oncology": {
                 "title": "Oncology",
-                "onco_1": "Идентифицирует вид воспалительной реакции организма",
-                "onco_2": "Демонстрирует сохранность врожденного или приобретенного иммунитета",
-                "onco_3": "Визуализирует уровень компенсаторного ответа на проведение комплексного лечения опухоли",
-                "onco_4": "Подтверждает ареактивность течения ЗО",
-                "onco_5": "Выявляет состояние иммунокомпрометации при повторном развитии ЗНО",
-                "onco_6": "Анализирует динамику изменения иммунитета при выбранном векторе реабилитации",
-                "onco_7": "Предназначен для ЗО с МКБ: С18-19,20-21, С34, С43, С49 (саркома Капоши), С61-64"
+                "onco_1": "Identifies the type of the body's inflammatory response.",
+                "onco_2": "Demonstrates the integrity of innate or adaptive immunity.",
+                "onco_3": "Visualizes the level of compensatory response to comprehensive cancer therapy.",
+                "onco_4": "Confirms the non-reactive course of the malignant disease.",
+                "onco_5": "Detects the state of immunocompromise upon relapse of the malignant tumor.",
+                "onco_6": "Analyzes the dynamics of immune changes upon the implemented rehabilitation strategy",
+                "onco_7": "Intended for malignant diseases (MD) with ICD-10 codes: C18-C19, C20-C21, C34, C43, C49 (Kaposi's sarcoma), C61-C64"
             },
             "hematology": {
                 "title": "Hematology",
-                "hemato_1": "Подтверждаем визуальный порог компенсации системного воспаления после ПГСК",
-                "hemato_2": "Оценивает глубину иммуноповреждения после трансплантации ПГСК",
-                "hemato_3": "Определяет вектор иммунологической коррекции"
+                "hemato_1": "Confirms the visual threshold of systemic inflammation compensation following HSCT",
+                "hemato_2": "Evaluates the severity of the immunospecific injury following HSCT",
+                "hemato_3": "Guides immunomodulatory treatment strategies"
             },
             "surgery": {
                 "title": "Surgery",
-                "surgery_1": "Определяет «благоприятное окно» хирургического вмешательства",
-                "surgery_2": "Документирует вероятность развития осложнений от системного воспаления до/после операции",
-                "surgery_3": "Помогает персонализировать подготовку иммунокомпрометированных пациентов"
+                "surgery_1": "Identifies the optimal timing for surgery",
+                "surgery_2": "Assesses and documents the likelihood of complications from systemic inflammation before and after surgery",
+                "surgery_3": "Supports personalized preparation of immunocompromised patients"
             },
             "therapy": {
                 "title": "Therapy",
-                "therapy_1": "Определяет доминирующий элемент влияния системного воспаления на организм",
-                "therapy_2": "Оценивает динамику иммунитета в сезонах весна/осень",
-                "therapy_3": "Предопределяет обострение хронических заболеваний",
-                "therapy_4": "Дифференцирует терапевтический порог лечения СВР при воспалительных заболеваниях толстого кишечника",
-                "therapy_5": "Рассчитывает параметры иммунограмм в системной воспалительной реакции пациента"
+                "therapy_1": "Identifies the dominant factor of systemic inflammatory response affecting the organism",
+                "therapy_2": "Monitors seasonal changes in immune function (spring/autumn)",
+                "therapy_3": "Predicts exacerbation of chronic diseases",
+                "therapy_4": "Differentiates the therapeutic threshold for SIR in inflammatory bowel diseases",
+                "therapy_5": "Analyzes immune status parameters in the patient’s systemic inflammatory response"
             }
         },
         "copyright": {
