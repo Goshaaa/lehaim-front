@@ -12,7 +12,7 @@ function Home() {
             <header className="home-header clearfix">
                 <div className='d-flex justify-content-end'>
                     <Link to="/about">
-                        <button type="button" className="btn btn-outline-secondary me-3">
+                        <button type="button" className="btn btn-outline-dark me-3">
                             {t('home.about')}
                         </button>
                     </Link>
@@ -26,7 +26,7 @@ function Home() {
                     {t('home.headTitle')}
                 </p>
                 <Link to="/searhPatient">
-                    <button type="button" className="btn btn-outline-secondary">
+                    <button type="button" className="btn btn-outline-dark">
                         {t('home.start')}
                     </button>
                 </Link>

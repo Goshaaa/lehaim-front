@@ -125,7 +125,7 @@ export default function RecommendationsBlock({
               <button
                 type="button"
                 onClick={toggleEditMode}
-                className="btn btn-outline-secondary ms-3 float-end"
+                className="btn btn-outline-dark ms-3 float-end"
                 disabled={loading}
                 title={editMode ? t('recommendationBlock.cancelTooltip') : t('recommendationBlock.editTooltip')}
                 >

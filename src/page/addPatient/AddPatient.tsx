@@ -87,7 +87,7 @@ function AddPatient() {
             <div className="container-lg">
                 <div className="row justify-content-center">
                     <div className="col-sm-10 col-md-8 col-lg-6">
-                        <div className="border border-secondary rounded-3 text-secondary p-3 mb-3">
+                        <div className="border border-dark rounded-3 text-dark p-3 mb-3">
                             <h4 className="mb-3">{t('patientAddForm.modalTitle')}</h4>
                             <form onSubmit={handleSubmit} className="container-fluid">
                                 <div className="mb-3">
@@ -174,7 +174,7 @@ function AddPatient() {
                                     </button>
                                     <button
                                         type="button"
-                                        className="btn btn-outline-secondary"
+                                        className="btn btn-outline-dark"
                                         onClick={() => navigate("/searhPatient/")}
                                         disabled={loading}>
                                         {t('patientAddForm.cancel')}

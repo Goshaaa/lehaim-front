@@ -7,7 +7,7 @@ interface Props {
 function PatientInfo({ patient }: Props) {
     return (
         <>
-            <div className="border border-secondary rounded-3 text-secondary p-3 mb-3">
+            <div className="border border-dark rounded-3 text-dark p-3 mb-3">
                 <div className="row">
                     <div className="col fw-bold">
                         Фамилия

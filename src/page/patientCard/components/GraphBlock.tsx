@@ -46,7 +46,7 @@ function GraphBlock({ selectedAnalyzeId }: Props) {
     }, [selectedAnalyzeId])
 
     return (
-        <div className="container-lg border border-secondary rounded-3 text-secondary p-3 mb-3 clearfix">
+        <div className="container-lg border border-dark rounded-3 text-dark p-3 mb-3 clearfix">
             <h3 className="text-center m-3">{t('graphBlock.title')}</h3>
             {analyzeResult.length === 0
                 ? <h5 className="text-center m-3">{t('graphBlock.noSelected')}</h5>

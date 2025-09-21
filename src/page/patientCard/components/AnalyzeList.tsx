@@ -99,10 +99,10 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                 {oncoTests?.map((test) =>
                     <li key={test.id}
                         role='button'
-                        className={"list-group-item list-group-item-action " + (test.id === activeId ? "active" : "")}
+                        className={"list-group-item list-group-item-action" + (test.id === activeId ? "active" : "")}
                         onClick={() => handleClick(test.id!!)}>
                         <div className='d-flex justify-content-between'>
-                            <div className="d-flex">
+                            <div className="d-flex text-dark">
                                 <div>
                                     {t('analyzeList.analize') + dateUtils.formatDate(test.testDate)}
                                 </div>

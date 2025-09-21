@@ -246,7 +246,7 @@ function AdditionaInfolBlock({ patient }: Props) {
 
     return (
         <>
-            <div className="border border-secondary rounded-3 text-secondary p-3 clearfix">
+            <div className="border border-dark rounded-3 text-dark p-3 clearfix">
                 <form onSubmit={handleSubmit} className="container-fluid">
                     <div className="mb-2 d-flex justify-content-between gap-2">
                         <label htmlFor="lastNameArea" className="fw-bold">
@@ -543,7 +543,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                         <button
                             type="button"
                             onClick={toggleEditMode}
-                            className="btn btn-outline-secondary ms-3 float-end"
+                            className="btn btn-outline-dark ms-3 float-end"
                             disabled={loading}
                             title={editMode ? t('patientAdditionalBlock.cancelBtnTooltip') : t('patientAdditionalBlock.editBtnTooltip')}
                         >

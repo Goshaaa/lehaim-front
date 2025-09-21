@@ -9,7 +9,7 @@ interface Props {
 function CatalogParamItem({ param, value, onChange }: Props) {
 
     return (
-        <div className="p-1 text-secondary">
+        <div className="p-1 text-dark">
             <div className="d-flex justify-content-start col-12">
                 <div className="text-truncate "
                     title={param.name + " " + param.unit + " (" + param.additionalName + ")"}>

@@ -139,8 +139,8 @@ function EditAnalyzes() {
     return (
         <>
             <Header title={getPageTitle()}></Header>
-            <div className="container-lg text-secondary">
-                <div className="border border-secondary rounded-3 p-3 mb-3">
+            <div className="container-lg text-dark">
+                <div className="border border-dark rounded-3 p-3 mb-3">
                     <form onSubmit={handleSubmit}>
                         <h3 className="text-center mb-3">
                             {getPageTitle()}
@@ -181,7 +181,7 @@ function EditAnalyzes() {
                                 <div className="accordion-item">
                                     <h2 className="accordion-header"
                                         id="flush-Hematological">
-                                        <button className="accordion-button collapsed fw-bold text-secondary"
+                                        <button className="accordion-button collapsed fw-bold text-dark"
                                             type="button" data-bs-toggle="collapse"
                                             data-bs-target="#flush-collapseHematological"
                                             aria-expanded="false"
@@ -229,7 +229,7 @@ function EditAnalyzes() {
                                 <div className="accordion-item">
                                     <h2 className="accordion-header"
                                         id="flush-Immunological">
-                                        <button className="accordion-button collapsed fw-bold text-secondary"
+                                        <button className="accordion-button collapsed fw-bold text-dark"
                                             type="button" data-bs-toggle="collapse"
                                             data-bs-target="#flush-collapseImmunological"
                                             aria-expanded="false"
@@ -275,7 +275,7 @@ function EditAnalyzes() {
                                 <div className="accordion-item">
                                     <h2 className="accordion-header"
                                         id="flush-Cytokine">
-                                        <button className="accordion-button collapsed fw-bold text-secondary"
+                                        <button className="accordion-button collapsed fw-bold text-dark"
                                             type="button" data-bs-toggle="collapse"
                                             data-bs-target="#flush-collapseCytokine"
                                             aria-expanded="false"
@@ -334,7 +334,7 @@ function EditAnalyzes() {
                             </button>
                             <button
                                 type="button"
-                                className="btn btn-outline-secondary"
+                                className="btn btn-outline-dark"
                                 onClick={() => navigate("/patient/" + patientId)}
                                 disabled={loading}>
                                 {t('editAnalyzes.cancel')}

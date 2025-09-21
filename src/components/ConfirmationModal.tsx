@@ -27,7 +27,7 @@ function ConfirmationModal({ title, body, yesCallback }: Props) {
                             </button>
                             <button
                                 type="button"
-                                className="btn btn-secondary"
+                                className="btn btn-dark"
                                 data-bs-dismiss="modal">
                                 Отмена
                             </button>

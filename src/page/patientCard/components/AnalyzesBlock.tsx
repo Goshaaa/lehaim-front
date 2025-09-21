@@ -13,7 +13,7 @@ function AnalyzesBlock({ selectAnalyzeCallback }: Props) {
     const { t } = useTranslation();
 
     return (
-        <div className="container-lg border border-secondary rounded-3 text-secondary p-3 mb-3 clearfix">
+        <div className="container-lg border border-dark rounded-3 text-dark p-3 mb-3 clearfix">
             <h3 className="text-center mb-3">
                 {t('analyzeList.title')}
             </h3>
@@ -25,7 +25,7 @@ function AnalyzesBlock({ selectAnalyzeCallback }: Props) {
 
                     <div className='mt-3'>
                         <Link to={"/patient/" + patientId + "/analyzes/"}>
-                            <button type="button" className="btn btn-outline-secondary float-end" title="Добавить обследование">
+                            <button type="button" className="btn btn-outline-dark float-end" title="Добавить обследование">
                                 {t('analyzeList.addAnalyzeBtn')}
                             </button>
                         </Link>
