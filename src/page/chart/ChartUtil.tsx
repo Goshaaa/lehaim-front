@@ -38,7 +38,7 @@ function getBOption(data: ChartDataParams, chartPage: ChartPage) {
     let chartTitle = 'Относительные параметры B - клеточного звена иммунитета'
     let radarIndicator: Indicator[] = [
         { name: 'NEU/CD19' },
-        { name: 'NEU/LYMF' },
+        { name: 'NEU/LYM' },
         { name: 'CD19/CD8' },
         { name: 'CD19/CD4' },
     ]
@@ -51,7 +51,7 @@ function getTOption(data: ChartDataParams, chartPage: ChartPage) {
     let chartTitle = 'Относительные параметры T - клеточного звена иммунитета'
     let radarIndicator: Indicator[] = [
         { name: 'NEU/CD3' },
-        { name: 'NEU/LYMF' },
+        { name: 'NEU/LYM' },
         { name: 'NEU/CD8' },
         { name: 'NEU/CD4' }
     ]
@@ -82,8 +82,8 @@ function getRegenerationOption(data: ChartDataParams, chartPage: ChartPage) {
     let chartTitle = 'Расчет вида регенерации';
     let radarIndicator: Indicator[] = [
         { name: 'NEU/MON', max: upAxisMaxValue },
-        { name: 'NEU/LYMF', max: rightAxisMaxValue },
-        { name: 'LYMF/MON', max: leftAxisMaxValue },
+        { name: 'NEU/LYM', max: rightAxisMaxValue },
+        { name: 'LYM/MON', max: leftAxisMaxValue },
     ];
 
     let option = getBaseOption(chartTitle, radarIndicator, data, chartPage);
