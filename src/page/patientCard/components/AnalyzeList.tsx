@@ -10,6 +10,7 @@ import ConfirmationModal from '../../../components/ConfirmationModal';
 import ChartIndicator from './ChartIndicator';
 import XrayIndicatorIndicator from './XrayIndicator';
 import { useTranslation } from "react-i18next";
+import './AnalyzeList.css';
 
 interface Props {
     patientId: string,
@@ -99,7 +100,7 @@ function AnalyzeList({ patientId, selectAnalyzeCallback }: Props) {
                 {oncoTests?.map((test) =>
                     <li key={test.id}
                         role='button'
-                        className={"list-group-item list-group-item-action" + (test.id === activeId ? "active" : "")}
+                        className={"list-group-item list-group-item-action " + (test.id === activeId ? "active" : "")}
                         onClick={() => handleClick(test.id!!)}>
                         <div className='d-flex justify-content-between'>
                             <div className="d-flex text-dark">
