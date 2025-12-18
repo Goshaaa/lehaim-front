@@ -213,9 +213,9 @@ function AdditionaInfolBlock({ patient }: Props) {
         }
 
         const fio = changePatient.name + changePatient.lastname + changePatient.patronymic;
-        if (!((fioRegexEn.test(fio) && !fioRegexRu.test(fio)) || 
+        if (!((fioRegexEn.test(fio) && !fioRegexRu.test(fio)) ||
             (!fioRegexEn.test(fio) && fioRegexRu.test(fio)))) {
-                errMsgs.push("ФИО может быть указано либо только на кирилице либо только на латинице");
+            errMsgs.push("ФИО может быть указано либо только на кирилице либо только на латинице");
         }
 
         if (!changePatient.birthdate) {
@@ -229,14 +229,14 @@ function AdditionaInfolBlock({ patient }: Props) {
             }
         }
         if ((isNullOrEmpty(changePatient.radiationTherapy?.startTherapy) && !isNullOrEmpty(changePatient.radiationTherapy?.endTherapy)) ||
-             (!isNullOrEmpty(changePatient.radiationTherapy?.startTherapy) && isNullOrEmpty(changePatient.radiationTherapy?.endTherapy))) {
+            (!isNullOrEmpty(changePatient.radiationTherapy?.startTherapy) && isNullOrEmpty(changePatient.radiationTherapy?.endTherapy))) {
             errMsgs.push("У лучевой терапии должны быть заполнены обе даты");
         }
         if (changePatient.operationDate && changePatient.radiationTherapy?.startTherapy && changePatient.radiationTherapy?.endTherapy) {
             const operationDate = new Date(changePatient.operationDate);
             const therapyStart = new Date(changePatient.radiationTherapy.startTherapy);
             const therapyEnd = new Date(changePatient.radiationTherapy.endTherapy);
-            
+
             if (operationDate >= therapyStart && operationDate <= therapyEnd) {
                 errMsgs.push("Дата операции не может быть в период лучевой терапии");
             }
@@ -489,7 +489,7 @@ function AdditionaInfolBlock({ patient }: Props) {
                                         disabled={!editMode}
                                     />
                                 </div>
-                                
+
                                 <div className="d-flex align-items-center gap-2 flex-grow-1">
                                     <label htmlFor="xrayterapyfrom" className="fw-bold">
                                         {t('patientAdditionalBlock.xrayPeriodEnd')}:
@@ -510,12 +510,12 @@ function AdditionaInfolBlock({ patient }: Props) {
                         </div>
                         <div>
                             <label htmlFor="xrayTherapyArea" className="fw-bold">
-                            {t('patientAdditionalBlock.xrayTherapyComment')}:
+                                {t('patientAdditionalBlock.xrayTherapyComment')}:
                             </label>
                             <div className="mt-2">
                                 <textarea
                                     className="w-100"
-                                    id="xrayTherapyArea"
+                                    id="deathDate"
                                     name="comment"
                                     value={xrayTherapy?.comment ?? ""}
                                     onChange={handleXrayChange}
@@ -523,6 +523,63 @@ function AdditionaInfolBlock({ patient }: Props) {
                             </div>
                         </div>
                     </div>
+
+                    <div className="accordion mt-1" id="accordionAdditionalInfoFlush">
+                        <div className="accordion-item">
+                            <h2 className="accordion-header" id="flush-addInfo">
+                                <button className="accordion-button collapsed fw-bold text-dark"
+                                    type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#flush-collapseAddInfo"
+                                    aria-expanded="false"
+                                    aria-controls="flush-collapseAddInfo">
+                                    {t('patientAdditionalBlock.additionalInfo')}
+                                </button>
+                            </h2>
+
+                            <div id="flush-collapseAddInfo"
+                                className="accordion-collapse collapse"
+                                aria-labelledby="flush-addInfo"
+                                data-bs-parent="#accordionAdditionalInfoFlush">
+                                <div className="accordion-body">
+                                    <div className='row'>
+                                        <div className="mb-2">
+                                            <label htmlFor="deathDateArea" className="fw-bold">
+                                                {t('patientAdditionalBlock.deathDate')}:
+                                            </label>
+                                            <div className="mt-2">
+                                                <input className="w-100"
+                                                    type="date"
+                                                    min={changePatient.birthdate || '1900-01-01'}
+                                                    max='2199-12-12'
+                                                    id="deathDateArea"
+                                                    name="deathdate"
+                                                    autoComplete="off"
+                                                    value={changePatient.deathdate ?? ""}
+                                                    onChange={handleChange}
+                                                    disabled={!editMode} />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label htmlFor="deathCommentArea" className="fw-bold">
+                                                {t('patientAdditionalBlock.deathComment')}:
+                                            </label>
+                                            <div className="mt-2">
+                                                <textarea
+                                                    className="w-100"
+                                                    id="deathCommentArea"
+                                                    name="deathComment"
+                                                    value={changePatient.deathComment ?? ""}
+                                                    onChange={handleChange}
+                                                    disabled={!editMode} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     {error &&
                         <div className="alert alert-danger" role="alert">
                             {error}

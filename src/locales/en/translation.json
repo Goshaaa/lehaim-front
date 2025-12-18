@@ -45,13 +45,13 @@
             "title": "Scope of application",
             "oncology": {
                 "title": "Oncology",
-                "onco_1": "Identifies the type of the body's inflammatory response.",
-                "onco_2": "Demonstrates the integrity of innate or adaptive immunity.",
-                "onco_3": "Visualizes the level of compensatory response to comprehensive cancer therapy.",
-                "onco_4": "Confirms the non-reactive course of the malignant disease.",
-                "onco_5": "Detects the state of immunocompromise upon relapse of the malignant tumor.",
+                "onco_1": "Identifies the type of the body's inflammatory response",
+                "onco_2": "Demonstrates the integrity of innate or adaptive immunity",
+                "onco_3": "Visualizes the level of compensatory response to comprehensive cancer therapy",
+                "onco_4": "Confirms the non-reactive course of the malignant tumor",
+                "onco_5": "Detects the state of immunocompromise upon relapse of the malignant tumor",
                 "onco_6": "Analyzes the dynamics of immune changes upon the implemented rehabilitation strategy",
-                "onco_7": "Intended for malignant diseases (MD) with ICD-10 codes: C18-C19, C20-C21, C34, C43, C49 (Kaposi's sarcoma), C61-C64"
+                "onco_7": "Intended for malignant diseases (MD) with ICD-10 codes: C18-C19, C20-C21, C34, C43, C49 (Kaposi's sarcoma), C50, C61-C64"
             },
             "hematology": {
                 "title": "Hematology",
@@ -61,17 +61,17 @@
             },
             "surgery": {
                 "title": "Surgery",
-                "surgery_1": "Identifies the optimal timing for surgery",
-                "surgery_2": "Assesses and documents the likelihood of complications from systemic inflammation before and after surgery",
-                "surgery_3": "Supports personalized preparation of immunocompromised patients"
+                "surgery_1": "Determines the “optimal window” for planned surgical intervention in oncology patients",
+                "surgery_2": "Documents the likelihood of developing complications in the form of systemic inflammatory reactions before or after surgery",
+                "surgery_3": "Helps to personalize the preparation for surgical intervention in immunocompromised patients"
             },
             "therapy": {
                 "title": "Therapy",
                 "therapy_1": "Identifies the dominant factor of systemic inflammatory response affecting the organism",
                 "therapy_2": "Monitors seasonal changes in immune function (spring/autumn)",
                 "therapy_3": "Predicts exacerbation of chronic diseases",
-                "therapy_4": "Differentiates the therapeutic threshold for SIR in inflammatory bowel diseases",
-                "therapy_5": "Analyzes immune status parameters in the patient’s systemic inflammatory response"
+                "therapy_4": "Differentiates the therapeutic threshold for treating systemic inflammatory response in inflammatory bowel diseases",
+                "therapy_5": "Calculates immunogram parameters and provides an assessment of the patient’s systemic inflammatory response"
             }
         },
         "copyright": {
@@ -150,9 +150,12 @@
         "diagnosis": "Diagnosis",
         "extraDiagnosis": "Biological subtype",
         "surgeryDate": "Surgery date",
+        "deathDate": "Death date",
         "diagnosisComment": "Diagnosis comment",
         "surgeryComment": "Surgery comment",
         "therapyComment": "Chemotherapy comment",
+        "additionalInfo": "Additional info",
+        "deathComment": "Comments / reason",
         "xrayPeriod": "X-Ray period",
         "xrayPeriodBegan": "from",
         "xrayPeriodEnd": "to",
