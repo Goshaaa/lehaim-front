@@ -155,7 +155,7 @@
         "surgeryComment": "Комментарий об операции",
         "therapyComment": "Комментарий о курсах химиотерапии",
         "additionalInfo": "Дополнительные сведения",
-        "deathComment": "Комментарии / причина",
+        "deathComment": "Комментарии",
         "xrayPeriod": "Период лучевой терапии",
         "xrayPeriodBegan": "c",
         "xrayPeriodEnd": "до",
@@ -197,10 +197,55 @@
         "inflammationChartTitle": "Индексы системного воспаления",
         "bTypeChartTitle": "Относительные параметры B - клеточного звена иммунитета",
         "tTypeChartTitle": "Относительные параметры T - клеточного звена иммунитета",
-        "cytokineChartTitle": "Цитокиновые пары"
+        "cytokineChartTitle": "Цитокиновые пары",
+        "intervals": "Интервалы референтных значений",
+        "result": "Результат"
     },
     "editAnalyzes": {
         "save": "Сохранить",
         "cancel": "Отмена"
+    },
+    "pdfReport": {
+        "title": "Отчет об обследовании за ",
+        "patinentName": "ФИО",
+        "patinentDOB": "Дата рождения",
+
+        "diagnosisDetails": "Информация о диагнозе",
+        "diagnosisDetailsCode": "Код",
+        "diagnosisDetailsClassification": "Классификация",
+        "diagnosisDetailsBioType": "Биологический подтип",
+        "diagnosisDetailsComment": "Комментарий",
+
+        "surgeryDetails": "Информация об операции",
+        "surgeryDetailsDate": "Дата операции",
+        "surgeryDetailsComment": "Комментарий",
+
+        "chemotherapyDetails": "Информация о химиотерапии",
+        "chemotherapyDetailsComment": "Комментарий",
+
+        "radiotherapyDetails": "Информация о лучевой терапии",
+        "radiotherapyDetailsPeriod": "Период лучевой терапии",
+        "radiotherapyDetailsComment": "Комментарий",
+
+        "examinationComment": "Комментарий к обследованию",
+
+        "conclusion": "Заключение",
+        "recommendation": "Рекомендация",
+
+        "regenerationChartTitle": "Расчет вида регенерации",
+        "inflammationChartTitle" : "Индексы системного воспаления",
+        "bTypeChartTitle": "Относительные параметры B - клеточного звена иммунитета",
+        "tTypeChartTitle": "Относительные параметры T - клеточного звена иммунитета",
+        "cytokineChartTitle": "Цитокиновые пары",
+
+        "comparation": {
+            "comparationTitle": "Сравнение показателей",
+            "number": "№",
+            "title": "Наименование показателя",
+            "avg": "Среднее значение*",
+            "current": "Текущие значение",
+            "diff": "Изменение",
+            "remark": "*рассчитывается на основе показателей из предыдущих анализов"
+        }
     }
 }

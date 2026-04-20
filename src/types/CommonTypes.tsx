@@ -129,9 +129,8 @@ interface SelectAnalyzeCallback { (analyzeId?: string | undefined): void }
 interface Recommendation {
     id?: string,
     name?: string,
-    conclusion?: string,
-    recommendation?: string,
     chartType?: string,
+    localeContent?: Record<string, LocaleContent> | null
     errorMessage?: string,
 }
 
@@ -141,6 +140,12 @@ interface RecommendationData {
     T_CELL: Recommendation | null,
     CYTOKINE_PAIRS: Recommendation | null,
     SYSTEMIC_INFLAMMATION: Recommendation | null,
+}
+
+interface LocaleContent {
+    conclusionText?: string | null,
+    recommendationText?: string | null,
+    locale?: string
 }
 
 export enum ChartPage {
@@ -179,5 +184,5 @@ export enum ReportAverageType {
 export type {
     Patient, PatientSearchParam, AnalyzeBriefInfo, SelectAnalyzeCallback, AnalyzeDetailedInfo, AnalyzeParameter,
     CatalogItem, TestParamType, OncoTestData, OncologicalTestRestDTO, ParameterResultRestDTO, ChartsDataUrl, Recommendation, RecommendationData, 
-    PatientAllGenesDto, GeneDto, PatientGeneDto, XrayTherapyDto
+    PatientAllGenesDto, GeneDto, PatientGeneDto, XrayTherapyDto, LocaleContent
 };

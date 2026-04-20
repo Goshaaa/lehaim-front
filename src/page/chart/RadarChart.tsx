@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import ReactECharts, { EChartsInstance } from 'echarts-for-react';
+import ReactECharts from 'echarts-for-react';
 
 import { AnalyzeDetailedInfo, ChartPage, ChartType } from "../../types/CommonTypes";
 import getOptions, { isGraphFilled } from './ChartUtil'
+import { useTranslation } from "react-i18next";
 
 
 interface Props {
@@ -15,10 +16,11 @@ interface Props {
 function RadarChat({ chartType, data, dataUrlHandler, chartPage }: Props) {
     const [options, setOptions] = useState<any>(null);
     const chartRef = useRef<ReactECharts>(null);
-
+    const { t } = useTranslation();
 
     useEffect(() => {
-        const opt = getOptions(data, chartType, chartPage);
+        
+        const opt = getOptions(data, chartType, chartPage, t);
         if (chartPage == ChartPage.Analyze) {
             setOptions(opt);
         } else {
@@ -29,7 +31,7 @@ function RadarChat({ chartType, data, dataUrlHandler, chartPage }: Props) {
             }
         }
 
-    }, [data, chartType]);
+    }, [data, chartType, t]);
 
 
     useEffect(() => {

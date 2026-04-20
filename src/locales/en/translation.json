@@ -99,7 +99,7 @@
             "neulymf": "Neu/Lym ",
             "neulymfDefinition": "Neutrophil-to-Lymphocyte Ratio (NLR)",
             "neumon": "Neu/Mon ",
-            "neumonDefinition": "Neutrophil-to-Monocyte Ratio",
+            "neumonDefinition": "Neutrophil-to-Monocyte Ratio (NMR)",
             "lymfmon": "Lym/Mon ",
             "lymfmonDefinition": "Lymphocyte-to-Monocyte Ratio (LMR)",
             "siri": "SiRi ",
@@ -155,7 +155,7 @@
         "surgeryComment": "Surgery comment",
         "therapyComment": "Chemotherapy comment",
         "additionalInfo": "Additional info",
-        "deathComment": "Comments / reason",
+        "deathComment": "Comments",
         "xrayPeriod": "X-Ray period",
         "xrayPeriodBegan": "from",
         "xrayPeriodEnd": "to",
@@ -197,10 +197,55 @@
         "inflammationChartTitle": "Systemic inflammation indices",
         "bTypeChartTitle": "Relative parameters of B - cellular immunity",
         "tTypeChartTitle": "Relative parameters of T-cell immunity",
-        "cytokineChartTitle": "Cytokine pairs"
+        "cytokineChartTitle": "Cytokine pairs",
+        "intervals": "Reference range intervals",
+        "result": "Result"
     },
     "editAnalyzes": {
         "save": "Save",
         "cancel": "Cancel"
+    },
+    "pdfReport": {
+        "title": "Medical examination report dated ",
+        "patinentName": "Full name",
+        "patinentDOB": "Date of birth",
+        
+        "diagnosisDetails": "Diagnosis information",
+        "diagnosisDetailsCode": "Code",
+        "diagnosisDetailsClassification": "Classification",
+        "diagnosisDetailsBioType": "Bio type",
+        "diagnosisDetailsComment": "Comment",
+
+        "surgeryDetails": "Surgical information",
+        "surgeryDetailsDate": "Date of surgery",
+        "surgeryDetailsComment": "Comment",
+        
+        "chemotherapyDetails": "Chemotherapy information",
+        "chemotherapyDetailsComment": "Comment",
+
+        "radiotherapyDetails": "Radiotherapy information",
+        "radiotherapyDetailsPeriod": "Radiotherapy period",
+        "radiotherapyDetailsComment": "Comment",
+
+        "examinationComment": "Examination comment",
+
+        "conclusion": "Conclusion",
+        "recommendation": "Recommendation",
+
+        "regenerationChartTitle": "Integral indices of hemogram",
+        "inflammationChartTitle" : "Systemic inflammatory indices",
+        "bTypeChartTitle": "Indices of the B-Cell component of the immune system",
+        "tTypeChartTitle": "Indices of the T-Cell component of the immune system",
+        "cytokineChartTitle": "Cytokine reactivity indices",
+
+        "comparation": {
+            "comparationTitle": "Comparison of Parameters",
+            "number": "#",
+            "title": "Medical terminology",
+            "avg": "Average value*",
+            "current": "Сurrent value",
+            "diff": "Change",
+            "remark": "*calculated based on previous test results"
+        }        
     }
 }

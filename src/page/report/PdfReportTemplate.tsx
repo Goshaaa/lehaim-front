@@ -5,6 +5,8 @@ import { ChartsDataUrl, AnalyzeDetailedInfo, RecommendationData, PatientAllGenes
 import { ReportDTO } from '../../services/ReportService';
 import { DiagnosisDTO } from '../../services/DiagnosisService';
 import * as dateUtils from '../../components/DateUtils';
+import { useTranslation } from "react-i18next";
+
 
 Font.register({
   family: "Roboto",
@@ -157,6 +159,7 @@ interface ResultData {
 
 function PatientReport({ reportData, chartData, diagnosisCatalog, recommendationData, patientGenes }: Props) {
   const [resultMap, setResultMap] = useState<ResultData | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     var mapData: ResultDataHolder = {};
@@ -238,32 +241,32 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
 
   return (
     <>
-      <Document title={"Отчет " + reportData.patient.lastname + " " + reportData.patient.name + " от " + reportData.currentTestDate}>
+      <Document title={"Report " + reportData.patient.lastname + " " + reportData.patient.name + " от " + reportData.currentTestDate}>
         <Page size="A4" style={styles.page}>
 
           <View style={styles.header}>
-            <Text>Отчет об обследовании за {dateUtils.formatDate(reportData.currentTestDate)}</Text>
+            <Text>{t('pdfReport.title')}{dateUtils.formatDate(reportData.currentTestDate)}</Text>
           </View>
 
           <View style={styles.blockSection}>
             <View style={styles.section}>
-              <Text style={styles.propertyLabel}>ФИО: </Text>
+              <Text style={styles.propertyLabel}>{t('pdfReport.patinentName')}: </Text>
               <Text style={styles.propertyValue}>{reportData.patient.lastname} {reportData.patient.name} {reportData.patient.patronymic ?? ""}</Text>
             </View>
             <View style={styles.section}>
-              <Text style={styles.propertyLabel}>Дата рождения: </Text>
+              <Text style={styles.propertyLabel}>{t('pdfReport.patinentDOB')}: </Text>
               <Text style={styles.propertyValue}>{dateUtils.formatDate(reportData.patient.birthdate)}</Text>
             </View>
           </View>
 
           <View style={styles.blockSection}>
-            <Text style={styles.propertyLabel}>Информация о диагнозе:</Text>
+            <Text style={styles.propertyLabel}>{t('pdfReport.diagnosisDetails')}:</Text>
             <View style={styles.shiftSection}>
-              <Text>Код: </Text>
+              <Text>{t('pdfReport.diagnosisDetailsCode')}: </Text>
               <Text>{getDiagnosisName(reportData.patient.diagnosisId)};</Text>
             </View>
             <View style={styles.shiftSection}>
-              <Text>Классификация: </Text>
+              <Text>{t('pdfReport.diagnosisDetailsClassification')}: </Text>
               <Text>T: {reportData.patient.t?.replaceAll(", ", " ")}; </Text>
               <Text>N: {reportData.patient.n?.replaceAll(", ", " ")}; </Text>
               <Text>M: {reportData.patient.m?.replaceAll(", ", " ")}; </Text>
@@ -272,52 +275,52 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
 
             {reportData.patient.diagnosisId === 45 ?
               <View style={styles.shiftSection}>
-                <Text>Биологический подтип: </Text>
+                <Text>{t('pdfReport.diagnosisDetailsBioType')}: </Text>
                 <Text>{reportData.patient.additionalDiagnosis}</Text>
               </View>
               : null
             }
 
             <View style={styles.shiftSection}>
-              <Text>Комментарий: </Text>
+              <Text>{t('pdfReport.diagnosisDetailsComment')}: </Text>
               <Text>{reportData.patient.diagnosisComments}</Text>
             </View>
           </View>
 
           <View style={styles.blockSection}>
-            <Text style={styles.propertyLabel}>Информация об операции:</Text>
+            <Text style={styles.propertyLabel}>{t('pdfReport.surgeryDetails')}:</Text>
             <View style={styles.shiftSection}>
-              <Text>Дата операции: </Text>
-              <Text>{dateUtils.formatDate(reportData.patient.operationDate)};</Text>
+              <Text>{t('pdfReport.surgeryDetailsDate')}: </Text>
+              <Text>{dateUtils.formatDate(reportData.patient.operationDate)}</Text>
             </View>
             <View style={styles.shiftSection}>
-              <Text>Комментарий: </Text>
+              <Text>{t('pdfReport.surgeryDetailsComment')}: </Text>
               <Text>{reportData.patient.operationComments}</Text>
             </View>
           </View>
 
           <View style={styles.blockSection}>
-            <Text style={styles.propertyLabel}>Информация о химиотерапии:</Text>
+            <Text style={styles.propertyLabel}>{t('pdfReport.chemotherapyDetails')}:</Text>
             <View style={styles.shiftSection}>
-              <Text>Комментарий: </Text>
+              <Text>{t('pdfReport.chemotherapyDetailsComment')}: </Text>
               <Text>{reportData.patient.chemotherapyComments}</Text>
             </View>
           </View>
 
           <View style={styles.blockSection}>
-            <Text style={styles.propertyLabel}>Информация о лучевой терапии:</Text>
+            <Text style={styles.propertyLabel}>{t('pdfReport.radiotherapyDetails')}:</Text>
             <View style={styles.shiftSection}>
-              <Text>Период лучевой терапии: </Text>
+              <Text>{t('pdfReport.radiotherapyDetailsPeriod')}: </Text>
               <Text>{dateUtils.formatDate(reportData.patient.radiationTherapy?.startTherapy)} - {dateUtils.formatDate(reportData.patient.radiationTherapy?.endTherapy)}</Text>
             </View>
             <View style={styles.shiftSection}>
-              <Text>Комментарий: </Text>
+              <Text>{t('pdfReport.radiotherapyDetailsComment')}: </Text>
               <Text>{reportData.patient.radiationTherapy?.comment}</Text>
             </View>
           </View>
 
           <View style={styles.blockSection}>
-            <Text style={styles.propertyLabel}>Комментарий к обследованию:</Text>
+            <Text style={styles.propertyLabel}>{t('pdfReport.examinationComment')}:</Text>
             <View style={styles.shiftSection}>
               <Text>{reportData.currentTestNote}</Text>
             </View>
@@ -326,7 +329,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
           {chartData?.regenerationChartData ?
             <View style={styles.chartSection}>
               <View>
-                <Text style={styles.chartTitle}>Расчет вида регенерации</Text>
+                <Text style={styles.chartTitle}>{t('pdfReport.regenerationChartTitle')}</Text>
                 <Image
                   style={styles.chart}
                   source={chartData.regenerationChartData} />
@@ -334,14 +337,16 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
               {recommendationData?.REGENERATION ?
                 <View>
                   <View style={styles.section}>
-                    <Text style={styles.propertyLabel}>Заключение: </Text>
+                    <Text style={styles.propertyLabel}>{t('pdfReport.conclusion')}: </Text>
                     <Text style={styles.propertyValue}>
-                      {recommendationData.REGENERATION.conclusion ?? '-'}
+                      {recommendationData.REGENERATION.localeContent?.['RUS']?.conclusionText ?? '-'}
                     </Text>
                   </View>
                   <View style={styles.section}>
-                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                    <Text style={styles.propertyValue}>{recommendationData.REGENERATION.recommendation ?? '-'}</Text>
+                    <Text style={styles.propertyLabel}>{t('pdfReport.recommendation')}: </Text>
+                    <Text style={styles.propertyValue}>
+                      {recommendationData.REGENERATION.localeContent?.['RUS']?.recommendationText ?? '-'}
+                    </Text>
                   </View>
                 </View>
                 : null
@@ -354,7 +359,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
           {chartData?.inflammationTypeData ?
             <View style={styles.chartSection} wrap={false}>
               <View>
-                <Text style={styles.chartTitle}>Индексы системного воспаления</Text>
+                <Text style={styles.chartTitle}>{t('pdfReport.inflammationChartTitle')}</Text>
                 <Image
                   style={styles.chart}
                   source={chartData.inflammationTypeData} />
@@ -362,12 +367,16 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
               {recommendationData?.SYSTEMIC_INFLAMMATION ?
                 <View>
                   <View style={styles.section}>
-                    <Text style={styles.propertyLabel}>Заключение: </Text>
-                    <Text style={styles.propertyValue}>{recommendationData.SYSTEMIC_INFLAMMATION.conclusion ?? '-'}</Text>
+                    <Text style={styles.propertyLabel}>{t('pdfReport.conclusion')}: </Text>
+                    <Text style={styles.propertyValue}>
+                      {recommendationData.SYSTEMIC_INFLAMMATION.localeContent?.['RUS']?.conclusionText ?? '-'}
+                    </Text>
                   </View>
                   <View style={styles.section}>
-                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                    <Text style={styles.propertyValue}>{recommendationData.SYSTEMIC_INFLAMMATION.recommendation ?? '-'}</Text>
+                    <Text style={styles.propertyLabel}>{t('pdfReport.recommendation')}: </Text>
+                    <Text style={styles.propertyValue}>
+                      {recommendationData.SYSTEMIC_INFLAMMATION.localeContent?.['RUS']?.recommendationText ?? '-'}
+                    </Text>
                   </View>
                 </View>
                 : null
@@ -380,7 +389,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
           {chartData?.bTypeData ?
             <View style={styles.chartSection} wrap={false}>
               <View>
-                <Text style={styles.chartTitle}>Относительные параметры B - клеточного звена иммунитета</Text>
+                <Text style={styles.chartTitle}>{t('pdfReport.bTypeChartTitle')}</Text>
                 <Image
                   style={styles.chart}
                   source={chartData.bTypeData} />
@@ -388,12 +397,16 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
               {recommendationData?.B_CELL ?
                 <View>
                   <View style={styles.section}>
-                    <Text style={styles.propertyLabel}>Заключение: </Text>
-                    <Text style={styles.propertyValue}>{recommendationData.B_CELL.conclusion ?? '-'}</Text>
+                    <Text style={styles.propertyLabel}>{t('pdfReport.conclusion')}: </Text>
+                    <Text style={styles.propertyValue}>
+                      {recommendationData.B_CELL.localeContent?.['RUS']?.conclusionText ?? '-'}
+                    </Text>
                   </View>
                   <View style={styles.section}>
-                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                    <Text style={styles.propertyValue}>{recommendationData.B_CELL.recommendation ?? '-'}</Text>
+                    <Text style={styles.propertyLabel}>{t('pdfReport.recommendation')}: </Text>
+                    <Text style={styles.propertyValue}>
+                      {recommendationData.B_CELL.localeContent?.['RUS']?.recommendationText ?? '-'}
+                    </Text>
                   </View>
                 </View>
                 : null
@@ -408,7 +421,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
           {chartData?.tTypeData ?
             <View style={styles.chartSection} wrap={false}>
               <View>
-                <Text style={styles.chartTitle}>Относительные параметры T - клеточного звена иммунитета</Text>
+                <Text style={styles.chartTitle}>{t('pdfReport.tTypeChartTitle')}</Text>
                 <Image
                   style={styles.chart}
                   source={chartData.tTypeData} />
@@ -416,12 +429,16 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
               {recommendationData?.T_CELL ?
                 <View>
                   <View style={styles.section}>
-                    <Text style={styles.propertyLabel}>Заключение: </Text>
-                    <Text style={styles.propertyValue}>{recommendationData.T_CELL.conclusion ?? '-'}</Text>
+                    <Text style={styles.propertyLabel}>{t('pdfReport.conclusion')}: </Text>
+                    <Text style={styles.propertyValue}>
+                      {recommendationData.T_CELL.localeContent?.['RUS']?.conclusionText ?? '-'}
+                    </Text>
                   </View>
                   <View style={styles.section}>
-                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                    <Text style={styles.propertyValue}>{recommendationData.T_CELL.recommendation ?? '-'}</Text>
+                    <Text style={styles.propertyLabel}>{t('pdfReport.recommendation')}: </Text>
+                    <Text style={styles.propertyValue}>
+                      {recommendationData.T_CELL.localeContent?.['RUS']?.recommendationText ?? '-'}
+                    </Text>
                   </View>
                 </View>
                 : null
@@ -435,7 +452,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
           {chartData?.cytokineTypeData ?
             <View style={styles.chartSection} wrap={false}>
               <View>
-                <Text style={styles.chartTitle}>Цитокиновые пары</Text>
+                <Text style={styles.chartTitle}>{t('pdfReport.cytokineChartTitle')}</Text>
                 <Image
                   style={styles.chart}
                   source={chartData.cytokineTypeData} />
@@ -443,12 +460,16 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
               {recommendationData?.CYTOKINE_PAIRS ?
                 <View>
                   <View style={styles.section}>
-                    <Text style={styles.propertyLabel}>Заключение: </Text>
-                    <Text style={styles.propertyValue}>{recommendationData.CYTOKINE_PAIRS.conclusion ?? '-'}</Text>
+                    <Text style={styles.propertyLabel}>{t('pdfReport.conclusion')}: </Text>
+                    <Text style={styles.propertyValue}>
+                      {recommendationData.CYTOKINE_PAIRS.localeContent?.['RUS']?.conclusionText ?? '-'}
+                    </Text>
                   </View>
                   <View style={styles.section}>
-                    <Text style={styles.propertyLabel}>Рекомендация: </Text>
-                    <Text style={styles.propertyValue}>{recommendationData.CYTOKINE_PAIRS.recommendation ?? '-'}</Text>
+                    <Text style={styles.propertyLabel}>{t('pdfReport.recommendation')}: </Text>
+                    <Text style={styles.propertyValue}>
+                      {recommendationData.CYTOKINE_PAIRS.localeContent?.['RUS']?.recommendationText ?? '-'}
+                    </Text>
                   </View>
                 </View>
                 : null
@@ -461,14 +482,14 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
 
           {resultMap &&
             <View wrap={false}>
-              <Text style={styles.sectionTitle}>Сравнение показателей</Text>
+              <Text style={styles.sectionTitle}>{t('pdfReport.comparation.comparationTitle')}</Text>
               <View style={styles.table}>
                 <View style={[styles.row, styles.bold, styles.tableHeader]}>
-                  <Text style={styles.col1}>№</Text>
-                  <Text style={styles.col2}>Наименование показателя</Text>
-                  <Text style={styles.col3}>Среднее значение* {getAverageTypeLabel(reportData.reportAverageTableType)}</Text>
-                  <Text style={styles.col4}>Текущие значения</Text>
-                  <Text style={styles.col5}>Изменение</Text>
+                  <Text style={styles.col1}>{t('pdfReport.comparation.number')}</Text>
+                  <Text style={styles.col2}>{t('pdfReport.comparation.title')}</Text>
+                  <Text style={styles.col3}>{t('pdfReport.comparation.avg')} {getAverageTypeLabel(reportData.reportAverageTableType)}</Text>
+                  <Text style={styles.col4}>{t('pdfReport.comparation.current')}</Text>
+                  <Text style={styles.col5}>{t('pdfReport.comparation.diff')}</Text>
                 </View>
                 {Object.entries(resultMap)
                   .map(([key, value], index) =>
@@ -482,7 +503,7 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
                   )}
               </View>
 
-              <Text style={styles.remark}>*рассчитывается на основе показателей из предыдущих анализов</Text>
+              <Text style={styles.remark}>{t('pdfReport.comparation.remark')}</Text>
             </View>
           }
 
