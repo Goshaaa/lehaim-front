@@ -111,9 +111,9 @@ function EditAnalyzes() {
 
     const getPageTitle = () => {
         if (testId) {
-            return "Редактирование сведений об обследовании"
+            return t('editAnalyze.editAnalyzeTitle')
         } else {
-            return "Внести сведения об обследовании"
+            return t('editAnalyze.addAnalyzeTitle')
         }
     }
 
@@ -147,7 +147,7 @@ function EditAnalyzes() {
                         </h3>
 
                         <div className="col-sm-12 col-md-6 col-lg-4 mb-3 ">
-                            <label htmlFor="testDate" className="form-label fw-bold">Дата обследования</label>
+                            <label htmlFor="testDate" className="form-label fw-bold">{t('editAnalyze.analyzeDate')}</label>
                             <input
                                 type="date"
                                 required
@@ -162,7 +162,7 @@ function EditAnalyzes() {
                         </div>
 
                         <div className="col-sm-12 col-md-6 col-lg-4 mb-3 ">
-                            <label htmlFor="testDate" className="form-label fw-bold">Комментарий к обследованию</label>
+                            <label htmlFor="testDate" className="form-label fw-bold">{t('editAnalyze.analyzeComment')}</label>
                             <textarea
                                 id="testNote"
                                 name="testNote"
@@ -175,7 +175,7 @@ function EditAnalyzes() {
                         </div>
 
                         <div className='mb-3'>
-                            <label htmlFor="testDate" className="form-label fw-bold">Результаты</label>
+                            <label htmlFor="testDate" className="form-label fw-bold">{t('editAnalyze.analyzeResultTitle')}</label>
 
                             <div className="accordion" id="accordionTestsFlush">
                                 <div className="accordion-item">
@@ -186,7 +186,7 @@ function EditAnalyzes() {
                                             data-bs-target="#flush-collapseHematological"
                                             aria-expanded="false"
                                             aria-controls="flush-collapseHematological">
-                                            Результаты гематологического исследования
+                                                {t('editAnalyze.analyzeResultHemogram')}
                                         </button>
                                     </h2>
 
@@ -234,7 +234,7 @@ function EditAnalyzes() {
                                             data-bs-target="#flush-collapseImmunological"
                                             aria-expanded="false"
                                             aria-controls="flush-collapseImmunological">
-                                            Иммунный статус
+                                                {t('editAnalyze.analyzeResultImmunological')}
                                         </button>
                                     </h2>
                                     <div id="flush-collapseImmunological"
@@ -280,7 +280,7 @@ function EditAnalyzes() {
                                             data-bs-target="#flush-collapseCytokine"
                                             aria-expanded="false"
                                             aria-controls="flush-collapseCytokine">
-                                            Цитокиновый статус
+                                                {t('editAnalyze.analyzeResultCytokine')}
                                         </button>
                                     </h2>
                                     <div id="flush-collapseCytokine"

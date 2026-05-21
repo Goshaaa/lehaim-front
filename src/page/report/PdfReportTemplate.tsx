@@ -159,7 +159,7 @@ interface ResultData {
 
 function PatientReport({ reportData, chartData, diagnosisCatalog, recommendationData, patientGenes }: Props) {
   const [resultMap, setResultMap] = useState<ResultData | null>(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     var mapData: ResultDataHolder = {};
@@ -234,9 +234,13 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
   }
 
   const getAverageTypeLabel = (reportAverageType: ReportAverageType): string => {
-    if (reportAverageType === ReportAverageType.RADIATION_THERAPY) return "\n(за период ЛТ)"
-    else if (reportAverageType === ReportAverageType.OPERATION) return "\n(за операционный период)"
+    if (reportAverageType === ReportAverageType.RADIATION_THERAPY) return "\n(" + t('pdfReport.comparation.xRayPeriod') + ")"
+    else if (reportAverageType === ReportAverageType.OPERATION) return "\n(" + t('pdfReport.comparation.xRayPeriod') + ")"
     else return ""
+  }
+
+  const getLanguage = (): string => {
+    return i18n.resolvedLanguage === "en" ? "ENG" : "RUS";
   }
 
   return (
@@ -339,13 +343,13 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
                   <View style={styles.section}>
                     <Text style={styles.propertyLabel}>{t('pdfReport.conclusion')}: </Text>
                     <Text style={styles.propertyValue}>
-                      {recommendationData.REGENERATION.localeContent?.['RUS']?.conclusionText ?? '-'}
+                      {recommendationData.REGENERATION.localeContent?.[getLanguage()]?.conclusionText ?? '-'}
                     </Text>
                   </View>
                   <View style={styles.section}>
                     <Text style={styles.propertyLabel}>{t('pdfReport.recommendation')}: </Text>
                     <Text style={styles.propertyValue}>
-                      {recommendationData.REGENERATION.localeContent?.['RUS']?.recommendationText ?? '-'}
+                      {recommendationData.REGENERATION.localeContent?.[getLanguage()]?.recommendationText ?? '-'}
                     </Text>
                   </View>
                 </View>
@@ -369,13 +373,13 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
                   <View style={styles.section}>
                     <Text style={styles.propertyLabel}>{t('pdfReport.conclusion')}: </Text>
                     <Text style={styles.propertyValue}>
-                      {recommendationData.SYSTEMIC_INFLAMMATION.localeContent?.['RUS']?.conclusionText ?? '-'}
+                      {recommendationData.SYSTEMIC_INFLAMMATION.localeContent?.[getLanguage()]?.conclusionText ?? '-'}
                     </Text>
                   </View>
                   <View style={styles.section}>
                     <Text style={styles.propertyLabel}>{t('pdfReport.recommendation')}: </Text>
                     <Text style={styles.propertyValue}>
-                      {recommendationData.SYSTEMIC_INFLAMMATION.localeContent?.['RUS']?.recommendationText ?? '-'}
+                      {recommendationData.SYSTEMIC_INFLAMMATION.localeContent?.[getLanguage()]?.recommendationText ?? '-'}
                     </Text>
                   </View>
                 </View>
@@ -399,13 +403,13 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
                   <View style={styles.section}>
                     <Text style={styles.propertyLabel}>{t('pdfReport.conclusion')}: </Text>
                     <Text style={styles.propertyValue}>
-                      {recommendationData.B_CELL.localeContent?.['RUS']?.conclusionText ?? '-'}
+                      {recommendationData.B_CELL.localeContent?.[getLanguage()]?.conclusionText ?? '-'}
                     </Text>
                   </View>
                   <View style={styles.section}>
                     <Text style={styles.propertyLabel}>{t('pdfReport.recommendation')}: </Text>
                     <Text style={styles.propertyValue}>
-                      {recommendationData.B_CELL.localeContent?.['RUS']?.recommendationText ?? '-'}
+                      {recommendationData.B_CELL.localeContent?.[getLanguage()]?.recommendationText ?? '-'}
                     </Text>
                   </View>
                 </View>
@@ -431,13 +435,13 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
                   <View style={styles.section}>
                     <Text style={styles.propertyLabel}>{t('pdfReport.conclusion')}: </Text>
                     <Text style={styles.propertyValue}>
-                      {recommendationData.T_CELL.localeContent?.['RUS']?.conclusionText ?? '-'}
+                      {recommendationData.T_CELL.localeContent?.[getLanguage()]?.conclusionText ?? '-'}
                     </Text>
                   </View>
                   <View style={styles.section}>
                     <Text style={styles.propertyLabel}>{t('pdfReport.recommendation')}: </Text>
                     <Text style={styles.propertyValue}>
-                      {recommendationData.T_CELL.localeContent?.['RUS']?.recommendationText ?? '-'}
+                      {recommendationData.T_CELL.localeContent?.[getLanguage()]?.recommendationText ?? '-'}
                     </Text>
                   </View>
                 </View>
@@ -462,13 +466,13 @@ function PatientReport({ reportData, chartData, diagnosisCatalog, recommendation
                   <View style={styles.section}>
                     <Text style={styles.propertyLabel}>{t('pdfReport.conclusion')}: </Text>
                     <Text style={styles.propertyValue}>
-                      {recommendationData.CYTOKINE_PAIRS.localeContent?.['RUS']?.conclusionText ?? '-'}
+                      {recommendationData.CYTOKINE_PAIRS.localeContent?.[getLanguage()]?.conclusionText ?? '-'}
                     </Text>
                   </View>
                   <View style={styles.section}>
                     <Text style={styles.propertyLabel}>{t('pdfReport.recommendation')}: </Text>
                     <Text style={styles.propertyValue}>
-                      {recommendationData.CYTOKINE_PAIRS.localeContent?.['RUS']?.recommendationText ?? '-'}
+                      {recommendationData.CYTOKINE_PAIRS.localeContent?.[getLanguage()]?.recommendationText ?? '-'}
                     </Text>
                   </View>
                 </View>

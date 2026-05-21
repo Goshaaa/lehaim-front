@@ -178,6 +178,16 @@
         "deleteAnalyzeBtn": "Delete analyze",
         "addAnalyzeBtn": "Add analyze"
     },
+    "editAnalyze": {
+        "addAnalyzeTitle": "Add analize data",
+        "editAnalyzeTitle": "Edit analize data",
+        "analyzeDate": "Analyze date",
+        "analyzeComment": "Comment",
+        "analyzeResultTitle": "Result",
+        "analyzeResultHemogram": "Hematological test results",
+        "analyzeResultImmunological": "Immune status",
+        "analyzeResultCytokine": "Cytokine status"
+    },
     "graphBlock": {
         "title": "Graphs",
         "noSelected": "Select analysis firstly"
@@ -193,11 +203,11 @@
         "cancelTooltip": "Cancel editing"
     },
     "chart": {
-        "regenerationChartTitle": "Calculation of the type of regeneration",
-        "inflammationChartTitle": "Systemic inflammation indices",
-        "bTypeChartTitle": "Relative parameters of B - cellular immunity",
-        "tTypeChartTitle": "Relative parameters of T-cell immunity",
-        "cytokineChartTitle": "Cytokine pairs",
+        "regenerationChartTitle": "Integral indices of hemogram",
+        "inflammationChartTitle" : "Systemic inflammatory indices",
+        "bTypeChartTitle": "Indices of the B-Cell component of the immune system",
+        "tTypeChartTitle": "Indices of the T-Cell component of the immune system",
+        "cytokineChartTitle": "Cytokine reactivity indices",
         "intervals": "Reference range intervals",
         "result": "Result"
     },
@@ -245,7 +255,9 @@
             "avg": "Average value*",
             "current": "Сurrent value",
             "diff": "Change",
-            "remark": "*calculated based on previous test results"
+            "remark": "*calculated based on previous test results",
+            "xRayPeriod": "period of RT",
+            "surgeryPeriod": "period of influence operation"
         }        
     }
 }
